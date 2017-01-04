@@ -1,0 +1,90 @@
+$gutter-small: 1rem;
+
+.quinoa-presentation-player{
+  background: yellow;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position : absolute;
+  .wrapper{
+    aside{
+      position : absolute;
+      background: white;
+      margin: 0;
+      padding: 0;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 20%;
+      &.hidden{
+        left: -20%;
+      }
+      transition: all .5s ease;
+      .aside-toggler{
+        position : absolute;
+        width: 20px;
+        height: 20px;
+        right : -20px;
+        top: $gutter-small;
+        background: brown;
+        z-index: 5;
+      }
+      .metadata{
+        padding: $gutter-small;
+      }
+      .summary{
+        padding: $gutter-small;
+        ul{
+          padding: 0;
+          li{
+            margin: 0;
+            list-style-type: none;
+            cursor: pointer;
+            &.active{
+              color: brown;
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+    .aside-bg{
+        position : absolute;
+        pointer-events: none;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        animation: all .5s ease;
+        &.active{
+          width: 80%;
+          pointer-events: all;
+          background: rgba(0,0,0,.4);
+        }
+      }
+    figure{
+      .views-container{
+        .view-container{
+        }
+      }
+      .caption-container{
+        background: lightgrey;
+        position: absolute;
+        bottom: $gutter-small;
+        right: $gutter-small;
+        min-width: 20%;
+        max-height: 100%;
+        padding: $gutter-small;
+        .caption-header,
+        .caption-footer{
+          min-height: $gutter-small;
+        }
+        .caption-content{
+
+        }
+      }
+    }
+  }
+}
