@@ -32,3 +32,14 @@ storiesOf('Quinoa presentation player', module)
   .add('with invalid data', () => (
     <Player presentation={{}} />
   ))
+
+storiesOf('Quinoa timeline presentation', module)
+  .add('Cartel mode, navigable', () => (
+    <span>Todo</span>
+  ))
+  .add('Cartel mode, not navigable', () => (
+    <span>Todo</span>
+  ))
+  .add('Scroll mode', () => (
+    <span>Todo</span>
+  ))

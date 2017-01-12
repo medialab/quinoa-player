@@ -22,7 +22,7 @@
       ]
     }
   },
-  "views": {
+  "visualizations": {
     "f8920ce3-b77a-407e-90eb-1b1c831455fe": {
       "metadata": {
         "title": "My good view",
@@ -89,10 +89,39 @@
       },
       "title": "My second slide",
       "markdown": "A **bold** comment"
+    },
+    "582aa0bc-89d4-4c27-ad07-306e21e9e380": {
+      "id": "582aa0bc-89d4-4c27-ad07-306e21e9e380",
+      "views": {
+        "f8920ce3-b77a-407e-90eb-1b1c831455fe": {
+          "viewParameters": {
+            "zoom": 3,
+            "latitude": 4.1,
+            "longitude": 1.1
+          },
+          "viewDataMap": [
+            {
+              "inputKey": "name",
+              "outputKey": "title"
+            },
+            {
+              "inputKey": "lat",
+              "outputKey": "latitude"
+            },
+            {
+              "inputKey": "lng",
+              "outputKey": "longitude"
+            }
+          ]
+        }
+      },
+      "title": "My third slide",
+      "markdown": "A normal comment"
     }
   },
   "order": [
     "ae815661-1cff-499a-9d1a-ed550aa468f3",
-    "7001c8d8-d2db-489d-80cc-6bf11ee87689"
+    "7001c8d8-d2db-489d-80cc-6bf11ee87689",
+    "582aa0bc-89d4-4c27-ad07-306e21e9e380"
   ]
 }
