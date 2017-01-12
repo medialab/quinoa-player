@@ -41,7 +41,7 @@
                 }
             }
         },
-        "views": {
+        "visualizations": {
             "type": "object",
             "required": true,
             "keys": {

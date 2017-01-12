@@ -1,82 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import ReactMarkdown from 'react-markdown';
 
 import validate from './presentationValidator';
 
 require('./Player.scss');
 
-const renderPresentation = ({
-  presentation,
-  navigation,
-  setCurrentSlide,
-  stepSlide,
-  toggleAside,
-  gui: {
-    asideVisible
-  }
-}) => {
-  const next = () => !presentation.lastSlide && stepSlide(true);
-  const prev = () => !presentation.firstSlide && stepSlide(false);
-  return (
-    <div className="wrapper">
-      <aside className={asideVisible ? 'visible' : 'hidden'}>
-        <div className="metadata">
-          <h1>{presentation.metadata.title || 'Quinoa'}</h1>
-        </div>
-        <div className="summary">
-          <ul>
-            {presentation.order.map((id, index) => {
-            const slide = presentation.slides[id];
-            const onSlideClick = () => setCurrentSlide(id);
-            return (
-              <li onClick={onSlideClick} key={index} className={navigation.currentSlideId === id ? 'active' : 'inactive'}>
-                <h3>{slide.title}</h3>
-              </li>
-            );
-          })}
-          </ul>
-        </div>
-        <div onClick={toggleAside} className="aside-toggler" />
-      </aside>
-      { navigation.currentSlideId ?
-        <figure>
-          <div className="views-container">
-            {Object.keys(presentation.views).map(viewKey => {
-          const view = presentation.views[viewKey];
-          const viewState = presentation.slides[navigation.currentSlideId].views[viewKey];
-          return (
-            <div className="view-container" id={viewKey} key={viewKey}>
-              <div className="view-header">
-                <h3>{view.metadata.title}</h3>
-              </div>
-              <div className="view-body">
-                {JSON.stringify(viewState.viewParameters, null, 2)}
-              </div>
-            </div>
-          );
-        })}
-          </div>
-          <figcaption className="caption-container">
-            <div className="caption-header">
-              <button onClick={prev} className={presentation.firstSlide ? 'inactive' : ''}>Previous slide</button>
-            </div>
-            <div className="caption-main">
-              <div className="caption-header">
-                <h2>{presentation.slides[navigation.currentSlideId].title}</h2>
-              </div>
-              <div className="caption-content">
-                <ReactMarkdown source={presentation.slides[navigation.currentSlideId].markdown} />
-              </div>
-            </div>
-            <div className="caption-footer">
-              <button onClick={next} className={presentation.lastSlide ? 'inactive' : ''}>Next slide</button>
-            </div>
-          </figcaption>
-        </figure> : ''}
-      <div className={'aside-bg' + (asideVisible ? ' active' : ' inactive')} onClick={toggleAside} />
-    </div>
-);
-};
+import PresentationLayout from './PresentationLayout';
 
 class QuinoaPresentationPlayer extends Component {
   constructor(props) {
@@ -86,23 +14,31 @@ class QuinoaPresentationPlayer extends Component {
 
     this.setCurrentSlide = this.setCurrentSlide.bind(this);
     this.stepSlide = this.stepSlide.bind(this);
-
     this.toggleAside = this.toggleAside.bind(this);
 
-    this.status = 'waiting';
-    this.navigation = {};
-    this.gui = {
-      asideVisible: false
-    };
+    this.state = {
+      status: 'waiting',
+      navigation: {},
+      gui: {
+        asideVisible: false
+      }
+    }
 
     if (props.presentation) {
-      this.initPresentation(props.presentation);
+      const valid = validate(props.presentation);
+      if (valid) {
+        this.state.status = 'loaded';
+        this.state.presentation = props.presentation;
+      }
+   else {
+        this.state.status = 'error';
+      }
     }
   }
 
   componentDidMount() {
-    if (this.presentation) {
-      this.setCurrentSlide(this.presentation.order[0]);
+    if (this.state.presentation) {
+      this.setCurrentSlide(this.state.presentation.order[0]);
     }
   }
 
@@ -113,24 +49,39 @@ class QuinoaPresentationPlayer extends Component {
   initPresentation(presentation) {
     const valid = validate(presentation);
     if (valid) {
-      this.status = 'loaded';
-      this.presentation = presentation;
+      this.setState({
+        status: 'loaded',
+        presentation
+      });
     }
  else {
-      this.status = 'error';
+      this.setState({
+        status: 'error'
+      })
     }
   }
 
   renderComponent () {
-    if (this.presentation && this.status === 'loaded') {
-      return renderPresentation({
-        presentation: this.presentation,
-        navigation: this.navigation,
-        setCurrentSlide: this.setCurrentSlide,
-        stepSlide: this.stepSlide,
-        toggleAside: this.toggleAside,
-        gui: this.gui
-      });
+    if (this.state.presentation && this.state.status === 'loaded') {
+      return (
+        <PresentationLayout
+          presentation={this.state.presentation}
+          navigation={this.state.navigation}
+          setCurrentSlide={this.setCurrentSlide}
+          stepSlide={this.stepSlide}
+          toggleAside={this.toggleAside}
+          gui={this.state.gui}
+        />
+
+      // PresentationLayout({
+      //   presentation: this.state.presentation,
+      //   navigation: this.state.navigation,
+      //   setCurrentSlide: this.setCurrentSlide,
+      //   stepSlide: this.stepSlide,
+      //   toggleAside: this.toggleAside,
+      //   gui: this.state.gui
+      // })
+      )
     }
     else if (this.status === 'error') {
       return (<div>Oups</div>);
@@ -141,31 +92,40 @@ class QuinoaPresentationPlayer extends Component {
   }
 
   setCurrentSlide (id) {
-    if (this.presentation.slides[id]) {
-      this.navigation.currentSlideId = id;
-      this.navigation.position = this.presentation.order.indexOf(id);
-      this.navigation.firstSlide = this.navigation.position === 0;
-      this.navigation.lastSlide = this.navigation.position === this.presentation.order.length - 1;
+    if (this.state.presentation.slides[id]) {
+      this.setState({
+        navigation: {
+          ...this.state.navigation,
+          currentSlideId: id,
+          position: this.state.presentation.order.indexOf(id),
+          firstSlide: this.state.navigation.position === 0,
+          lastSlide: this.state.navigation.position === this.state.presentation.order.length - 1
+        }
+      })
       if (this.props.onSlideChange) {
         this.props.onSlideChange(id);
       }
-      this.forceUpdate();
     }
   }
 
   stepSlide (forward) {
+    let newSlidePosition;
     if (forward) {
-      this.navigation.position = this.navigation.position < this.presentation.order.length - 1 ? this.navigation.position + 1 : 0;
+      newSlidePosition = this.state.navigation.position < this.state.presentation.order.length - 1 ? this.state.navigation.position + 1 : 0;
     }
- else {
-      this.navigation.position = this.navigation.position > 0 ? this.navigation.position - 1 : this.presentation.order.length - 1;
+    else {
+      newSlidePosition = this.state.navigation.position > 0 ? this.state.navigation.position - 1 : this.state.presentation.order.length - 1;
     }
-    this.setCurrentSlide(this.presentation.order[this.navigation.position]);
+    this.setCurrentSlide(this.state.presentation.order[newSlidePosition]);
   }
 
   toggleAside () {
-    this.gui.asideVisible = !this.gui.asideVisible;
-    this.forceUpdate();
+    this.setState({
+      gui: {
+        ...this.state.gui,
+        asideVisible: !this.state.gui.asideVisible
+      }
+    })
   }
   render() {
     return (
@@ -178,7 +138,8 @@ class QuinoaPresentationPlayer extends Component {
 
 QuinoaPresentationPlayer.propTypes = {
   // presentation: PropTypes.Object,
-  allowDataExploration: PropTypes.bool // whether users can pan/zoom/navigate inside view
+  allowDataExploration: PropTypes.bool, // whether users can pan/zoom/navigate inside view
+  onSlideChange: PropTypes.func, // callback when navigation is changed
 };
 
 export default QuinoaPresentationPlayer;

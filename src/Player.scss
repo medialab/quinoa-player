@@ -1,13 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i');
+
 $gutter-small: 1rem;
 
 .quinoa-presentation-player{
-  background: yellow;
   margin: 0;
   padding: 0;
   overflow: hidden;
   width: 100%;
   height: 100%;
   position : absolute;
+  font-family: 'Source Sans Pro', sans-serif;
   .wrapper{
     aside{
       position : absolute;
@@ -30,6 +32,8 @@ $gutter-small: 1rem;
         top: $gutter-small;
         background: brown;
         z-index: 5;
+        cursor: pointer;
+        border-radius: 0 50% 50% 0;
       }
       .metadata{
         padding: $gutter-small;
@@ -57,20 +61,26 @@ $gutter-small: 1rem;
         width: 100%;
         height: 100%;
         top: 0;
-        animation: all .5s ease;
+        transition: all .5s ease;
         &.active{
           width: 80%;
           pointer-events: all;
-          background: rgba(0,0,0,.4);
+        background: rgba(0,0,0,.4);
+        cursor: pointer;
         }
       }
     figure{
       .views-container{
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
         .view-container{
+          flex: 1;
         }
       }
       .caption-container{
-        background: lightgrey;
+        background: snow;
         position: absolute;
         bottom: $gutter-small;
         right: $gutter-small;

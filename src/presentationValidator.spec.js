@@ -23,7 +23,7 @@ const validPresentations = [
       ]
     }
   },
-  views: {
+  visualizations: {
     'f8920ce3-b77a-407e-90eb-1b1c831455fe': {
       metadata: {
         title: 'My good view',
