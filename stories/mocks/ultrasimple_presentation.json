@@ -41,22 +41,22 @@
           "viewParameters": {
             "zoom": 3,
             "latitude": 2.1,
-            "longitude": 3.1
-          },
-          "viewDataMap": [
-            {
-              "inputKey": "name",
-              "outputKey": "title"
-            },
-            {
-              "inputKey": "lat",
-              "outputKey": "latitude"
-            },
-            {
-              "inputKey": "lng",
-              "outputKey": "longitude"
-            }
-          ]
+            "longitude": 3.1,
+            "viewDataMap": [
+              {
+                "inputKey": "name",
+                "outputKey": "title"
+              },
+              {
+                "inputKey": "lat",
+                "outputKey": "latitude"
+              },
+              {
+                "inputKey": "lng",
+                "outputKey": "longitude"
+              }
+            ]
+          }
         }
       },
       "title": "My first slide",
@@ -69,22 +69,22 @@
           "viewParameters": {
             "zoom": 3,
             "latitude": 5.1,
-            "longitude": 1.1
-          },
-          "viewDataMap": [
-            {
-              "inputKey": "name",
-              "outputKey": "title"
-            },
-            {
-              "inputKey": "lat",
-              "outputKey": "latitude"
-            },
-            {
-              "inputKey": "lng",
-              "outputKey": "longitude"
-            }
-          ]
+            "longitude": 1.1,
+            "viewDataMap": [
+              {
+                "inputKey": "name",
+                "outputKey": "title"
+              },
+              {
+                "inputKey": "lat",
+                "outputKey": "latitude"
+              },
+              {
+                "inputKey": "lng",
+                "outputKey": "longitude"
+              }
+            ]
+          }
         }
       },
       "title": "My second slide",
@@ -97,22 +97,22 @@
           "viewParameters": {
             "zoom": 3,
             "latitude": 4.1,
-            "longitude": 1.1
-          },
-          "viewDataMap": [
-            {
-              "inputKey": "name",
-              "outputKey": "title"
-            },
-            {
-              "inputKey": "lat",
-              "outputKey": "latitude"
-            },
-            {
-              "inputKey": "lng",
-              "outputKey": "longitude"
-            }
-          ]
+            "longitude": 1.1,
+            "viewDataMap": [
+                {
+                  "inputKey": "name",
+                  "outputKey": "title"
+                },
+                {
+                  "inputKey": "lat",
+                  "outputKey": "latitude"
+                },
+                {
+                  "inputKey": "lng",
+                  "outputKey": "longitude"
+                }
+              ]
+          }
         }
       },
       "title": "My third slide",

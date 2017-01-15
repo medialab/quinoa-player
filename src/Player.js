@@ -16,24 +16,26 @@ class QuinoaPresentationPlayer extends Component {
     this.stepSlide = this.stepSlide.bind(this);
     this.toggleAside = this.toggleAside.bind(this);
 
-    this.state = {
+    const initialState = {
       status: 'waiting',
       navigation: {},
       gui: {
         asideVisible: false
       }
-    }
+    };
 
     if (props.presentation) {
       const valid = validate(props.presentation);
       if (valid) {
-        this.state.status = 'loaded';
-        this.state.presentation = props.presentation;
+        initialState.status = 'loaded';
+        initialState.presentation = props.presentation;
       }
    else {
-        this.state.status = 'error';
+        initialState.status = 'error';
       }
     }
+
+    this.state = initialState;
   }
 
   componentDidMount() {
@@ -57,7 +59,7 @@ class QuinoaPresentationPlayer extends Component {
  else {
       this.setState({
         status: 'error'
-      })
+      });
     }
   }
 
@@ -70,8 +72,7 @@ class QuinoaPresentationPlayer extends Component {
           setCurrentSlide={this.setCurrentSlide}
           stepSlide={this.stepSlide}
           toggleAside={this.toggleAside}
-          gui={this.state.gui}
-        />
+          gui={this.state.gui} />
 
       // PresentationLayout({
       //   presentation: this.state.presentation,
@@ -81,7 +82,7 @@ class QuinoaPresentationPlayer extends Component {
       //   toggleAside: this.toggleAside,
       //   gui: this.state.gui
       // })
-      )
+      );
     }
     else if (this.status === 'error') {
       return (<div>Oups</div>);
@@ -101,7 +102,7 @@ class QuinoaPresentationPlayer extends Component {
           firstSlide: this.state.navigation.position === 0,
           lastSlide: this.state.navigation.position === this.state.presentation.order.length - 1
         }
-      })
+      });
       if (this.props.onSlideChange) {
         this.props.onSlideChange(id);
       }
@@ -125,7 +126,7 @@ class QuinoaPresentationPlayer extends Component {
         ...this.state.gui,
         asideVisible: !this.state.gui.asideVisible
       }
-    })
+    });
   }
   render() {
     return (

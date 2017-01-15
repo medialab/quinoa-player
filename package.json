@@ -48,14 +48,12 @@
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "csscomb": "^3.1.7",
-    "enzyme": "^2.4.1",
     "eslint": "^3.7.1",
     "eslint-plugin-react": "^6.3.0",
     "file-loader": "^0.9.0",
     "mocha": "^3.1.0",
     "node-sass": "^3.8.0",
     "pre-commit": "^1.1.3",
-    "react-addons-test-utils": "^15.3.2",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "@kadira/storybook": "^2.21.0"
@@ -77,6 +75,9 @@
       "@yomguithereal/eslint-config/es7",
       "@yomguithereal/eslint-config/react"
     ],
+    "rules": {
+      "react/no-set-state": 0
+    },
     "globals": {
       "sigma": true
     }

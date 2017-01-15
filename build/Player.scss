@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i');
+
+$gutter-small: 1rem;
+
+.quinoa-presentation-player{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position : absolute;
+  font-family: 'Source Sans Pro', sans-serif;
+  .wrapper{
+    aside{
+      position : absolute;
+      background: white;
+      margin: 0;
+      padding: 0;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 20%;
+      &.hidden{
+        left: -20%;
+      }
+      transition: all .5s ease;
+      .aside-toggler{
+        position : absolute;
+        width: 20px;
+        height: 20px;
+        right : -20px;
+        top: $gutter-small;
+        background: brown;
+        z-index: 5;
+        cursor: pointer;
+        border-radius: 0 50% 50% 0;
+      }
+      .metadata{
+        padding: $gutter-small;
+      }
+      .summary{
+        padding: $gutter-small;
+        ul{
+          padding: 0;
+          li{
+            margin: 0;
+            list-style-type: none;
+            cursor: pointer;
+            &.active{
+              color: brown;
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+    .aside-bg{
+        position : absolute;
+        pointer-events: none;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        transition: all .5s ease;
+        &.active{
+          width: 80%;
+          pointer-events: all;
+        background: rgba(0,0,0,.4);
+        cursor: pointer;
+        }
+      }
+    figure{
+      .views-container{
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
+        .view-container{
+          flex: 1;
+        }
+      }
+      .caption-container{
+        background: snow;
+        position: absolute;
+        bottom: $gutter-small;
+        right: $gutter-small;
+        min-width: 20%;
+        max-height: 100%;
+        padding: $gutter-small;
+        .caption-header,
+        .caption-footer{
+          min-height: $gutter-small;
+        }
+        .caption-content{
+
+        }
+      }
+    }
+  }
+}

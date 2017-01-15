@@ -76,6 +76,3 @@ const PresentationLayout = ({
 
 export default PresentationLayout;
 
-
-
-
