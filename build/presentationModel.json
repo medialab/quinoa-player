@@ -8,6 +8,14 @@
                 "title": {
                     "type": "string",
                     "required": false
+                },
+                "description": {
+                    "type": "string",
+                    "required": false
+                },
+                "authors": {
+                    "type": "array",
+                    "required": false
                 }
             }
         },
@@ -24,6 +32,22 @@
                             "required": true,
                             "keys": {
                                 "title": {
+                                    "type": "string",
+                                    "required": false
+                                },
+                                "authors": {
+                                    "type": "array",
+                                    "required": false
+                                },
+                                "url": {
+                                    "type": "string",
+                                    "required": false
+                                },
+                                "description": {
+                                    "type": "string",
+                                    "required": false
+                                },
+                                "license": {
                                     "type": "string",
                                     "required": false
                                 },
@@ -106,22 +130,11 @@
                                     "keys": {
                                         "viewParameters": {
                                             "type": "object",
-                                            "required": true
-                                        },
-                                        "viewDataMap": {
-                                            "type": "array",
                                             "required": true,
-                                            "children": {
-                                                "type": "object",
-                                                "keys": {
-                                                    "inputKey": {
-                                                        "type": "string",
-                                                        "required": true
-                                                    },
-                                                    "outputKey": {
-                                                        "type": "string",
-                                                        "required": true
-                                                    }
+                                            "keys": {
+                                                "viewDataMap": {
+                                                    "type": "object",
+                                                    "required": true
                                                 }
                                             }
                                         }

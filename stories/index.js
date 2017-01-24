@@ -11,16 +11,6 @@ storiesOf('Welcome', module)
     <Welcome showApp={linkTo('Button')}/>
   ));
 
-/*
-storiesOf('Button', module)
-  .add('with text', () => (
-    <Button onClick={action('clicked')}>Hello Button</Button>
-  ))
-  .add('with some emoji', () => (
-    <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>
-  ));
-*/
-
 storiesOf('Quinoa presentation player', module)
   .add('with very simple presentation', () => (
     <Player presentation={ultrasimple} />
@@ -30,11 +20,15 @@ storiesOf('Quinoa presentation player', module)
   ))
   .add('with invalid data', () => (
     <Player presentation={{}} />
-  ))
+  ));
 
-storiesOf('Quinoa timeline presentation', module)
+
+import mapPresentation from './map/simple-map-presentation.json';
+storiesOf('Quinoa map presentation', module)
   .add('Cartel mode, navigable', () => (
-    <span>Todo</span>
+    <Player 
+      presentation={mapPresentation} 
+    />
   ))
   .add('Cartel mode, not navigable', () => (
     <span>Todo</span>

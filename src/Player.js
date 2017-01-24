@@ -1,6 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 
-import validate from './presentationValidator';
+// import validate from './presentationValidator';
+
+import {
+  mapMapData,
+  mapTimelineData,
+  mapNetworkData
+} from 'quinoa-vis-modules';
 
 require('./Player.scss');
 
@@ -15,24 +21,29 @@ class QuinoaPresentationPlayer extends Component {
     this.setCurrentSlide = this.setCurrentSlide.bind(this);
     this.stepSlide = this.stepSlide.bind(this);
     this.toggleAside = this.toggleAside.bind(this);
+    this.resetView = this.resetView.bind(this);
+    this.onUserViewChange = this.onUserViewChange.bind(this);
 
     const initialState = {
       status: 'waiting',
       navigation: {},
       gui: {
         asideVisible: false
-      }
+      },
+      datasets: {},
+      activeViewsParameters: {}
     };
 
     if (props.presentation) {
-      const valid = validate(props.presentation);
-      if (valid) {
+      // const valid = validate(props.presentation);
+      // console.log(valid);
+      // if (valid) {
         initialState.status = 'loaded';
         initialState.presentation = props.presentation;
-      }
-   else {
-        initialState.status = 'error';
-      }
+      // }
+   // else {
+        // initialState.status = 'error';
+      // }
     }
 
     this.state = initialState;
@@ -48,44 +59,113 @@ class QuinoaPresentationPlayer extends Component {
     return true;
   }
 
-  initPresentation(presentation) {
-    const valid = validate(presentation);
-    if (valid) {
+  componentWillUpdate(nextProps, nextState) {
+    const slide = nextState.currentSlide;
+    const previousSlide = this.state.currentSlide;
+
+    const slideParamsMark = slide && Object.keys(slide.views).map(viewKey => slide.views[viewKey] && slide.views[viewKey].viewParameters && slide.views[viewKey].viewParameters.viewDataMap);
+    const previousSlideParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.viewDataMap);
+    if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
+      const datasets = {};
+      Object.keys(slide.views).map(viewKey => {
+        const viewDataMap = slide.views[viewKey].viewDataMap;
+        const visualization = this.state.presentation.visualizations[viewKey];
+        const visType = visualization.metadata.visualizationType;
+        let dataset = this.state.presentation.datasets[visualization.datasets[0]];
+        dataset = dataset && dataset.data;
+        let mappedData;
+        switch (visType) {
+          case 'map':
+            mappedData = mapMapData(dataset, viewDataMap);
+            break;
+          case 'timeline':
+            mappedData = mapTimelineData(dataset, viewDataMap);
+            break;
+          case 'network':
+            mappedData = mapNetworkData(dataset, viewDataMap);
+            break;
+          default:
+            break;
+        }
+        datasets[viewKey] = mappedData;
+      });
       this.setState({
-        status: 'loaded',
-        presentation
+        datasets
       });
     }
- else {
+    const slideViewParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey]);
+    const activeViewParamsMark = Object.keys(slide.views).map(viewKey => this.state.activeViewsParameters[viewKey]);
+    if (previousSlide && JSON.stringify(slideViewParamsMark) !== JSON.stringify(activeViewParamsMark) && !this.state.viewDifferentFromSlide) {
       this.setState({
-        status: 'error'
+        viewDifferentFromSlide: true
       });
     }
   }
 
+  onUserViewChange (viewKey, viewParameters) {
+    this.setState({
+      activeViewsParameters: {
+        ...this.state.activeViews,
+        [viewKey]: {viewParameters}
+      }
+    });
+  }
+
+  resetView() {
+    const slide = this.state.currentSlide;
+    if (slide) {
+      const activeViewsParameters = Object.keys(slide.views).reduce((result, viewKey) => {
+          return {
+            ...result,
+            [viewKey]: {viewParameters: slide.views[viewKey].viewParameters}
+          };
+        }, {});
+      this.setState({
+        activeViewsParameters,
+        viewDifferentFromSlide: false
+      });
+    }
+  }
+
+  initPresentation(presentation) {
+    // const valid = validate(presentation);
+    // if (valid) {
+      this.setState({
+        status: 'loaded',
+        presentation
+      });
+ //    }
+ // else {
+ //      this.setState({
+ //        status: 'error'
+ //      });
+ //    }
+  }
+
   renderComponent () {
+    const {
+      options = {}
+    } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
       return (
         <PresentationLayout
+          currentSlide={this.state.currentSlide}
+          activeViewsParameters={this.state.activeViewsParameters}
+          viewDifferentFromSlide={this.state.viewDifferentFromSlide}
+          datasets={this.state.datasets}
           presentation={this.state.presentation}
           navigation={this.state.navigation}
           setCurrentSlide={this.setCurrentSlide}
           stepSlide={this.stepSlide}
           toggleAside={this.toggleAside}
-          gui={this.state.gui} />
-
-      // PresentationLayout({
-      //   presentation: this.state.presentation,
-      //   navigation: this.state.navigation,
-      //   setCurrentSlide: this.setCurrentSlide,
-      //   stepSlide: this.stepSlide,
-      //   toggleAside: this.toggleAside,
-      //   gui: this.state.gui
-      // })
+          gui={this.state.gui}
+          options={options}
+          resetView={this.resetView}
+          onUserViewChange={this.onUserViewChange} />
       );
     }
     else if (this.status === 'error') {
-      return (<div>Oups</div>);
+      return (<div>Oups, that looks like an error</div>);
     }
  else {
       return (<div>No data yet</div>);
@@ -93,8 +173,18 @@ class QuinoaPresentationPlayer extends Component {
   }
 
   setCurrentSlide (id) {
-    if (this.state.presentation.slides[id]) {
+    const slide = this.state.presentation.slides[id];
+    if (slide) {
+      const activeViewsParameters = Object.keys(slide.views).reduce((result, viewKey) => {
+          return {
+            ...result,
+            [viewKey]: {viewParameters: slide.views[viewKey].viewParameters}
+          };
+        }, {});
       this.setState({
+        currentSlide: slide,
+        viewDifferentFromSlide: false,
+        activeViewsParameters,
         navigation: {
           ...this.state.navigation,
           currentSlideId: id,
@@ -139,7 +229,9 @@ class QuinoaPresentationPlayer extends Component {
 
 QuinoaPresentationPlayer.propTypes = {
   // presentation: PropTypes.Object,
-  allowDataExploration: PropTypes.bool, // whether users can pan/zoom/navigate inside view
+  options: PropTypes.shape({
+    allowViewExploration: PropTypes.bool // whether users can pan/zoom/navigate inside view
+  }),
   onSlideChange: PropTypes.func, // callback when navigation is changed
 };
 

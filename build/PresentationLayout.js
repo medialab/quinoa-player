@@ -12,15 +12,25 @@ var _reactMarkdown = require('react-markdown');
 
 var _reactMarkdown2 = _interopRequireDefault(_reactMarkdown);
 
+var _quinoaVisModules = require('quinoa-vis-modules');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PresentationLayout = function PresentationLayout(_ref) {
-  var presentation = _ref.presentation,
+  var currentSlide = _ref.currentSlide,
+      activeViewsParameters = _ref.activeViewsParameters,
+      viewDifferentFromSlide = _ref.viewDifferentFromSlide,
+      datasets = _ref.datasets,
+      presentation = _ref.presentation,
       navigation = _ref.navigation,
       setCurrentSlide = _ref.setCurrentSlide,
       stepSlide = _ref.stepSlide,
       toggleAside = _ref.toggleAside,
-      asideVisible = _ref.gui.asideVisible;
+      asideVisible = _ref.gui.asideVisible,
+      _ref$options$allowVie = _ref.options.allowViewExploration,
+      allowViewExploration = _ref$options$allowVie === undefined ? true : _ref$options$allowVie,
+      onUserViewChange = _ref.onUserViewChange,
+      resetView = _ref.resetView;
 
   var next = function next() {
     return !presentation.lastSlide && stepSlide(true);
@@ -68,7 +78,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
       ),
       _react2.default.createElement('div', { onClick: toggleAside, className: 'aside-toggler' })
     ),
-    navigation.currentSlideId ? _react2.default.createElement(
+    currentSlide ? _react2.default.createElement(
       'figure',
       null,
       _react2.default.createElement(
@@ -76,25 +86,49 @@ var PresentationLayout = function PresentationLayout(_ref) {
         { className: 'views-container' },
         Object.keys(presentation.visualizations).map(function (viewKey) {
           var visualization = presentation.visualizations[viewKey];
-          var viewState = presentation.slides[navigation.currentSlideId].views[viewKey];
-          return _react2.default.createElement(
-            'div',
-            { className: 'view-container', id: viewKey, key: viewKey },
-            _react2.default.createElement(
+          var visType = visualization.metadata.visualizationType;
+          var dataset = datasets[viewKey];
+          var Component = _react2.default.createElement('span', null);
+          switch (visType) {
+            case 'timeline':
+              Component = _quinoaVisModules.Timeline;
+              break;
+            case 'map':
+              Component = _quinoaVisModules.Map;
+              break;
+            case 'network':
+              Component = _quinoaVisModules.Network;
+              break;
+            default:
+              break;
+          }
+          if (dataset) {
+            var onViewChange = function onViewChange(e) {
+              onUserViewChange(viewKey, e.viewParameters);
+            };
+            return _react2.default.createElement(
               'div',
-              { className: 'view-header' },
+              { className: 'view-container', id: viewKey, key: viewKey },
               _react2.default.createElement(
-                'h3',
-                null,
-                visualization.metadata.title
+                'div',
+                { className: 'view-header' },
+                _react2.default.createElement(
+                  'h3',
+                  null,
+                  visualization.metadata.title
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'view-body' },
+                _react2.default.createElement(Component, {
+                  data: dataset,
+                  viewParameters: activeViewsParameters[viewKey].viewParameters,
+                  allowUserViewChange: allowViewExploration,
+                  onUserViewChange: onViewChange })
               )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'view-body' },
-              JSON.stringify(viewState.viewParameters, null, 2)
-            )
-          );
+            );
+          }
         })
       ),
       _react2.default.createElement(
@@ -130,6 +164,11 @@ var PresentationLayout = function PresentationLayout(_ref) {
         _react2.default.createElement(
           'div',
           { className: 'caption-footer' },
+          viewDifferentFromSlide ? _react2.default.createElement(
+            'button',
+            { onClick: resetView },
+            'Reset'
+          ) : '',
           _react2.default.createElement(
             'button',
             { onClick: next, className: presentation.lastSlide ? 'inactive' : '' },
