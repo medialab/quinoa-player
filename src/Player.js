@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 
-// import validate from './presentationValidator';
-
 import {
   mapMapData,
   mapTimelineData,
@@ -35,15 +33,8 @@ class QuinoaPresentationPlayer extends Component {
     };
 
     if (props.presentation) {
-      // const valid = validate(props.presentation);
-      // console.log(valid);
-      // if (valid) {
         initialState.status = 'loaded';
         initialState.presentation = props.presentation;
-      // }
-   // else {
-        // initialState.status = 'error';
-      // }
     }
 
     this.state = initialState;
@@ -68,11 +59,23 @@ class QuinoaPresentationPlayer extends Component {
     if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
       const datasets = {};
       Object.keys(slide.views).map(viewKey => {
-        const viewDataMap = slide.views[viewKey].viewDataMap;
+        const view = slide.views[viewKey];
+        const viewDataMap = Object.keys(view.dataMap).reduce((result, collectionId) => ({
+          ...result,
+          [collectionId]: Object.keys(view.dataMap[collectionId]).reduce((propsMap, parameterId) => {
+            const parameter = view.dataMap[collectionId][parameterId];
+            if (parameter.mappedField) {
+              return {
+                ...propsMap,
+                [parameterId]: parameter.mappedField
+              };
+            }
+            return propsMap;
+          }, {})
+        }), {});
         const visualization = this.state.presentation.visualizations[viewKey];
         const visType = visualization.metadata.visualizationType;
-        let dataset = this.state.presentation.datasets[visualization.datasets[0]];
-        dataset = dataset && dataset.data;
+        const dataset = visualization.data;
         let mappedData;
         switch (visType) {
           case 'map':
@@ -234,5 +237,6 @@ QuinoaPresentationPlayer.propTypes = {
   }),
   onSlideChange: PropTypes.func, // callback when navigation is changed
 };
+
 
 export default QuinoaPresentationPlayer;

@@ -1,6 +1,10 @@
 {
     "type": "object",
     "keys": {
+        "id": {
+            "type": "string",
+            "required": true
+        },
         "metadata": {
             "type": "object",
             "required": true,
@@ -16,6 +20,9 @@
                 "authors": {
                     "type": "array",
                     "required": false
+                },
+                "gistId": {
+                    "type": "string"
                 }
             }
         },
