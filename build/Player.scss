@@ -7,6 +7,8 @@ $gutter-small: 1rem;
     font-family: 'Source Sans Pro', sans-serif;
 
     position: absolute;
+    top: 0;
+    left: 0;
 
     overflow: hidden;
 
@@ -23,6 +25,8 @@ $gutter-small: 1rem;
             top: 0;
             left: 0;
 
+            display: flex;
+
             width: 20%;
             height: 100%;
             margin: 0;
@@ -31,6 +35,17 @@ $gutter-small: 1rem;
             transition: all .5s ease;
 
             background: white;
+
+            flex-flow: column nowrap;
+            align-items: stretch;
+
+            h1,
+            h2,
+            h3
+            {
+                margin: 0;
+            }
+
             &.hidden
             {
                 left: -20%;
@@ -50,13 +65,15 @@ $gutter-small: 1rem;
                 border-radius: 0 50% 50% 0;
                 background: brown;
             }
-            .metadata
+            .aside-group
             {
+                overflow: 1;
+
                 padding: $gutter-small;
             }
             .summary
             {
-                padding: $gutter-small;
+                flex: 3;
                 ul
                 {
                     padding: 0;
@@ -127,6 +144,44 @@ $gutter-small: 1rem;
                 .caption-footer
                 {
                     min-height: $gutter-small;
+                }
+
+                .legend-container
+                {
+                    overflow-y: auto;
+
+                    max-height: 10rem;
+                    .view-legend
+                    {
+                        .collection-legend
+                        {
+                            .legend-group
+                            {
+                                margin: 0;
+                                padding: 0;
+                                .legend-item
+                                {
+                                    display: flex;
+
+                                    margin: 0;
+
+                                    list-style-type: none;
+
+                                    flex-flow: row nowrap;
+                                    .color
+                                    {
+                                        width: 1rem;
+                                        height: 1rem;
+                                        margin-right: 1rem;
+                                    }
+                                    .category
+                                    {
+                                        flex: 5;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

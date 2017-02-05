@@ -41,43 +41,6 @@ var PresentationLayout = function PresentationLayout(_ref) {
   return _react2.default.createElement(
     'div',
     { className: 'wrapper' },
-    _react2.default.createElement(
-      'aside',
-      { className: asideVisible ? 'visible' : 'hidden' },
-      _react2.default.createElement(
-        'div',
-        { className: 'metadata' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          presentation.metadata.title || 'Quinoa'
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'summary' },
-        _react2.default.createElement(
-          'ul',
-          null,
-          presentation.order.map(function (id, index) {
-            var slide = presentation.slides[id];
-            var onSlideClick = function onSlideClick() {
-              return setCurrentSlide(id);
-            };
-            return _react2.default.createElement(
-              'li',
-              { onClick: onSlideClick, key: index, className: navigation.currentSlideId === id ? 'active' : 'inactive' },
-              _react2.default.createElement(
-                'h3',
-                null,
-                slide.title
-              )
-            );
-          })
-        )
-      ),
-      _react2.default.createElement('div', { onClick: toggleAside, className: 'aside-toggler' })
-    ),
     currentSlide ? _react2.default.createElement(
       'figure',
       null,
@@ -136,6 +99,48 @@ var PresentationLayout = function PresentationLayout(_ref) {
         { className: 'caption-container' },
         _react2.default.createElement(
           'div',
+          { className: 'legend-container' },
+          Object.keys(presentation.slides[navigation.currentSlideId].views).map(function (viewId) {
+            return _react2.default.createElement(
+              'div',
+              { key: viewId, className: 'view-legend' },
+              Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap).filter(function (collectionId) {
+                return collectionId !== 'default';
+              }).map(function (collectionId) {
+                return _react2.default.createElement(
+                  'div',
+                  { className: 'collection-legend', key: collectionId },
+                  Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap).length > 2 ? _react2.default.createElement(
+                    'h4',
+                    null,
+                    collectionId
+                  ) : null,
+                  _react2.default.createElement(
+                    'ul',
+                    { className: 'legend-group' },
+                    Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId]).map(function (category) {
+                      return _react2.default.createElement(
+                        'li',
+                        { className: 'legend-item', key: category },
+                        _react2.default.createElement('span', { className: 'color',
+                          style: {
+                            background: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId][category]
+                          } }),
+                        _react2.default.createElement(
+                          'span',
+                          { className: 'category' },
+                          category
+                        )
+                      );
+                    })
+                  )
+                );
+              })
+            );
+          })
+        ),
+        _react2.default.createElement(
+          'div',
           { className: 'caption-header' },
           _react2.default.createElement(
             'button',
@@ -177,6 +182,90 @@ var PresentationLayout = function PresentationLayout(_ref) {
         )
       )
     ) : '',
+    _react2.default.createElement(
+      'aside',
+      { className: asideVisible ? 'visible' : 'hidden' },
+      _react2.default.createElement(
+        'div',
+        { className: 'metadata aside-group' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          presentation.metadata.title || 'Quinoa'
+        ),
+        presentation.metadata.authors && presentation.metadata.authors.length ? _react2.default.createElement(
+          'p',
+          { className: 'authors-container' },
+          'By ',
+          presentation.metadata.authors.join(', ')
+        ) : null,
+        presentation.metadata.description ? _react2.default.createElement(
+          'p',
+          { className: 'description-container' },
+          presentation.metadata.description
+        ) : null
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'summary aside-group' },
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Summary'
+        ),
+        _react2.default.createElement(
+          'ul',
+          null,
+          presentation.order.map(function (id, index) {
+            var slide = presentation.slides[id];
+            var onSlideClick = function onSlideClick() {
+              return setCurrentSlide(id);
+            };
+            return _react2.default.createElement(
+              'li',
+              { onClick: onSlideClick, key: index, className: navigation.currentSlideId === id ? 'active' : 'inactive' },
+              _react2.default.createElement(
+                'h3',
+                null,
+                slide.title
+              )
+            );
+          })
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'datasets aside-group' },
+        _react2.default.createElement(
+          'h2',
+          null,
+          'About data'
+        ),
+        Object.keys(presentation.datasets).map(function (dataKey) {
+          return _react2.default.createElement(
+            'div',
+            { key: dataKey },
+            _react2.default.createElement(
+              'h3',
+              null,
+              presentation.datasets[dataKey].metadata.title
+            ),
+            presentation.datasets[dataKey].metadata.description ? _react2.default.createElement(
+              'p',
+              { className: 'dataset-description' },
+              presentation.datasets[dataKey].metadata.description
+            ) : null,
+            presentation.datasets[dataKey].metadata.license ? _react2.default.createElement(
+              'p',
+              { className: 'dataset-license' },
+              'License : ',
+              presentation.datasets[dataKey].metadata.license
+            ) : null
+          );
+        })
+      ),
+      _react2.default.createElement('div', { onClick: toggleAside, className: 'aside-toggler' })
+    ),
     _react2.default.createElement('div', { className: 'aside-bg' + (asideVisible ? ' active' : ' inactive'), onClick: toggleAside })
   );
 };

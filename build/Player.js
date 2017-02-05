@@ -28,8 +28,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// import validate from './presentationValidator';
-
 require('./Player.scss');
 
 var QuinoaPresentationPlayer = function (_Component) {
@@ -60,15 +58,8 @@ var QuinoaPresentationPlayer = function (_Component) {
     };
 
     if (props.presentation) {
-      // const valid = validate(props.presentation);
-      // console.log(valid);
-      // if (valid) {
       initialState.status = 'loaded';
       initialState.presentation = props.presentation;
-      // }
-      // else {
-      // initialState.status = 'error';
-      // }
     }
 
     _this.state = initialState;
@@ -105,11 +96,19 @@ var QuinoaPresentationPlayer = function (_Component) {
         (function () {
           var datasets = {};
           Object.keys(slide.views).map(function (viewKey) {
-            var viewDataMap = slide.views[viewKey].viewDataMap;
+            var view = slide.views[viewKey];
+            var viewDataMap = Object.keys(view.dataMap).reduce(function (result, collectionId) {
+              return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
+                var parameter = view.dataMap[collectionId][parameterId];
+                if (parameter.mappedField) {
+                  return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
+                }
+                return propsMap;
+              }, {})));
+            }, {});
             var visualization = _this2.state.presentation.visualizations[viewKey];
             var visType = visualization.metadata.visualizationType;
-            var dataset = _this2.state.presentation.datasets[visualization.datasets[0]];
-            dataset = dataset && dataset.data;
+            var dataset = visualization.data;
             var mappedData = void 0;
             switch (visType) {
               case 'map':
