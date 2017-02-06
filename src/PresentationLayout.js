@@ -10,7 +10,7 @@ import {
 const PresentationLayout = ({
   currentSlide,
   activeViewsParameters,
-  viewDifferentFromSlide,
+  // viewDifferentFromSlide,
   datasets,
   presentation,
   navigation,
@@ -24,7 +24,7 @@ const PresentationLayout = ({
     allowViewExploration = true
   },
   onUserViewChange,
-  resetView
+  // resetView
 }) => {
   const next = () => !presentation.lastSlide && stepSlide(true);
   const prev = () => !presentation.firstSlide && stepSlide(false);
@@ -122,7 +122,7 @@ const PresentationLayout = ({
               </div>
             </div>
             <div className="caption-footer">
-              {viewDifferentFromSlide ? <button onClick={resetView}>Reset</button> : ''}
+              {/*viewDifferentFromSlide ? <button onClick={resetView}>Reset</button> : ''*/}
               <button onClick={next} className={presentation.lastSlide ? 'inactive' : ''}>Next slide</button>
             </div>
           </figcaption>

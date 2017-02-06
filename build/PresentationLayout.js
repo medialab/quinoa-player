@@ -19,7 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var PresentationLayout = function PresentationLayout(_ref) {
   var currentSlide = _ref.currentSlide,
       activeViewsParameters = _ref.activeViewsParameters,
-      viewDifferentFromSlide = _ref.viewDifferentFromSlide,
       datasets = _ref.datasets,
       presentation = _ref.presentation,
       navigation = _ref.navigation,
@@ -29,8 +28,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
       asideVisible = _ref.gui.asideVisible,
       _ref$options$allowVie = _ref.options.allowViewExploration,
       allowViewExploration = _ref$options$allowVie === undefined ? true : _ref$options$allowVie,
-      onUserViewChange = _ref.onUserViewChange,
-      resetView = _ref.resetView;
+      onUserViewChange = _ref.onUserViewChange;
 
   var next = function next() {
     return !presentation.lastSlide && stepSlide(true);
@@ -169,11 +167,6 @@ var PresentationLayout = function PresentationLayout(_ref) {
         _react2.default.createElement(
           'div',
           { className: 'caption-footer' },
-          viewDifferentFromSlide ? _react2.default.createElement(
-            'button',
-            { onClick: resetView },
-            'Reset'
-          ) : '',
           _react2.default.createElement(
             'button',
             { onClick: next, className: presentation.lastSlide ? 'inactive' : '' },
