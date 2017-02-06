@@ -24,7 +24,6 @@ const PresentationLayout = ({
   options: {
     allowViewExploration = true
   },
-  onTopKeyPress,
   onUserViewChange,
   // resetView
 }) => {

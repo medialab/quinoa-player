@@ -7,7 +7,6 @@ $color-background: white;
 .quinoa-presentation-player
 {
     font-family: 'Source Sans Pro', sans-serif;
-
     font-size: .8rem;
 
     position: absolute;
@@ -28,7 +27,6 @@ $color-background: white;
             z-index: 10000;
             top: 0;
             left: 0;
-
             // display: flex;
 
             width: 20%;
@@ -43,6 +41,7 @@ $color-background: white;
             .player-aside-contents
             {
                 overflow: auto;
+
                 height: 100%;
             }
 
@@ -83,7 +82,8 @@ $color-background: white;
 
                 margin: $gutter-small;
 
-                &:not(.datasets){
+                &:not(.datasets)
+                {
                     border-bottom: 1px solid $color-primary;
                 }
             }
@@ -95,20 +95,21 @@ $color-background: white;
                     padding: 0;
                     li
                     {
+                        font-size: .9rem;
+                        font-weight: 400;
+                        font-style: italic;
+
                         margin: 0;
                         margin-left: 1.1rem;
 
                         list-style-type: circle;
 
                         cursor: pointer;
-
-                        font-weight: 400;
-                        font-style: italic;
-                        font-size: .9rem;
                         &.active
                         {
-                            cursor: default;
                             list-style-type: disc;
+
+                            cursor: default;
 
                             color: brown;
                         }
