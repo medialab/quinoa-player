@@ -143,7 +143,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
           _react2.default.createElement(
             'button',
             { onClick: prev, className: presentation.firstSlide ? 'inactive' : '' },
-            'Previous slide'
+            '\u25B3 Previous slide'
           )
         ),
         _react2.default.createElement(
@@ -170,14 +170,14 @@ var PresentationLayout = function PresentationLayout(_ref) {
           _react2.default.createElement(
             'button',
             { onClick: next, className: presentation.lastSlide ? 'inactive' : '' },
-            'Next slide'
+            '\u25BD Next slide'
           )
         )
       )
     ) : '',
     _react2.default.createElement(
       'aside',
-      { className: asideVisible ? 'visible' : 'hidden' },
+      { className: 'player-aside ' + (asideVisible ? 'visible' : 'hidden') },
       _react2.default.createElement(
         'div',
         { className: 'metadata aside-group' },

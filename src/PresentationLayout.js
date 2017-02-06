@@ -111,7 +111,7 @@ const PresentationLayout = ({
               }
             </div>
             <div className="caption-header">
-              <button onClick={prev} className={presentation.firstSlide ? 'inactive' : ''}>Previous slide</button>
+              <button onClick={prev} className={presentation.firstSlide ? 'inactive' : ''}>△ Previous slide</button>
             </div>
             <div className="caption-main">
               <div className="caption-header">
@@ -123,11 +123,11 @@ const PresentationLayout = ({
             </div>
             <div className="caption-footer">
               {/*viewDifferentFromSlide ? <button onClick={resetView}>Reset</button> : ''*/}
-              <button onClick={next} className={presentation.lastSlide ? 'inactive' : ''}>Next slide</button>
+              <button onClick={next} className={presentation.lastSlide ? 'inactive' : ''}>▽ Next slide</button>
             </div>
           </figcaption>
         </figure> : ''}
-      <aside className={asideVisible ? 'visible' : 'hidden'}>
+      <aside className={'player-aside ' + (asideVisible ? 'visible' : 'hidden')}>
         <div className="metadata aside-group">
           <h1>{presentation.metadata.title || 'Quinoa'}</h1>
           {
