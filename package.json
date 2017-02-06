@@ -32,6 +32,7 @@
     "quinoa-vis-modules": "git+https://github.com/medialab/quinoa-vis-modules.git",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-key-handler": "^0.3.0",
     "react-markdown": "^2.4.2"
   },
   "devDependencies": {

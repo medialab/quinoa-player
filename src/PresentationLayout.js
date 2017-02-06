@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import KeyHandler, {KEYDOWN} from 'react-key-handler';
 
 import {
   Timeline,
@@ -23,6 +24,7 @@ const PresentationLayout = ({
   options: {
     allowViewExploration = true
   },
+  onTopKeyPress,
   onUserViewChange,
   // resetView
 }) => {
@@ -128,27 +130,28 @@ const PresentationLayout = ({
           </figcaption>
         </figure> : ''}
       <aside className={'player-aside ' + (asideVisible ? 'visible' : 'hidden')}>
-        <div className="metadata aside-group">
-          <h1>{presentation.metadata.title || 'Quinoa'}</h1>
-          {
+        <div className="player-aside-contents">
+          <div className="metadata aside-group">
+            <h1>{presentation.metadata.title || 'Quinoa'}</h1>
+            {
             presentation.metadata.authors && presentation.metadata.authors.length ?
               <p className="authors-container">
                 By {presentation.metadata.authors.join(', ')}
               </p>
             : null
           }
-          {
+            {
             presentation.metadata.description ?
               <p className="description-container">
                 {presentation.metadata.description}
               </p>
             : null
           }
-        </div>
-        <div className="summary aside-group">
-          <h2>Summary</h2>
-          <ul>
-            {presentation.order.map((id, index) => {
+          </div>
+          <div className="summary aside-group">
+            <h2>Presentation summary</h2>
+            <ul>
+              {presentation.order.map((id, index) => {
             const slide = presentation.slides[id];
             const onSlideClick = () => setCurrentSlide(id);
             return (
@@ -157,11 +160,11 @@ const PresentationLayout = ({
               </li>
             );
           })}
-          </ul>
-        </div>
-        <div className="datasets aside-group">
-          <h2>About data</h2>
-          {
+            </ul>
+          </div>
+          <div className="datasets aside-group">
+            <h2>About the data</h2>
+            {
             Object.keys(presentation.datasets)
             .map(dataKey => (
               <div key={dataKey}>
@@ -171,10 +174,15 @@ const PresentationLayout = ({
               </div>
             ))
           }
+          </div>
         </div>
         <div onClick={toggleAside} className="aside-toggler" />
       </aside>
       <div className={'aside-bg' + (asideVisible ? ' active' : ' inactive')} onClick={toggleAside} />
+      <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowUp" onKeyHandle={prev} />
+      <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowDown" onKeyHandle={next} />
+      <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowRight" onKeyHandle={toggleAside} />
+      <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowLeft" onKeyHandle={toggleAside} />
     </div>
   );
 };
