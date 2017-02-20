@@ -158,10 +158,11 @@ $color-background: white;
                 right: $gutter-small;
                 bottom: $gutter-small;
 
+                overflow-y: auto;
+
                 min-width: 30%;
                 max-width: 30%;
                 max-height: 100%;
-                overflow-y: auto;
                 padding: $gutter-small;
 
                 border: 1px solid $color-primary;
@@ -198,7 +199,8 @@ $color-background: white;
                         &.inactive
                         {
                             pointer-events: none;
-                            opacity: 0.2;
+
+                            opacity: .2;
                         }
                     }
                 }
