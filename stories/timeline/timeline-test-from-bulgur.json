@@ -1510,6 +1510,20 @@
           }
         }
       },
+      "viewParameters": {
+        "fromDate": -5613976315199,
+        "toDate": -3720606715199,
+        "colorsMap": {
+          "default": "brown",
+          "main": {
+            "default": "#ff4700",
+            "cartography": "#ffd1bf",
+            "mathematics": "#ffa380",
+            "statistics": "#1feb00",
+            "computation": "#16a400"
+          }
+        }
+      },
       "datasets": [
         "d3f1b30e-035e-47a8-9b1c-96e68131a7f6"
       ],

@@ -43,7 +43,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
   return _react2.default.createElement(
     'div',
     { className: 'wrapper' },
-    currentSlide ? _react2.default.createElement(
+    activeViewsParameters ? _react2.default.createElement(
       'figure',
       null,
       _react2.default.createElement(
@@ -96,7 +96,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
           }
         })
       ),
-      _react2.default.createElement(
+      currentSlide ? _react2.default.createElement(
         'figcaption',
         { className: 'caption-container' },
         _react2.default.createElement(
@@ -177,8 +177,8 @@ var PresentationLayout = function PresentationLayout(_ref) {
             '\u25BD Next slide'
           )
         )
-      )
-    ) : '',
+      ) : null
+    ) : null,
     _react2.default.createElement(
       'aside',
       { className: 'player-aside ' + (asideVisible ? 'visible' : 'hidden') },

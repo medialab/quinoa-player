@@ -26,7 +26,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint react/no-did-mount-set-state : 0 */
+
 
 require('./Player.scss');
 
@@ -69,8 +70,51 @@ var QuinoaPresentationPlayer = function (_Component) {
   _createClass(QuinoaPresentationPlayer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       if (this.state.presentation) {
-        this.setCurrentSlide(this.state.presentation.order[0]);
+        if (this.state.presentation.order && this.state.presentation.order.length) {
+          this.setCurrentSlide(this.state.presentation.order[0]);
+        } else {
+          (function () {
+            var datasets = {};
+            var views = _this2.state.presentation.visualizations;
+            Object.keys(views).map(function (viewKey) {
+              var view = views[viewKey];
+              var viewDataMap = Object.keys(view.dataMap).reduce(function (result, collectionId) {
+                return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
+                  var parameter = view.dataMap[collectionId][parameterId];
+                  if (parameter.mappedField) {
+                    return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
+                  }
+                  return propsMap;
+                }, {})));
+              }, {});
+              var visualization = _this2.state.presentation.visualizations[viewKey];
+              var visType = visualization.metadata.visualizationType;
+              var dataset = visualization.data;
+              var mappedData = void 0;
+              switch (visType) {
+                case 'map':
+                  mappedData = (0, _quinoaVisModules.mapMapData)(dataset, viewDataMap);
+                  break;
+                case 'timeline':
+                  mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, viewDataMap);
+                  break;
+                case 'network':
+                  mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, viewDataMap);
+                  break;
+                default:
+                  break;
+              }
+              datasets[viewKey] = mappedData;
+            });
+            _this2.setState({
+              activeViewsParameters: _extends({}, _this2.state.presentation.visualizations),
+              datasets: datasets
+            });
+          })();
+        }
       }
     }
   }, {
@@ -81,7 +125,7 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate(nextProps, nextState) {
-      var _this2 = this;
+      var _this3 = this;
 
       var slide = nextState.currentSlide;
       var previousSlide = this.state.currentSlide;
@@ -95,8 +139,9 @@ var QuinoaPresentationPlayer = function (_Component) {
       if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
         (function () {
           var datasets = {};
-          Object.keys(slide.views).map(function (viewKey) {
-            var view = slide.views[viewKey];
+          var views = slide ? slide.views : nextState.presentation.visualizations;
+          Object.keys(views).map(function (viewKey) {
+            var view = views[viewKey];
             var viewDataMap = Object.keys(view.dataMap).reduce(function (result, collectionId) {
               return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
                 var parameter = view.dataMap[collectionId][parameterId];
@@ -106,7 +151,7 @@ var QuinoaPresentationPlayer = function (_Component) {
                 return propsMap;
               }, {})));
             }, {});
-            var visualization = _this2.state.presentation.visualizations[viewKey];
+            var visualization = _this3.state.presentation.visualizations[viewKey];
             var visType = visualization.metadata.visualizationType;
             var dataset = visualization.data;
             var mappedData = void 0;
@@ -125,7 +170,7 @@ var QuinoaPresentationPlayer = function (_Component) {
             }
             datasets[viewKey] = mappedData;
           });
-          _this2.setState({
+          _this3.setState({
             datasets: datasets
           });
         })();
@@ -133,8 +178,8 @@ var QuinoaPresentationPlayer = function (_Component) {
       var slideViewParamsMark = previousSlide && Object.keys(previousSlide.views).map(function (viewKey) {
         return previousSlide.views[viewKey];
       });
-      var activeViewParamsMark = Object.keys(slide.views).map(function (viewKey) {
-        return _this2.state.activeViewsParameters[viewKey];
+      var activeViewParamsMark = slide && Object.keys(slide.views).map(function (viewKey) {
+        return _this3.state.activeViewsParameters[viewKey];
       });
       if (previousSlide && JSON.stringify(slideViewParamsMark) !== JSON.stringify(activeViewParamsMark) && !this.state.viewDifferentFromSlide) {
         this.setState({
@@ -152,6 +197,8 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'resetView',
     value: function resetView() {
+      var _this4 = this;
+
       var slide = this.state.currentSlide;
       if (slide) {
         var activeViewsParameters = Object.keys(slide.views).reduce(function (result, viewKey) {
@@ -161,6 +208,17 @@ var QuinoaPresentationPlayer = function (_Component) {
           activeViewsParameters: activeViewsParameters,
           viewDifferentFromSlide: false
         });
+      } else {
+        (function () {
+          var visualizations = _this4.state.presentation.visualizations;
+          var activeViewsParameters = Object.keys(visualizations).reduce(function (result, viewKey) {
+            return _extends({}, result, _defineProperty({}, viewKey, { viewParameters: visualizations[viewKey].viewParameters }));
+          }, {});
+          _this4.setState({
+            activeViewsParameters: activeViewsParameters,
+            viewDifferentFromSlide: false
+          });
+        })();
       }
     }
   }, {

@@ -31,7 +31,7 @@ const PresentationLayout = ({
   const prev = () => !presentation.firstSlide && stepSlide(false);
   return (
     <div className="wrapper">
-      { currentSlide ?
+      { activeViewsParameters ?
         <figure>
           <div className="views-container">
             {Object.keys(presentation.visualizations).map(viewKey => {
@@ -73,7 +73,7 @@ const PresentationLayout = ({
           }
         })}
           </div>
-          <figcaption className="caption-container">
+          {currentSlide ? <figcaption className="caption-container">
             <div className="legend-container">
               {
                 Object.keys(presentation.slides[navigation.currentSlideId].views)
@@ -126,8 +126,8 @@ const PresentationLayout = ({
               {/*viewDifferentFromSlide ? <button onClick={resetView}>Reset</button> : ''*/}
               <button onClick={next} className={presentation.lastSlide ? 'inactive' : ''}>▽ Next slide</button>
             </div>
-          </figcaption>
-        </figure> : ''}
+          </figcaption> : null}
+        </figure> : null}
       <aside className={'player-aside ' + (asideVisible ? 'visible' : 'hidden')}>
         <div className="player-aside-contents">
           <div className="metadata aside-group">

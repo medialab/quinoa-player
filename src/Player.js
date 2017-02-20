@@ -1,3 +1,4 @@
+/* eslint react/no-did-mount-set-state : 0 */
 import React, {Component, PropTypes} from 'react';
 
 import {
@@ -42,7 +43,51 @@ class QuinoaPresentationPlayer extends Component {
 
   componentDidMount() {
     if (this.state.presentation) {
-      this.setCurrentSlide(this.state.presentation.order[0]);
+      if (this.state.presentation.order && this.state.presentation.order.length) {
+        this.setCurrentSlide(this.state.presentation.order[0]);
+      }
+ else {
+        const datasets = {};
+        const views = this.state.presentation.visualizations;
+        Object.keys(views).map(viewKey => {
+          const view = views[viewKey];
+          const viewDataMap = Object.keys(view.dataMap).reduce((result, collectionId) => ({
+            ...result,
+            [collectionId]: Object.keys(view.dataMap[collectionId]).reduce((propsMap, parameterId) => {
+              const parameter = view.dataMap[collectionId][parameterId];
+              if (parameter.mappedField) {
+                return {
+                  ...propsMap,
+                  [parameterId]: parameter.mappedField
+                };
+              }
+              return propsMap;
+            }, {})
+          }), {});
+          const visualization = this.state.presentation.visualizations[viewKey];
+          const visType = visualization.metadata.visualizationType;
+          const dataset = visualization.data;
+          let mappedData;
+          switch (visType) {
+            case 'map':
+              mappedData = mapMapData(dataset, viewDataMap);
+              break;
+            case 'timeline':
+              mappedData = mapTimelineData(dataset, viewDataMap);
+              break;
+            case 'network':
+              mappedData = mapNetworkData(dataset, viewDataMap);
+              break;
+            default:
+              break;
+          }
+          datasets[viewKey] = mappedData;
+        });
+        this.setState({
+          activeViewsParameters: {...this.state.presentation.visualizations},
+          datasets
+        });
+      }
     }
   }
 
@@ -58,8 +103,9 @@ class QuinoaPresentationPlayer extends Component {
     const previousSlideParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.viewDataMap);
     if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
       const datasets = {};
-      Object.keys(slide.views).map(viewKey => {
-        const view = slide.views[viewKey];
+      const views = slide ? slide.views : nextState.presentation.visualizations;
+      Object.keys(views).map(viewKey => {
+        const view = views[viewKey];
         const viewDataMap = Object.keys(view.dataMap).reduce((result, collectionId) => ({
           ...result,
           [collectionId]: Object.keys(view.dataMap[collectionId]).reduce((propsMap, parameterId) => {
@@ -97,7 +143,7 @@ class QuinoaPresentationPlayer extends Component {
       });
     }
     const slideViewParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey]);
-    const activeViewParamsMark = Object.keys(slide.views).map(viewKey => this.state.activeViewsParameters[viewKey]);
+    const activeViewParamsMark = slide && Object.keys(slide.views).map(viewKey => this.state.activeViewsParameters[viewKey]);
     if (previousSlide && JSON.stringify(slideViewParamsMark) !== JSON.stringify(activeViewParamsMark) && !this.state.viewDifferentFromSlide) {
       this.setState({
         viewDifferentFromSlide: true
@@ -128,21 +174,34 @@ class QuinoaPresentationPlayer extends Component {
         viewDifferentFromSlide: false
       });
     }
+ else {
+      const visualizations = this.state.presentation.visualizations;
+      const activeViewsParameters = Object.keys(visualizations).reduce((result, viewKey) => {
+          return {
+            ...result,
+            [viewKey]: {viewParameters: visualizations[viewKey].viewParameters}
+          };
+        }, {});
+      this.setState({
+        activeViewsParameters,
+        viewDifferentFromSlide: false
+      });
+    }
   }
 
   initPresentation(presentation) {
     // const valid = validate(presentation);
     // if (valid) {
-      this.setState({
-        status: 'loaded',
-        presentation
-      });
- //    }
- // else {
- //      this.setState({
- //        status: 'error'
- //      });
- //    }
+    this.setState({
+      status: 'loaded',
+      presentation
+    });
+   //    }
+   // else {
+   //      this.setState({
+   //        status: 'error'
+   //      });
+   //    }
   }
 
   renderComponent () {
