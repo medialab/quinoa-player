@@ -1732,6 +1732,8 @@
           "viewParameters": {
             "fromDate": -5613976315199,
             "toDate": -3720606715199,
+            "shownCategories": {"main": ["computation"]},
+
             "colorsMap": {
               "default": "brown",
               "main": {

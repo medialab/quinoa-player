@@ -95,7 +95,22 @@ const PresentationLayout = ({
                                   <li className="legend-item" key={category}>
                                     <span className="color"
                                       style={{
-                                        background: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId][category]
+                                        background: presentation
+                                                      .slides[navigation.currentSlideId]
+                                                      .views[viewId]
+                                                      .viewParameters
+                                                      .colorsMap[collectionId][category],
+                                        opacity: presentation
+                                                      .slides[navigation.currentSlideId]
+                                                      .views[viewId]
+                                                      .viewParameters
+                                                      .shownCategories
+                                                  && presentation
+                                                      .slides[navigation.currentSlideId]
+                                                      .views[viewId]
+                                                      .viewParameters
+                                                      .shownCategories[collectionId]
+                                                      .indexOf(category) === -1 ? 0.3 : 1
                                       }} />
                                     <span className="category">
                                       {category}
@@ -175,7 +190,7 @@ const PresentationLayout = ({
           }
           </div>
         </div>
-        <div onClick={toggleAside} className="aside-toggler" />
+        <div onClick={toggleAside} className="aside-toggler">☰ Menu</div>
       </aside>
       <div className={'aside-bg' + (asideVisible ? ' active' : ' inactive')} onClick={toggleAside} />
       <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowUp" onKeyHandle={prev} />

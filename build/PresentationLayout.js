@@ -126,7 +126,8 @@ var PresentationLayout = function PresentationLayout(_ref) {
                         { className: 'legend-item', key: category },
                         _react2.default.createElement('span', { className: 'color',
                           style: {
-                            background: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId][category]
+                            background: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId][category],
+                            opacity: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.shownCategories && presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.shownCategories[collectionId].indexOf(category) === -1 ? 0.3 : 1
                           } }),
                         _react2.default.createElement(
                           'span',
@@ -265,7 +266,11 @@ var PresentationLayout = function PresentationLayout(_ref) {
           })
         )
       ),
-      _react2.default.createElement('div', { onClick: toggleAside, className: 'aside-toggler' })
+      _react2.default.createElement(
+        'div',
+        { onClick: toggleAside, className: 'aside-toggler' },
+        '\u2630 Menu'
+      )
     ),
     _react2.default.createElement('div', { className: 'aside-bg' + (asideVisible ? ' active' : ' inactive'), onClick: toggleAside }),
     _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowUp', onKeyHandle: prev }),
