@@ -1,13 +1,44 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i');
 
-$gutter-small: 1rem;
+$gutter-small: .5em;
+$gutter-medium: $gutter-small * 1.666;
+
 $color-primary: #333;
 $color-background: white;
+$color-secondary-background: #E5E7E6;
+$color-primary-background: #F4F4F4;
+$color-strokes: #DDDBD9;
+
+$font-size-1 : $gutter-medium;
+$font-size-2 : $font-size-1 * 1.66;
+
+
+// abstract classes
+.interactive-item-intent
+{
+    color: $color-primary;
+    background: $color-strokes;
+}
+
+.interactive-item-active
+{
+    color: #333;
+    background: #d6cfc4;
+}
+
+.interactive-item-active-intent
+{
+    color: #333;
+    background: #c3baac;
+}
 
 .quinoa-presentation-player
 {
+    // default styling
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: .8rem;
+    font-size: $font-size-1;
+    background: $color-background;
+    color: $color-primary;
 
     position: absolute;
     top: 0;
@@ -19,131 +50,32 @@ $color-background: white;
     height: 100%;
     margin: 0;
     padding: 0;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    // nested layout
     .wrapper
     {
-        .player-aside
+        flex: 1;
+        margin: 0;
+        width: 100%;
+        padding: 0;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: stretch;
+
+        .views-container,
+        .caption-container
         {
-            position: absolute;
-            z-index: 10000;
-            top: 0;
-            left: 0;
-            // display: flex;
-
-            width: 20%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-
-            transition: all .5s ease;
-
-            background: white;
-
-            .player-aside-contents
-            {
-                overflow: auto;
-
-                height: 100%;
-            }
-
-            // flex-flow: column nowrap;
-            // align-items: stretch;
-            // overflow-y: auto;
-
-            h1,
-            h2,
-            h3
-            {
-                margin: 0;
-            }
-
-            &.hidden
-            {
-                left: -20%;
-            }
-            .aside-toggler
-            {
-                position: absolute;
-                z-index: 5;
-                top: $gutter-small;
-                right: -3.5rem;
-
-                width: 3rem;
-                height: 1.2rem;
-                padding-left: .5rem;
-
-                cursor: pointer;
-
-                color: white;
-                border-radius: 0 .5rem .5rem 0;
-                background: brown;
-            }
-            .aside-group
-            {
-                overflow: 1;
-                overflow-x: hidden;
-
-                margin: $gutter-small;
-
-                &:not(.datasets)
-                {
-                    border-bottom: 1px solid $color-primary;
-                }
-            }
-            .summary
-            {
-                flex: 5;
-                ul
-                {
-                    padding: 0;
-                    li
-                    {
-                        font-size: .9rem;
-                        font-weight: 400;
-                        font-style: italic;
-
-                        margin: 0;
-                        margin-left: 1.1rem;
-
-                        list-style-type: circle;
-
-                        cursor: pointer;
-                        &.active
-                        {
-                            list-style-type: disc;
-
-                            cursor: default;
-
-                            color: brown;
-                        }
-                    }
-                }
-            }
+            position: relative;
         }
-        .aside-bg
-        {
-            position: absolute;
-            top: 0;
-            right: 0;
 
-            width: 100%;
-            height: 100%;
-
-            transition: all .5s ease;
-            pointer-events: none;
-            &.active
+        .views-container
             {
-                width: 80%;
-
-                cursor: pointer;
-                pointer-events: all;
-
-                background: rgba(0,0,0,.4);
-            }
-        }
-        figure
-        {
-            .views-container
-            {
+                flex: 4;
                 display: flex;
                 flex-direction: row;
 
@@ -154,128 +86,229 @@ $color-background: white;
                     flex: 1;
                 }
             }
-            .caption-container
+        .caption-container
+        {
+            flex: 1;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: stretch;
+            border-right: 1px solid $color-strokes;
+        }
+        // body of the caption in slide mode
+        .caption-body-slide
+        {
+            flex: 1;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: stretch;
+
+            .slide-caption-container
             {
-                position: absolute;
-                right: $gutter-small;
-                bottom: $gutter-small;
-
-                overflow-y: auto;
-
-                min-width: 30%;
-                max-width: 30%;
-                max-height: 100%;
-                padding: $gutter-small;
-
-                border: 1px solid $color-primary;
-                background: $color-background;
-
-
-                .caption-header,
-                .caption-footer
+                flex: 3;
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: stretch;
+                .nav-container
                 {
-                    min-height: $gutter-small;
-
-                    button
-                    {
-                        padding: 0;
-
-                        transition: all .5s ease;
-
-                        opacity: .6;
-                        border: none;
-                        outline: none;
-                        background: none;
-                        &:hover
-                        {
-                            font-size: 1rem;
-
-                            opacity: 1;
-                        }
-
-                        &:active
-                        {
-                            border: none;
-                            outline: none;
-                        }
-                        &.inactive
-                        {
-                            pointer-events: none;
-
-                            opacity: .2;
-                        }
-                    }
+                    flex: 1;
+                    display: flex;
+                    flex-flow: column nowrap;
+                    align-items: stretch;
+                    padding-top: $gutter-medium;
+                    padding-bottom: $gutter-medium;
                 }
 
-                .caption-header
+                .slide-caption
                 {
-                    margin-bottom: $gutter-small;
-                    button
-                    {
-                        font-size: .8rem;
-                    }
+                    flex: 5;
+                    padding: $gutter-medium;
                 }
-                .caption-footer
-                {
-                    margin-top: $gutter-small;
-                    button
-                    {
-                        font-size: .9rem;
-                    }
-                }
+            }
+            .slide-legend-container
+            {
+                flex: 1;
+                padding: $gutter-medium;
+                background: $color-secondary-background;
+            }
+        }
+        // body of the caption in info mode
+        .caption-body-info
+        {
+            padding: $gutter-medium;
+            overflow-y: auto;
+            flex: 1;
+        }
+    }
+    /* 
+     * small components
+     */
+    // caption header
+    .caption-header
+    {
+        padding: $gutter-medium;
+        margin: 0;
+        font-size: $font-size-2;
+        transition : all .2s ease;
+        border-bottom: 1px solid $color-strokes;
+        &:hover{
+            @extend .interactive-item-intent;
+        }
 
-                .caption-main
-                {
-                    overflow: auto;
-                }
+        &.active
+        {
+            @extend .interactive-item-active;
+            &:hover
+            {
+                @extend .interactive-item-active-intent;
+            }
+        }
+        .presentation-title::before {
+            content: "i";
+            margin-right: $gutter-medium;
+            border: 1px solid $color-primary;
+            color: $color-primary;
+            border-radius: 50%;
+            text-align: center;
+            width: $gutter-medium * 1.2;
+            height: $gutter-medium * 1.2;
+            font-size: $font-size-1;
+            display: inline-block;
+        }
+    }
 
-                h2
+    // view legend
+    .view-legend
+    {
+        .collection-legend
+        {
+            .legend-group
+            {
+                margin: 0;
+                padding: 0;
+                .legend-item
                 {
+                    display: flex;
+
                     margin: 0;
-                }
-
-                .legend-container
-                {
-                    max-height: 10rem;
                     margin-bottom: $gutter-small;
-                    padding: 0;
-                    padding-bottom: $gutter-small;
 
-                    border-bottom: 1px solid $color-primary;
-                    .view-legend
+                    list-style-type: none;
+
+                    flex-flow: row nowrap;
+                    .color
                     {
-                        .collection-legend
-                        {
-                            .legend-group
-                            {
-                                margin: 0;
-                                padding: 0;
-                                .legend-item
-                                {
-                                    display: flex;
-
-                                    margin: 0;
-                                    margin-bottom: .2rem;
-
-                                    list-style-type: none;
-
-                                    flex-flow: row nowrap;
-                                    .color
-                                    {
-                                        width: 1rem;
-                                        height: 1rem;
-                                        margin-right: 1rem;
-                                    }
-                                    .category
-                                    {
-                                        flex: 5;
-                                    }
-                                }
-                            }
-                        }
+                        width: $gutter-medium*1.3;
+                        height: $gutter-medium*1.3;
+                        margin-right: $gutter-medium;
+                    }
+                    .category
+                    {
+                        flex: 5;
                     }
                 }
             }
         }
+    }
+    // quick nav
+    .quick-nav
+    {
+        margin: 0;
+        padding: $gutter-medium 0 $gutter-medium $gutter-medium * .9;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        flex: 5;
+        li{
+            padding: 0;
+            list-style-type: none;
+            border: $color-strokes;
+            width: $gutter-medium;
+            height: $gutter-medium;
+            background: $color-strokes;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+
+            h3{
+                position: absolute;
+                left: $gutter-medium;
+                top: 0;
+                width: auto;
+                margin: 0;
+                width: 20em;
+                // width: 0;
+                height: 20em;
+                pointer-events: none;
+                .tooltip-container{
+                    transition: all .5s ease;
+                    background: $color-primary;
+                    color: $color-background;
+                    position: absolute;
+                    left: 0;
+                    top: -$gutter-small/2;
+                    overflow: hidden;
+
+                    opacity: 0;
+
+                    .tooltip-content
+                    {
+                        padding: $gutter-small;
+                    }
+                }
+            }
+
+            &:hover
+            {
+                &:not(.active){
+                    background: $color-primary;
+                }
+                .tooltip-container
+                {
+                    opacity: 1;
+                }
+                
+            }
+
+            &.active
+            {
+                    background: $color-primary;
+            }
+        }
+    }
+
+    // slide caption
+    .slide-caption{
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: stretch;
+        .slide-title{
+            margin: 0;
+        }
+        .slide-content
+        {
+            overflow-y: auto;
+            flex: 1;
+        }
+        .next-slide-btn
+        {
+            text-align : left;
+            padding-top: $gutter-medium;
+            color: $color-primary;
+            opacity: .8;
+            transition: all .2s ease;
+            &:hover
+            {
+                opacity : 1;
+            }
+        }
+    }
+
+    // components
+    button
+    {
+        background: inherit;
+        border: none;
+        outline: none;
+        font-family: 'Source Sans Pro', sans-serif;
     }
 }
