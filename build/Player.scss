@@ -127,6 +127,10 @@ $font-size-2: $font-size-1 * 1.66;
                     flex: 1;
                     flex-flow: column nowrap;
                     align-items: stretch;
+                    button
+                    {
+                        text-align: center;
+                    }
                 }
 
                 .slide-caption
@@ -355,5 +359,8 @@ $font-size-2: $font-size-1 * 1.66;
         border: none;
         outline: none;
         background: inherit;
+        &:hover{
+            background: inherit;
+        }
     }
 }
