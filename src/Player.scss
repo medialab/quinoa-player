@@ -147,6 +147,8 @@ $font-size-2: $font-size-1 * 1.66;
                 background: $color-secondary-background;
 
                 flex: 1;
+                max-height: 33%;
+                overflow-y: auto;
             }
         }
         // body of the caption in info mode
@@ -244,7 +246,7 @@ $font-size-2: $font-size-1 * 1.66;
         display: flex;
 
         margin: 0;
-        padding: $gutter-medium 0 $gutter-medium $gutter-medium * 1.8;
+        padding: $gutter-medium 0 $gutter-medium 0;
 
         flex-flow: column nowrap;
         justify-content: space-between;
@@ -256,6 +258,7 @@ $font-size-2: $font-size-1 * 1.66;
             width: $gutter-medium;
             height: $gutter-medium;
             padding: 0;
+            margin-left: $gutter-medium;
 
             list-style-type: none;
 
@@ -359,7 +362,8 @@ $font-size-2: $font-size-1 * 1.66;
         border: none;
         outline: none;
         background: inherit;
-        &:hover{
+        &:hover
+        {
             background: inherit;
         }
     }
