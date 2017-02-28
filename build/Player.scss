@@ -138,17 +138,22 @@ $font-size-2: $font-size-1 * 1.66;
                     padding: $gutter-medium;
 
                     flex: 5;
+
+                    .slide-content{
+                        padding-right: $gutter-medium;
+                    }
                 }
             }
             .slide-legend-container
             {
+                overflow-y: auto;
+
+                max-height: 33%;
                 padding: $gutter-medium;
 
                 background: $color-secondary-background;
 
                 flex: 1;
-                max-height: 33%;
-                overflow-y: auto;
             }
         }
         // body of the caption in info mode
@@ -175,6 +180,8 @@ $font-size-2: $font-size-1 * 1.66;
         transition: all .2s ease;
 
         border-bottom: 1px solid $color-strokes;
+
+        cursor: pointer;
         &:hover
         {
             @extend .interactive-item-intent;
@@ -257,8 +264,8 @@ $font-size-2: $font-size-1 * 1.66;
 
             width: $gutter-medium;
             height: $gutter-medium;
-            padding: 0;
             margin-left: $gutter-medium;
+            padding: 0;
 
             list-style-type: none;
 
