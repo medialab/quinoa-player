@@ -1,14 +1,14 @@
 ﻿{
   "type": "presentation",
   "metadata": {
+    "title": "Timeline example",
     "authors": [
       "Robin"
     ],
-    "description": "This is cool",
-    "title": "Timeline test"
+    "description": "C’est très largement un concept vide. Les problèmes se posent depuis que la presse existe. Nous serons toujours confrontés à des événements sur lesquels les informations manquent, sont parcellaires, voire sont contradictoires. Plutôt que de s’épuiser dans la recherche vaine d’une « vérité des faits » qui, je le rappelle encore, n’existe pas en tant que telle, la tache d’un vrai journaliste serait plus de nous faire comprendre la complexité d’un problème, de nous présenter les diverses interprétations qui peuvent en exister puis de nous présenter son opinion. Mais, tant que les journalistes s’obstineront à vouloir mélanger les deux, à nous faire prendre des vessies pour des lanternes, ils ne peuvent espérer nulle rédemption. La seule solution passe par le pluralisme le plus large dans les sources d’informations, quitte à laisser aux gens la liberté de se faire, à partir de ces diverses sources, une opinion."
   },
   "datasets": {
-    "d3f1b30e-035e-47a8-9b1c-96e68131a7f6": {
+    "e621fe3e-7487-47f4-a54a-dabf0ed60a8d": {
       "metadata": {
         "format": "csv",
         "fileName": "milestones-history-datavis.csv",
@@ -19,7 +19,7 @@
     }
   },
   "visualizations": {
-    "627c4f4f-0d9d-4eb0-ba3c-f947571bcbc5": {
+    "4eb959ca-c650-4230-919b-712dde09b040": {
       "metadata": {
         "visualizationType": "timeline"
       },
@@ -1510,25 +1510,18 @@
           }
         }
       },
-      "viewParameters": {
-        "fromDate": -5613976315199,
-        "toDate": -3720606715199,
-        "colorsMap": {
-          "default": "brown",
-          "main": {
-            "default": "#ff4700",
-            "cartography": "#ffd1bf",
-            "mathematics": "#ffa380",
-            "statistics": "#1feb00",
-            "computation": "#16a400"
-          }
+      "flattenedDataMap": {
+        "main": {
+          "category": "category",
+          "year": "year",
+          "end year": "end year"
         }
       },
       "datasets": [
-        "d3f1b30e-035e-47a8-9b1c-96e68131a7f6"
+        "e621fe3e-7487-47f4-a54a-dabf0ed60a8d"
       ],
       "colorsMap": {
-        "default": "brown",
+        "default": "#d8d8d8",
         "main": {
           "default": "#ff4700",
           "cartography": "#ffd1bf",
@@ -1536,18 +1529,108 @@
           "statistics": "#1feb00",
           "computation": "#16a400"
         }
+      },
+      "viewParameters": {
+        "fromDate": -2203243732924,
+        "toDate": -309787732924,
+        "colorsMap": {
+          "default": "#d8d8d8",
+          "main": {
+            "default": "#ff4700",
+            "cartography": "#ffd1bf",
+            "mathematics": "#ffa380",
+            "statistics": "#1feb00",
+            "computation": "#16a400"
+          }
+        },
+        "dataMap": {
+          "main": {
+            "name": {
+              "id": "name",
+              "acceptedValueTypes": [
+                "string",
+                "number"
+              ]
+            },
+            "category": {
+              "id": "category",
+              "acceptedValueTypes": [
+                "string",
+                "number"
+              ],
+              "mappedField": "category"
+            },
+            "year": {
+              "id": "year",
+              "acceptedValueTypes": [
+                "number"
+              ],
+              "mappedField": "year"
+            },
+            "month": {
+              "id": "month",
+              "acceptedValueTypes": [
+                "number"
+              ]
+            },
+            "day": {
+              "id": "day",
+              "acceptedValueTypes": [
+                "number"
+              ]
+            },
+            "time": {
+              "id": "time",
+              "acceptedValueTypes": [
+                "string"
+              ]
+            },
+            "end year": {
+              "id": "end year",
+              "acceptedValueTypes": [
+                "number"
+              ],
+              "mappedField": "end year"
+            },
+            "end month": {
+              "id": "end month",
+              "acceptedValueTypes": [
+                "number"
+              ]
+            },
+            "end day": {
+              "id": "end day",
+              "acceptedValueTypes": [
+                "number"
+              ]
+            },
+            "end time": {
+              "id": "end time",
+              "acceptedValueTypes": [
+                "string"
+              ]
+            }
+          }
+        },
+        "flattenedDataMap": {
+          "main": {
+            "category": "category",
+            "year": "year",
+            "end year": "end year"
+          }
+        }
       }
     }
   },
   "slides": {
-    "f21a3e6a-ddf6-4daa-ac72-3476b48e972f": {
+    "2b6acced-261e-454e-b193-4b0c6a719401": {
       "views": {
-        "627c4f4f-0d9d-4eb0-ba3c-f947571bcbc5": {
+        "4eb959ca-c650-4230-919b-712dde09b040": {
           "viewParameters": {
-            "fromDate": -2205911035199,
-            "toDate": -312541435199,
+            "fromDate": -2203243732924,
+            "toDate": -309787732924,
             "colorsMap": {
-              "default": "brown",
+              "default": "#d8d8d8",
               "main": {
                 "default": "#ff4700",
                 "cartography": "#ffd1bf",
@@ -1555,92 +1638,116 @@
                 "statistics": "#1feb00",
                 "computation": "#16a400"
               }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "name": {
-                "id": "name",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "year"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "category"
-              },
-              "year": {
-                "id": "year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "year"
-              },
-              "month": {
-                "id": "month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "day": {
-                "id": "day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "time": {
-                "id": "time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
-              },
-              "end year": {
-                "id": "end year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "end year"
-              },
-              "end month": {
-                "id": "end month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end day": {
-                "id": "end day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end time": {
-                "id": "end time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
+            },
+            "dataMap": {
+              "main": {
+                "name": {
+                  "id": "name",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "category": {
+                  "id": "category",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ],
+                  "mappedField": "category"
+                },
+                "year": {
+                  "id": "year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "year"
+                },
+                "month": {
+                  "id": "month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "day": {
+                  "id": "day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "time": {
+                  "id": "time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                },
+                "end year": {
+                  "id": "end year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "end year"
+                },
+                "end month": {
+                  "id": "end month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end day": {
+                  "id": "end day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end time": {
+                  "id": "end time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                }
               }
+            },
+            "flattenedDataMap": {
+              "main": {
+                "category": "category",
+                "year": "year",
+                "end year": "end year"
+              }
+            },
+            "shownCategories": {
+              "default": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "main": [
+                "default",
+                "cartography",
+                "mathematics",
+                "statistics",
+                "computation"
+              ]
             }
           }
         }
       },
-      "title": "My first slide",
-      "markdown": "​Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "id": "f21a3e6a-ddf6-4daa-ac72-3476b48e972f"
+      "title": "Slide 1",
+      "markdown": "With a nice title",
+      "id": "2b6acced-261e-454e-b193-4b0c6a719401"
     },
-    "28b8d289-a7a0-47ce-86cf-47b6225a40ad": {
+    "825222b9-2651-40bf-a3de-91041d762906": {
       "views": {
-        "627c4f4f-0d9d-4eb0-ba3c-f947571bcbc5": {
+        "4eb959ca-c650-4230-919b-712dde09b040": {
           "viewParameters": {
-            "fromDate": -5613976315199,
-            "toDate": -3720606715199,
+            "fromDate": -4664736532924,
+            "toDate": -2771280532924,
             "colorsMap": {
-              "default": "brown",
+              "default": "#d8d8d8",
               "main": {
                 "default": "#ff4700",
                 "cartography": "#ffd1bf",
@@ -1648,184 +1755,546 @@
                 "statistics": "#1feb00",
                 "computation": "#16a400"
               }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "name": {
-                "id": "name",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "category"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "category"
-              },
-              "year": {
-                "id": "year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "year"
-              },
-              "month": {
-                "id": "month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "day": {
-                "id": "day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "time": {
-                "id": "time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
-              },
-              "end year": {
-                "id": "end year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "end year"
-              },
-              "end month": {
-                "id": "end month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end day": {
-                "id": "end day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end time": {
-                "id": "end time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
+            },
+            "dataMap": {
+              "main": {
+                "name": {
+                  "id": "name",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "category": {
+                  "id": "category",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ],
+                  "mappedField": "category"
+                },
+                "year": {
+                  "id": "year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "year"
+                },
+                "month": {
+                  "id": "month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "day": {
+                  "id": "day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "time": {
+                  "id": "time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                },
+                "end year": {
+                  "id": "end year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "end year"
+                },
+                "end month": {
+                  "id": "end month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end day": {
+                  "id": "end day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end time": {
+                  "id": "end time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                }
               }
+            },
+            "flattenedDataMap": {
+              "main": {
+                "category": "category",
+                "year": "year",
+                "end year": "end year"
+              }
+            },
+            "shownCategories": {
+              "default": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "main": [
+                "default",
+                "cartography",
+                "mathematics",
+                "statistics",
+                "computation"
+              ]
             }
           }
         }
       },
-      "title": "My second slide",
-      "markdown": "With some _italic_ content\n\n",
-      "id": "28b8d289-a7a0-47ce-86cf-47b6225a40ad"
+      "title": "Slide 2",
+      "markdown": "With a nice comment",
+      "id": "825222b9-2651-40bf-a3de-91041d762906"
     },
-    "70a718fb-8b85-4a1a-9977-d4ede436e795": {
+    "eb1ef7f7-6abe-4c6b-958a-054f93564813": {
       "views": {
-        "627c4f4f-0d9d-4eb0-ba3c-f947571bcbc5": {
+        "4eb959ca-c650-4230-919b-712dde09b040": {
           "viewParameters": {
-            "fromDate": -5613976315199,
-            "toDate": -3720606715199,
-            "shownCategories": {"main": ["computation"]},
-
+            "fromDate": -4664736532924,
+            "toDate": -2771280532924,
             "colorsMap": {
-              "default": "brown",
+              "default": "#d8d8d8",
               "main": {
-                "default": "#ff4700",
-                "cartography": "#ffd1bf",
-                "mathematics": "#ffa380",
-                "statistics": "#1feb00",
-                "computation": "#16a400"
+                "0": "#f50009",
+                "90": "#0300fb",
+                "105": "#f3000b",
+                "950": "#0100fd",
+                "1280": "#f2000c",
+                "1305": "#f0000e",
+                "1350": "#ef000f",
+                "1375": "#ed0011",
+                "1450": "#ec0012",
+                "1453": "#ea0014",
+                "1500": "#e80016",
+                "1530": "#e70017",
+                "1533": "#e50019",
+                "1545": "#e4001a",
+                "1550": "#e2001c",
+                "1556": "#e1001d",
+                "1562": "#df001f",
+                "1569": "#dd0021",
+                "1570": "#dc0022",
+                "1572": "#da0024",
+                "1581": "#d90025",
+                "1600": "#d70027",
+                "1603": "#d60028",
+                "1610": "#d4002a",
+                "1614": "#d2002c",
+                "1617": "#d1002d",
+                "1620": "#cf002f",
+                "1623": "#ce0030",
+                "1626": "#cc0032",
+                "1632": "#cb0033",
+                "1637": "#c90035",
+                "1644": "#c70037",
+                "1646": "#c60038",
+                "1654": "#c4003a",
+                "1657": "#c3003b",
+                "1662": "#c1003d",
+                "1663": "#c0003e",
+                "1666": "#be0040",
+                "1669": "#bc0042",
+                "1671": "#bb0043",
+                "1679": "#b90045",
+                "1686": "#b80046",
+                "1687": "#b60048",
+                "1693": "#b50049",
+                "1701": "#b3004b",
+                "1710": "#b1004d",
+                "1711": "#b0004e",
+                "1712": "#ae0050",
+                "1724": "#ad0051",
+                "1727": "#ab0053",
+                "1733": "#aa0055",
+                "1736": "#a80056",
+                "1741": "#a60058",
+                "1748": "#a50059",
+                "1750": "#a3005b",
+                "1752": "#a2005c",
+                "1753": "#a0005e",
+                "1758": "#9e0060",
+                "1760": "#9d0061",
+                "1763": "#9b0063",
+                "1765": "#9a0064",
+                "1767": "#980066",
+                "1776": "#970067",
+                "1778": "#950069",
+                "1779": "#93006b",
+                "1782": "#92006c",
+                "1785": "#90006e",
+                "1786": "#8f006f",
+                "1787": "#8d0071",
+                "1794": "#8c0072",
+                "1795": "#8a0074",
+                "1796": "#880076",
+                "1798": "#870077",
+                "1800": "#850079",
+                "1801": "#84007a",
+                "1809": "#82007c",
+                "1810": "#81007d",
+                "1811": "#7f007f",
+                "1816": "#7d0081",
+                "1817": "#7c0082",
+                "1819": "#7a0084",
+                "1820": "#790085",
+                "1821": "#770087",
+                "1822": "#760088",
+                "1825": "#74008a",
+                "1826": "#72008c",
+                "1827": "#71008d",
+                "1828": "#6f008f",
+                "1829": "#6e0090",
+                "1830": "#6c0092",
+                "1832": "#6b0093",
+                "1833": "#690095",
+                "1836": "#670097",
+                "1837": "#660098",
+                "1838": "#64009a",
+                "1839": "#63009b",
+                "1843": "#61009d",
+                "1844": "#60009e",
+                "1846": "#5e00a0",
+                "1850": "#5c00a2",
+                "1851": "#5b00a3",
+                "1852": "#5900a5",
+                "1853": "#5800a6",
+                "1854": "#5600a8",
+                "1855": "#5500aa",
+                "1857": "#5300ab",
+                "1861": "#5100ad",
+                "1863": "#5000ae",
+                "1868": "#4e00b0",
+                "1869": "#4d00b1",
+                "1870": "#4b00b3",
+                "1872": "#4900b5",
+                "1873": "#4800b6",
+                "1874": "#4600b8",
+                "1875": "#4500b9",
+                "1877": "#4300bb",
+                "1878": "#4200bc",
+                "1879": "#4000be",
+                "1880": "#3e00c0",
+                "1882": "#3d00c1",
+                "1883": "#3b00c3",
+                "1884": "#3a00c4",
+                "1885": "#3800c6",
+                "1888": "#3700c7",
+                "1889": "#3500c9",
+                "1892": "#3300cb",
+                "1895": "#3200cc",
+                "1896": "#3000ce",
+                "1899": "#2f00cf",
+                "1901": "#2d00d1",
+                "1904": "#2c00d2",
+                "1905": "#2a00d4",
+                "1910": "#2800d6",
+                "1911": "#2700d7",
+                "1913": "#2500d9",
+                "1914": "#2400da",
+                "1915": "#2200dc",
+                "1916": "#2100dd",
+                "1917": "#1f00df",
+                "1918": "#1d00e1",
+                "1919": "#1c00e2",
+                "1920": "#1a00e4",
+                "1923": "#1900e5",
+                "1924": "#1700e7",
+                "1925": "#1600e8",
+                "1926": "#1400ea",
+                "1927": "#1200ec",
+                "1928": "#1100ed",
+                "1929": "#0f00ef",
+                "1930": "#0e00f0",
+                "1931": "#0c00f2",
+                "1933": "#0b00f3",
+                "1935": "#0900f5",
+                "1937": "#0700f7",
+                "1939": "#0600f8",
+                "1944": "#0400fa",
+                "default": "#000000",
+                "-100": "#ff0000",
+                "-134": "#fd0001",
+                "-170": "#fb0003",
+                "-240": "#fa0004",
+                "-366": "#f80006",
+                "-550": "#f70007"
               }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "name": {
-                "id": "name",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "category"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ],
-                "mappedField": "category"
-              },
-              "year": {
-                "id": "year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "year"
-              },
-              "month": {
-                "id": "month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "day": {
-                "id": "day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "time": {
-                "id": "time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
-              },
-              "end year": {
-                "id": "end year",
-                "acceptedValueTypes": [
-                  "number"
-                ],
-                "mappedField": "end year"
-              },
-              "end month": {
-                "id": "end month",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end day": {
-                "id": "end day",
-                "acceptedValueTypes": [
-                  "number"
-                ]
-              },
-              "end time": {
-                "id": "end time",
-                "acceptedValueTypes": [
-                  "string"
-                ]
+            },
+            "dataMap": {
+              "main": {
+                "name": {
+                  "id": "name",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "category": {
+                  "id": "category",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ],
+                  "mappedField": "year"
+                },
+                "year": {
+                  "id": "year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "year"
+                },
+                "month": {
+                  "id": "month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "day": {
+                  "id": "day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "time": {
+                  "id": "time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                },
+                "end year": {
+                  "id": "end year",
+                  "acceptedValueTypes": [
+                    "number"
+                  ],
+                  "mappedField": "end year"
+                },
+                "end month": {
+                  "id": "end month",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end day": {
+                  "id": "end day",
+                  "acceptedValueTypes": [
+                    "number"
+                  ]
+                },
+                "end time": {
+                  "id": "end time",
+                  "acceptedValueTypes": [
+                    "string"
+                  ]
+                }
               }
+            },
+            "flattenedDataMap": {
+              "main": {
+                "category": "year",
+                "year": "year",
+                "end year": "end year"
+              }
+            },
+            "shownCategories": {
+              "default": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "main": [
+                "0",
+                "90",
+                "105",
+                "950",
+                "1280",
+                "1305",
+                "1350",
+                "1375",
+                "1450",
+                "1453",
+                "1500",
+                "1530",
+                "1533",
+                "1545",
+                "1550",
+                "1556",
+                "1562",
+                "1569",
+                "1570",
+                "1572",
+                "1581",
+                "1600",
+                "1603",
+                "1610",
+                "1614",
+                "1617",
+                "1620",
+                "1623",
+                "1626",
+                "1632",
+                "1637",
+                "1644",
+                "1646",
+                "1654",
+                "1657",
+                "1662",
+                "1663",
+                "1666",
+                "1669",
+                "1671",
+                "1679",
+                "1686",
+                "1687",
+                "1693",
+                "1701",
+                "1710",
+                "1711",
+                "1712",
+                "1724",
+                "1727",
+                "1733",
+                "1736",
+                "1741",
+                "1748",
+                "1750",
+                "1752",
+                "1753",
+                "1758",
+                "1760",
+                "1763",
+                "1765",
+                "1767",
+                "1776",
+                "1778",
+                "1779",
+                "1782",
+                "1785",
+                "1786",
+                "1787",
+                "1794",
+                "1795",
+                "1796",
+                "1798",
+                "1800",
+                "1801",
+                "1809",
+                "1810",
+                "1811",
+                "1816",
+                "1817",
+                "1819",
+                "1820",
+                "1821",
+                "1822",
+                "1825",
+                "1826",
+                "1827",
+                "1828",
+                "1829",
+                "1830",
+                "1832",
+                "1833",
+                "1836",
+                "1837",
+                "1838",
+                "1839",
+                "1843",
+                "1844",
+                "1846",
+                "1850",
+                "1851",
+                "1852",
+                "1853",
+                "1854",
+                "1855",
+                "1857",
+                "1861",
+                "1863",
+                "1868",
+                "1869",
+                "1870",
+                "1872",
+                "1873",
+                "1874",
+                "1875",
+                "1877",
+                "1878",
+                "1879",
+                "1880",
+                "1882",
+                "1883",
+                "1884",
+                "1885",
+                "1888",
+                "1889",
+                "1892",
+                "1895",
+                "1896",
+                "1899",
+                "1901",
+                "1904",
+                "1905",
+                "1910",
+                "1911",
+                "1913",
+                "1914",
+                "1915",
+                "1916",
+                "1917",
+                "1918",
+                "1919",
+                "1920",
+                "1923",
+                "1924",
+                "1925",
+                "1926",
+                "1927",
+                "1928",
+                "1929",
+                "1930",
+                "1931",
+                "1933",
+                "1935",
+                "1937",
+                "1939",
+                "1944",
+                "default",
+                "-100",
+                "-134",
+                "-170",
+                "-240",
+                "-366",
+                "-550"
+              ]
             }
           }
         }
       },
-      "title": "My third slide",
-      "markdown": "\nWith some **bold** content\n",
-      "id": "70a718fb-8b85-4a1a-9977-d4ede436e795"
+      "title": "Slide 3",
+      "markdown": "Mais pourquoi faudrait-il donc le sauver ? Bien souvent, les journalistes qui s’autoproclament « fact-checkeur », c’est à dire vérificateurs pour user d’un bon français, ne sont que des idéologues. Leur activité, bien souvent est une forme de censure idéologique, mais qui évidemment ne se donne pas pour ce qu’elle est. On le voit avec l’affaire de l’application Decodex imaginée par des journalistes du Monde ; Que les journalistes retournent à l’école, que ce soit sur l’histoire, la géographie, l’économie ou autre, qu’ils acceptent que l’on ne peut être un spécialiste de tout et qu’il faut une véritable spécialisation, qu’ils commencent à comprendre que les différences de perception et de représentation font partie du débat publique légitime, et que leur rôle est de respecter le pluralisme dans ces débats, et nous pourrons – peut-être – répondre à votre question.",
+      "id": "eb1ef7f7-6abe-4c6b-958a-054f93564813"
     }
   },
   "order": [
-    "f21a3e6a-ddf6-4daa-ac72-3476b48e972f",
-    "28b8d289-a7a0-47ce-86cf-47b6225a40ad",
-    "70a718fb-8b85-4a1a-9977-d4ede436e795"
+    "2b6acced-261e-454e-b193-4b0c6a719401",
+    "825222b9-2651-40bf-a3de-91041d762906",
+    "eb1ef7f7-6abe-4c6b-958a-054f93564813"
   ],
-  "id": "f0b97be6-c871-4b14-9549-1af59cc960b5"
+  "id": "2521a398-9108-4b23-a292-1ffe7a24ab7a"
 }

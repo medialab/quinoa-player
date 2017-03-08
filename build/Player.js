@@ -74,35 +74,27 @@ var QuinoaPresentationPlayer = function (_Component) {
 
       if (this.state.presentation) {
         if (this.state.presentation.order && this.state.presentation.order.length) {
-          this.setCurrentSlide(this.state.presentation.order[0]);
+          var beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
+          this.setCurrentSlide(this.state.presentation.order[beginAt]);
         } else {
           (function () {
             var datasets = {};
             var views = _this2.state.presentation.visualizations;
             Object.keys(views).map(function (viewKey) {
               var view = views[viewKey];
-              var viewDataMap = Object.keys(view.dataMap).reduce(function (result, collectionId) {
-                return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
-                  var parameter = view.dataMap[collectionId][parameterId];
-                  if (parameter.mappedField) {
-                    return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
-                  }
-                  return propsMap;
-                }, {})));
-              }, {});
               var visualization = _this2.state.presentation.visualizations[viewKey];
               var visType = visualization.metadata.visualizationType;
               var dataset = visualization.data;
               var mappedData = void 0;
               switch (visType) {
                 case 'map':
-                  mappedData = (0, _quinoaVisModules.mapMapData)(dataset, viewDataMap);
+                  mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
                   break;
                 case 'timeline':
-                  mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, viewDataMap);
+                  mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
                   break;
                 case 'network':
-                  mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, viewDataMap);
+                  mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
                   break;
                 default:
                   break;
@@ -129,12 +121,11 @@ var QuinoaPresentationPlayer = function (_Component) {
 
       var slide = nextState.currentSlide;
       var previousSlide = this.state.currentSlide;
-
       var slideParamsMark = slide && Object.keys(slide.views).map(function (viewKey) {
-        return slide.views[viewKey] && slide.views[viewKey].viewParameters && slide.views[viewKey].viewParameters.viewDataMap;
+        return slide.views[viewKey] && slide.views[viewKey].viewParameters && slide.views[viewKey].viewParameters.flattenedDataMap;
       });
       var previousSlideParamsMark = previousSlide && Object.keys(previousSlide.views).map(function (viewKey) {
-        return previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.viewDataMap;
+        return previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.flattenedDataMap;
       });
       if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
         (function () {
@@ -142,9 +133,9 @@ var QuinoaPresentationPlayer = function (_Component) {
           var views = slide ? slide.views : nextState.presentation.visualizations;
           Object.keys(views).map(function (viewKey) {
             var view = views[viewKey];
-            var viewDataMap = Object.keys(view.dataMap).reduce(function (result, collectionId) {
-              return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
-                var parameter = view.dataMap[collectionId][parameterId];
+            var viewDataMap = Object.keys(view.viewParameters.dataMap).reduce(function (result, collectionId) {
+              return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.viewParameters.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
+                var parameter = view.viewParameters.dataMap[collectionId][parameterId];
                 if (parameter.mappedField) {
                   return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
                 }

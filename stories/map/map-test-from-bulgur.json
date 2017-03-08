@@ -1,12 +1,14 @@
 ﻿{
   "type": "presentation",
   "metadata": {
-    "title": "Map test",
-    "authors": [],
-    "description": ""
+    "authors": [
+      "Robin"
+    ],
+    "description": "Cette année, c’est Grégoire Koenig, Directeur de cabinet du Président du directoire de la Société du Grand Paris (SGP) qui s’est prêté au jeu des questions-réponses pendant une demi-journée. La SGP est l’établissement public chargé de construire deux cents kilomètres de lignes nouvelles de métro en rocade autour de Paris, afin de faciliter le trajet de banlieue à banlieue, désengorger le réseau actuel et ainsi permettre un développement de l’aire métropolitaine parisienne. Ce chantier colossal, connu sous le nom de Grand Paris Express, est d’ores et déjà engagé et doit se poursuivre pendant plusieurs décennies. On imagine aisément les discussions, les négociations, les interrogations par lesquelles il a pu passer et qu’il ne manquera pas de susciter tout au long de sa construction !",
+    "title": "My nice map example"
   },
   "datasets": {
-    "cf6a7ed9-c6d3-475f-9617-5a10b0f7d4ff": {
+    "baffc382-5fcd-4186-9bad-5d28285d3521": {
       "metadata": {
         "format": "csv",
         "fileName": "histoiredufort.csv",
@@ -17,7 +19,7 @@
     }
   },
   "visualizations": {
-    "46d3c74f-072f-4f86-97d0-3cf54d11a23e": {
+    "736e6287-205d-473e-ad95-26702310a025": {
       "metadata": {
         "visualizationType": "map"
       },
@@ -451,184 +453,276 @@
             "acceptedValueTypes": [
               "string",
               "number"
-            ]
+            ],
+            "mappedField": "Période"
           }
+        }
+      },
+      "flattenedDataMap": {
+        "main": {
+          "category": "Période",
+          "title": "Evénement"
         }
       },
       "datasets": [
-        "cf6a7ed9-c6d3-475f-9617-5a10b0f7d4ff"
+        "baffc382-5fcd-4186-9bad-5d28285d3521"
       ],
       "colorsMap": {
-        "default": "brown",
+        "default": "#d8d8d8",
         "main": {
-          "default": "#7bdcb5"
+          "1870": "#16a400",
+          "1871": "#ffd1bf",
+          "default": "#ff4700",
+          "Avant 1840": "#ffa380",
+          "Après 1871": "#1feb00",
+          "1840-1846": "#c8ffbf"
         }
-      }
+      },
+      "viewParameters": {
+        "cameraX": 48.820569635604265,
+        "cameraY": 2.273097038269043,
+        "cameraZoom": 14,
+        "tilesUrl": "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+        "colorsMap": {
+          "default": "#d8d8d8",
+          "main": {
+            "1870": "#16a400",
+            "1871": "#ffd1bf",
+            "default": "#ff4700",
+            "Avant 1840": "#ffa380",
+            "Après 1871": "#1feb00",
+            "1840-1846": "#c8ffbf"
+          }
+        },
+        "dataMap": {
+          "main": {
+            "title": {
+              "id": "title",
+              "acceptedValueTypes": [
+                "string"
+              ],
+              "mappedField": "Evénement"
+            },
+            "category": {
+              "id": "category",
+              "acceptedValueTypes": [
+                "string",
+                "number"
+              ],
+              "mappedField": "Période"
+            }
+          }
+        },
+        "flattenedDataMap": {
+          "main": {
+            "category": "Période",
+            "title": "Evénement"
+          }
+        }
+      },
+      "viewOptions": [
+        {
+          "label": "Map tiles",
+          "viewParameter": "tilesUrl",
+          "optionType": "select",
+          "options": [
+            {
+              "value": "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+              "id": "positron",
+              "label": "CartoDB - positron"
+            },
+            {
+              "value": "https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png",
+              "id": "cycle",
+              "label": "OSM - Cycle"
+            },
+            {
+              "value": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "id": "mapnik",
+              "label": "OSM - Mapnik"
+            },
+            {
+              "value": "http://{s}.tile.stamen.com/terrain/{z}/{x}/{y}.png",
+              "id": "terrain",
+              "label": "Stamen - terrain"
+            },
+            {
+              "value": "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
+              "id": "toner",
+              "label": "Stamen - toner"
+            }
+          ]
+        }
+      ]
     }
   },
   "slides": {
-    "79359515-a1ea-4fe0-944e-74abfbda5358": {
+    "cca42e89-3645-447d-9e86-287fd988f950": {
       "views": {
-        "46d3c74f-072f-4f86-97d0-3cf54d11a23e": {
+        "736e6287-205d-473e-ad95-26702310a025": {
           "viewParameters": {
-            "cameraX": 48.823183274345446,
-            "cameraY": 2.2679901123046875,
-            "cameraZoom": 15,
-            "tilesUrl": "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
+            "cameraX": 48.820484866660514,
+            "cameraY": 2.2731399536132812,
+            "cameraZoom": 14,
+            "tilesUrl": "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
             "colorsMap": {
-              "default": "brown",
+              "default": "#d8d8d8",
               "main": {
-                "default": "#7bdcb5"
+                "1870": "#16a400",
+                "1871": "#ffd1bf",
+                "default": "#ff4700",
+                "Avant 1840": "#ffa380",
+                "Après 1871": "#1feb00",
+                "1840-1846": "#c8ffbf"
               }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "title": {
-                "id": "title",
-                "acceptedValueTypes": [
-                  "string"
-                ],
-                "mappedField": "Evénement"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ]
+            },
+            "dataMap": {
+              "main": {
+                "title": {
+                  "id": "title",
+                  "acceptedValueTypes": [
+                    "string"
+                  ],
+                  "mappedField": "Evénement"
+                },
+                "category": {
+                  "id": "category",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ],
+                  "mappedField": "Période"
+                }
               }
+            },
+            "flattenedDataMap": {
+              "main": {
+                "category": "Période",
+                "title": "Evénement"
+              }
+            },
+            "shownCategories": {
+              "default": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "main": [
+                "1870",
+                "1871",
+                "default",
+                "Avant 1840",
+                "Après 1871",
+                "1840-1846"
+              ]
             }
           }
         }
       },
-      "title": "Histoire du fort",
-      "markdown": "​Ja suis trop près\n",
-      "id": "79359515-a1ea-4fe0-944e-74abfbda5358"
+      "title": "Slide 1",
+      "markdown": "With a nice comment\n",
+      "id": "cca42e89-3645-447d-9e86-287fd988f950"
     },
-    "98659fd3-4bd1-45e4-8266-a25847f68f72": {
+    "5251fcf9-1ed8-414e-904a-4ad38942a9b9": {
       "views": {
-        "46d3c74f-072f-4f86-97d0-3cf54d11a23e": {
+        "736e6287-205d-473e-ad95-26702310a025": {
           "viewParameters": {
-            "cameraX": 48.828283009369194,
-            "cameraY": 2.296314239501953,
-            "cameraZoom": 13,
-            "tilesUrl": "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
+            "cameraX": 48.8428024034655,
+            "cameraY": 2.23297119140625,
+            "cameraZoom": 12,
+            "tilesUrl": "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
             "colorsMap": {
-              "default": "brown",
+              "default": "#d8d8d8",
               "main": {
-                "default": "#7bdcb5"
+                "default": "#000000",
+                "Avant le Fort: un site viticole": "#ff0000",
+                "Combats entre Communards et Versaillais dans le couvent Notre-Dame des Oiseaux (mai 1871 dans l'actuel Hôtel de Ville)": "#ef000f",
+                "Construire un Fort pour protéger Paris (1840-1846)": "#df001f",
+                "L'église Saint-Etienne sévèrement touchée par les combats entre Communards et Versaillais (avril 1871)": "#cf002f",
+                "La Commune est proclammée, les Fédérés sont à Issy!": "#bf003f",
+                "La guerre franco-prussienne : les combats contre les Prussiens (janvier 1871)": "#af004f",
+                "La guerre franco-prussienne: les préparatifs des combats contre les Prussiens (septembre-décembre 1870)": "#9f005f",
+                "Le Fort en temps de paix après 1871": "#8f006f",
+                "Le Fort et l'évolution urbaine d'Issy": "#7f007f",
+                "Le Séminaire Saint-Sulpice durement touché par les combats entre Communards et Versaillais (avril-mai 1871)": "#6f008f",
+                "Le château des princes de Conti est détruit (mai 1871)": "#5f009f",
+                "Le cimetière, théâtre des combats de la guerre franco-prussienne et lieu de mémoire": "#4f00af",
+                "Le parc du château des Princes de Conti, lieu stratégique pour défendre le Fort": "#3f00bf",
+                "Le pont de Billancourt, porte d'entrée du hameau des Moulineaux": "#2f00cf",
+                "Les Communards érigent des barricades place de la Fontaine pour stopper les Versaillais (mai 1871)": "#1f00df",
+                "Les Versaillais prennent d'assaut les Communards (avril 1871)": "#0f00ef"
               }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "title": {
-                "id": "title",
-                "acceptedValueTypes": [
-                  "string"
-                ],
-                "mappedField": "Evénement"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ]
+            },
+            "dataMap": {
+              "main": {
+                "title": {
+                  "id": "title",
+                  "acceptedValueTypes": [
+                    "string"
+                  ],
+                  "mappedField": "Evénement"
+                },
+                "category": {
+                  "id": "category",
+                  "acceptedValueTypes": [
+                    "string",
+                    "number"
+                  ],
+                  "mappedField": "Evénement"
+                }
               }
+            },
+            "flattenedDataMap": {
+              "main": {
+                "category": "Evénement",
+                "title": "Evénement"
+              }
+            },
+            "shownCategories": {
+              "default": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6"
+              ],
+              "main": [
+                "default",
+                "Avant le Fort: un site viticole",
+                "Combats entre Communards et Versaillais dans le couvent Notre-Dame des Oiseaux (mai 1871 dans l'actuel Hôtel de Ville)",
+                "Construire un Fort pour protéger Paris (1840-1846)",
+                "L'église Saint-Etienne sévèrement touchée par les combats entre Communards et Versaillais (avril 1871)",
+                "La Commune est proclammée, les Fédérés sont à Issy!",
+                "La guerre franco-prussienne : les combats contre les Prussiens (janvier 1871)",
+                "La guerre franco-prussienne: les préparatifs des combats contre les Prussiens (septembre-décembre 1870)",
+                "Le Fort en temps de paix après 1871",
+                "Le Fort et l'évolution urbaine d'Issy",
+                "Le Séminaire Saint-Sulpice durement touché par les combats entre Communards et Versaillais (avril-mai 1871)",
+                "Le château des princes de Conti est détruit (mai 1871)",
+                "Le cimetière, théâtre des combats de la guerre franco-prussienne et lieu de mémoire",
+                "Le parc du château des Princes de Conti, lieu stratégique pour défendre le Fort",
+                "Le pont de Billancourt, porte d'entrée du hameau des Moulineaux",
+                "Les Communards érigent des barricades place de la Fontaine pour stopper les Versaillais (mai 1871)",
+                "Les Versaillais prennent d'assaut les Communards (avril 1871)"
+              ]
             }
           }
         }
       },
-      "title": "Avec un dezoom",
-      "markdown": "Ja dézoomé​\n",
-      "id": "98659fd3-4bd1-45e4-8266-a25847f68f72"
-    },
-    "8d0636d7-1f78-4d7b-ae0b-174a214e14a8": {
-      "views": {
-        "46d3c74f-072f-4f86-97d0-3cf54d11a23e": {
-          "viewParameters": {
-            "cameraX": 48.828283009369194,
-            "cameraY": 2.2875595092773438,
-            "cameraZoom": 13,
-            "tilesUrl": "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
-            "colorsMap": {
-              "default": "brown",
-              "main": {
-                "default": "#eb144c"
-              }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "title": {
-                "id": "title",
-                "acceptedValueTypes": [
-                  "string"
-                ],
-                "mappedField": "Evénement"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ]
-              }
-            }
-          }
-        }
-      },
-      "title": "C'est mieux en rouge",
-      "markdown": "​Oh oui",
-      "id": "8d0636d7-1f78-4d7b-ae0b-174a214e14a8"
-    },
-    "27ae4193-75d5-423a-bb23-634d03d58d6a": {
-      "views": {
-        "46d3c74f-072f-4f86-97d0-3cf54d11a23e": {
-          "viewParameters": {
-            "cameraX": 48.81567222798506,
-            "cameraY": 2.2630763053894043,
-            "cameraZoom": 18,
-            "tilesUrl": "http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png",
-            "colorsMap": {
-              "default": "brown",
-              "main": {
-                "default": "#eb144c"
-              }
-            }
-          },
-          "dataMap": {
-            "main": {
-              "title": {
-                "id": "title",
-                "acceptedValueTypes": [
-                  "string"
-                ],
-                "mappedField": "Evénement"
-              },
-              "category": {
-                "id": "category",
-                "acceptedValueTypes": [
-                  "string",
-                  "number"
-                ]
-              }
-            }
-          }
-        }
-      },
-      "title": "Très très",
-      "markdown": "​\ntrès près",
-      "id": "27ae4193-75d5-423a-bb23-634d03d58d6a"
+      "title": "Slide 2",
+      "markdown": "With another slide comment\n",
+      "id": "5251fcf9-1ed8-414e-904a-4ad38942a9b9"
     }
   },
   "order": [
-    "79359515-a1ea-4fe0-944e-74abfbda5358",
-    "98659fd3-4bd1-45e4-8266-a25847f68f72",
-    "8d0636d7-1f78-4d7b-ae0b-174a214e14a8",
-    "27ae4193-75d5-423a-bb23-634d03d58d6a"
+    "cca42e89-3645-447d-9e86-287fd988f950",
+    "5251fcf9-1ed8-414e-904a-4ad38942a9b9"
   ],
-  "id": "ef775e76-3bc7-430c-9a14-0fd0d933e068"
+  "id": "6f801cd2-af97-4e5a-b6e5-de99cba3696e"
 }
