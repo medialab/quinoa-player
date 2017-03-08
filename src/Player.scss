@@ -345,6 +345,12 @@ $font-size-2: $font-size-1 * 1.66;
 
             flex: 1;
         }
+
+        .placeholder-text
+        {
+            font-style: italic;
+            color: $color-strokes;
+        }
         .next-slide-btn
         {
             font-size: $font-size-1 * 1.3;

@@ -114,7 +114,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
         navigation.currentSlideId ? _react2.default.createElement(
           'div',
           { className: 'slide-caption-container' },
-          _react2.default.createElement(
+          presentation.order.length > 1 ? _react2.default.createElement(
             'nav',
             { className: 'nav-container' },
             _react2.default.createElement(
@@ -154,7 +154,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
               { onClick: next },
               '\u25BC'
             )
-          ),
+          ) : null,
           _react2.default.createElement(
             'article',
             { className: 'slide-caption' },
@@ -166,13 +166,17 @@ var PresentationLayout = function PresentationLayout(_ref) {
             _react2.default.createElement(
               'section',
               { className: 'slide-content' },
-              _react2.default.createElement(_reactMarkdown2.default, { source: presentation.slides[navigation.currentSlideId].markdown })
+              presentation.slides[navigation.currentSlideId].markdown.length ? _react2.default.createElement(_reactMarkdown2.default, { source: presentation.slides[navigation.currentSlideId].markdown }) : _react2.default.createElement(
+                'p',
+                { className: 'placeholder-text' },
+                'No comments'
+              )
             ),
-            _react2.default.createElement(
+            presentation.order.indexOf(navigation.currentSlideId) < presentation.order.length - 1 ? _react2.default.createElement(
               'button',
               { className: 'next-slide-btn', onClick: next },
               'Next slide (\u2193)'
-            )
+            ) : null
           )
         ) : _react2.default.createElement(
           'p',

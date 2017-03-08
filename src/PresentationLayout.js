@@ -73,7 +73,7 @@ const PresentationLayout = ({
             <div className="caption-body-slide">
               {navigation.currentSlideId ?
                 <div className="slide-caption-container">
-                  <nav className="nav-container">
+                  {presentation.order.length > 1 ?<nav className="nav-container">
                     <button onClick={prev}>▲</button>
                     <ul className="quick-nav">
                       {presentation.order.map((id, index) => {
@@ -89,13 +89,18 @@ const PresentationLayout = ({
                     })}
                     </ul>
                     <button onClick={next}>▼</button>
-                  </nav>
+                  </nav> : null}
                   <article className="slide-caption">
-                    <h2 className="slide-title">{presentation.slides[navigation.currentSlideId].title}</h2>
+                    <h2 className="slide-title">
+                    {presentation.slides[navigation.currentSlideId].title}</h2>
                     <section className="slide-content">
-                      <ReactMarkdown source={presentation.slides[navigation.currentSlideId].markdown} />
+                      {
+                        presentation.slides[navigation.currentSlideId].markdown.length ?
+                        <ReactMarkdown source={presentation.slides[navigation.currentSlideId].markdown} />
+                        : <p className="placeholder-text">No comments</p>
+                      }
                     </section>
-                    <button className="next-slide-btn" onClick={next}>Next slide (↓)</button>
+                    {presentation.order.indexOf(navigation.currentSlideId) < presentation.order.length - 1 ?<button className="next-slide-btn" onClick={next}>Next slide (↓)</button> : null}
                   </article>
                 </div> :
                 <p>
