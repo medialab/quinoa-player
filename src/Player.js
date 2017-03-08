@@ -44,39 +44,27 @@ class QuinoaPresentationPlayer extends Component {
   componentDidMount() {
     if (this.state.presentation) {
       if (this.state.presentation.order && this.state.presentation.order.length) {
-        this.setCurrentSlide(this.state.presentation.order[0]);
+        const beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
+        this.setCurrentSlide(this.state.presentation.order[beginAt]);
       }
- else {
+      else {
         const datasets = {};
         const views = this.state.presentation.visualizations;
         Object.keys(views).map(viewKey => {
           const view = views[viewKey];
-          const viewDataMap = Object.keys(view.dataMap).reduce((result, collectionId) => ({
-            ...result,
-            [collectionId]: Object.keys(view.dataMap[collectionId]).reduce((propsMap, parameterId) => {
-              const parameter = view.dataMap[collectionId][parameterId];
-              if (parameter.mappedField) {
-                return {
-                  ...propsMap,
-                  [parameterId]: parameter.mappedField
-                };
-              }
-              return propsMap;
-            }, {})
-          }), {});
           const visualization = this.state.presentation.visualizations[viewKey];
           const visType = visualization.metadata.visualizationType;
           const dataset = visualization.data;
           let mappedData;
           switch (visType) {
             case 'map':
-              mappedData = mapMapData(dataset, viewDataMap);
+              mappedData = mapMapData(dataset, view.flattenedDataMap);
               break;
             case 'timeline':
-              mappedData = mapTimelineData(dataset, viewDataMap);
+              mappedData = mapTimelineData(dataset, view.flattenedDataMap);
               break;
             case 'network':
-              mappedData = mapNetworkData(dataset, viewDataMap);
+              mappedData = mapNetworkData(dataset, view.flattenedDataMap);
               break;
             default:
               break;
@@ -98,18 +86,17 @@ class QuinoaPresentationPlayer extends Component {
   componentWillUpdate(nextProps, nextState) {
     const slide = nextState.currentSlide;
     const previousSlide = this.state.currentSlide;
-
-    const slideParamsMark = slide && Object.keys(slide.views).map(viewKey => slide.views[viewKey] && slide.views[viewKey].viewParameters && slide.views[viewKey].viewParameters.viewDataMap);
-    const previousSlideParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.viewDataMap);
+    const slideParamsMark = slide && Object.keys(slide.views).map(viewKey => slide.views[viewKey] && slide.views[viewKey].viewParameters && slide.views[viewKey].viewParameters.flattenedDataMap);
+    const previousSlideParamsMark = previousSlide && Object.keys(previousSlide.views).map(viewKey => previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.flattenedDataMap);
     if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
       const datasets = {};
       const views = slide ? slide.views : nextState.presentation.visualizations;
       Object.keys(views).map(viewKey => {
         const view = views[viewKey];
-        const viewDataMap = Object.keys(view.dataMap).reduce((result, collectionId) => ({
+        const viewDataMap = Object.keys(view.viewParameters.dataMap).reduce((result, collectionId) => ({
           ...result,
-          [collectionId]: Object.keys(view.dataMap[collectionId]).reduce((propsMap, parameterId) => {
-            const parameter = view.dataMap[collectionId][parameterId];
+          [collectionId]: Object.keys(view.viewParameters.dataMap[collectionId]).reduce((propsMap, parameterId) => {
+            const parameter = view.viewParameters.dataMap[collectionId][parameterId];
             if (parameter.mappedField) {
               return {
                 ...propsMap,
