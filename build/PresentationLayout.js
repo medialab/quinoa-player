@@ -119,7 +119,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
             { className: 'nav-container' },
             _react2.default.createElement(
               'button',
-              { onClick: prev },
+              { className: 'nav-arrow', onClick: prev },
               '\u25B2'
             ),
             _react2.default.createElement(
@@ -151,7 +151,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
             ),
             _react2.default.createElement(
               'button',
-              { onClick: next },
+              { className: 'nav-arrow', onClick: next },
               '\u25BC'
             )
           ) : null,

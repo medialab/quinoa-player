@@ -251,10 +251,10 @@ class QuinoaPresentationPlayer extends Component {
   stepSlide (forward) {
     let newSlidePosition;
     if (forward) {
-      newSlidePosition = this.state.navigation.position < this.state.presentation.order.length - 1 ? this.state.navigation.position + 1 : 0;
+      newSlidePosition = this.state.navigation.position < this.state.presentation.order.length - 1 ? this.state.navigation.position + 1 : this.state.navigation.position; // 0;
     }
     else {
-      newSlidePosition = this.state.navigation.position > 0 ? this.state.navigation.position - 1 : this.state.presentation.order.length - 1;
+      newSlidePosition = this.state.navigation.position > 0 ? this.state.navigation.position - 1 : this.state.navigation.position; // this.state.presentation.order.length - 1;
     }
     this.setCurrentSlide(this.state.presentation.order[newSlidePosition]);
   }

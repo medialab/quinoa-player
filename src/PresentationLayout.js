@@ -74,7 +74,7 @@ const PresentationLayout = ({
               {navigation.currentSlideId ?
                 <div className="slide-caption-container">
                   {presentation.order.length > 1 ? <nav className="nav-container">
-                    <button onClick={prev}>▲</button>
+                    <button className="nav-arrow" onClick={prev}>▲</button>
                     <ul className="quick-nav">
                       {presentation.order.map((id, index) => {
                       const slide = presentation.slides[id];
@@ -88,7 +88,7 @@ const PresentationLayout = ({
                       );
                     })}
                     </ul>
-                    <button onClick={next}>▼</button>
+                    <button className="nav-arrow" onClick={next}>▼</button>
                   </nav> : null}
                   <article className="slide-caption">
                     <h2 className="slide-title">
