@@ -126,6 +126,7 @@ const PresentationLayout = ({
                               <ul className="legend-group">
                                 {
                                   Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId])
+                                  .filter(category => category !== 'default')
                                   .map(category => (
                                     <li className="legend-item" key={category}>
                                       <span className="color"

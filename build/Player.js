@@ -77,35 +77,33 @@ var QuinoaPresentationPlayer = function (_Component) {
           var beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
           this.setCurrentSlide(this.state.presentation.order[beginAt]);
         } else {
-          (function () {
-            var datasets = {};
-            var views = _this2.state.presentation.visualizations;
-            Object.keys(views).map(function (viewKey) {
-              var view = views[viewKey];
-              var visualization = _this2.state.presentation.visualizations[viewKey];
-              var visType = visualization.metadata.visualizationType;
-              var dataset = visualization.data;
-              var mappedData = void 0;
-              switch (visType) {
-                case 'map':
-                  mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
-                  break;
-                case 'timeline':
-                  mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
-                  break;
-                case 'network':
-                  mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
-                  break;
-                default:
-                  break;
-              }
-              datasets[viewKey] = mappedData;
-            });
-            _this2.setState({
-              activeViewsParameters: _extends({}, _this2.state.presentation.visualizations),
-              datasets: datasets
-            });
-          })();
+          var datasets = {};
+          var views = this.state.presentation.visualizations;
+          Object.keys(views).map(function (viewKey) {
+            var view = views[viewKey];
+            var visualization = _this2.state.presentation.visualizations[viewKey];
+            var visType = visualization.metadata.visualizationType;
+            var dataset = visualization.data;
+            var mappedData = void 0;
+            switch (visType) {
+              case 'map':
+                mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
+                break;
+              case 'timeline':
+                mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
+                break;
+              case 'network':
+                mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
+                break;
+              default:
+                break;
+            }
+            datasets[viewKey] = mappedData;
+          });
+          this.setState({
+            activeViewsParameters: _extends({}, this.state.presentation.visualizations),
+            datasets: datasets
+          });
         }
       }
     }
@@ -128,43 +126,41 @@ var QuinoaPresentationPlayer = function (_Component) {
         return previousSlide.views[viewKey] && previousSlide.views[viewKey].viewParameters && previousSlide.views[viewKey].viewParameters.flattenedDataMap;
       });
       if (JSON.stringify(slideParamsMark) !== JSON.stringify(previousSlideParamsMark)) {
-        (function () {
-          var datasets = {};
-          var views = slide ? slide.views : nextState.presentation.visualizations;
-          Object.keys(views).map(function (viewKey) {
-            var view = views[viewKey];
-            var viewDataMap = Object.keys(view.viewParameters.dataMap).reduce(function (result, collectionId) {
-              return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.viewParameters.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
-                var parameter = view.viewParameters.dataMap[collectionId][parameterId];
-                if (parameter.mappedField) {
-                  return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
-                }
-                return propsMap;
-              }, {})));
-            }, {});
-            var visualization = _this3.state.presentation.visualizations[viewKey];
-            var visType = visualization.metadata.visualizationType;
-            var dataset = visualization.data;
-            var mappedData = void 0;
-            switch (visType) {
-              case 'map':
-                mappedData = (0, _quinoaVisModules.mapMapData)(dataset, viewDataMap);
-                break;
-              case 'timeline':
-                mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, viewDataMap);
-                break;
-              case 'network':
-                mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, viewDataMap);
-                break;
-              default:
-                break;
-            }
-            datasets[viewKey] = mappedData;
-          });
-          _this3.setState({
-            datasets: datasets
-          });
-        })();
+        var datasets = {};
+        var views = slide ? slide.views : nextState.presentation.visualizations;
+        Object.keys(views).map(function (viewKey) {
+          var view = views[viewKey];
+          var viewDataMap = Object.keys(view.viewParameters.dataMap).reduce(function (result, collectionId) {
+            return _extends({}, result, _defineProperty({}, collectionId, Object.keys(view.viewParameters.dataMap[collectionId]).reduce(function (propsMap, parameterId) {
+              var parameter = view.viewParameters.dataMap[collectionId][parameterId];
+              if (parameter.mappedField) {
+                return _extends({}, propsMap, _defineProperty({}, parameterId, parameter.mappedField));
+              }
+              return propsMap;
+            }, {})));
+          }, {});
+          var visualization = _this3.state.presentation.visualizations[viewKey];
+          var visType = visualization.metadata.visualizationType;
+          var dataset = visualization.data;
+          var mappedData = void 0;
+          switch (visType) {
+            case 'map':
+              mappedData = (0, _quinoaVisModules.mapMapData)(dataset, viewDataMap);
+              break;
+            case 'timeline':
+              mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, viewDataMap);
+              break;
+            case 'network':
+              mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, viewDataMap);
+              break;
+            default:
+              break;
+          }
+          datasets[viewKey] = mappedData;
+        });
+        this.setState({
+          datasets: datasets
+        });
       }
       var slideViewParamsMark = previousSlide && Object.keys(previousSlide.views).map(function (viewKey) {
         return previousSlide.views[viewKey];
@@ -188,8 +184,6 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'resetView',
     value: function resetView() {
-      var _this4 = this;
-
       var slide = this.state.currentSlide;
       if (slide) {
         var activeViewsParameters = Object.keys(slide.views).reduce(function (result, viewKey) {
@@ -200,16 +194,14 @@ var QuinoaPresentationPlayer = function (_Component) {
           viewDifferentFromSlide: false
         });
       } else {
-        (function () {
-          var visualizations = _this4.state.presentation.visualizations;
-          var activeViewsParameters = Object.keys(visualizations).reduce(function (result, viewKey) {
-            return _extends({}, result, _defineProperty({}, viewKey, { viewParameters: visualizations[viewKey].viewParameters }));
-          }, {});
-          _this4.setState({
-            activeViewsParameters: activeViewsParameters,
-            viewDifferentFromSlide: false
-          });
-        })();
+        var visualizations = this.state.presentation.visualizations;
+        var _activeViewsParameters = Object.keys(visualizations).reduce(function (result, viewKey) {
+          return _extends({}, result, _defineProperty({}, viewKey, { viewParameters: visualizations[viewKey].viewParameters }));
+        }, {});
+        this.setState({
+          activeViewsParameters: _activeViewsParameters,
+          viewDifferentFromSlide: false
+        });
       }
     }
   }, {

@@ -206,7 +206,9 @@ var PresentationLayout = function PresentationLayout(_ref) {
                   _react2.default.createElement(
                     'ul',
                     { className: 'legend-group' },
-                    Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId]).map(function (category) {
+                    Object.keys(presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId]).filter(function (category) {
+                      return category !== 'default';
+                    }).map(function (category) {
                       return _react2.default.createElement(
                         'li',
                         { className: 'legend-item', key: category },
