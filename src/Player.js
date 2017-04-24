@@ -307,8 +307,13 @@ class QuinoaPresentationPlayer extends Component {
     const {
       template = 'stepper'
     } = this.props;
+    const onWheel = (e) => {
+      if (typeof this.props.onWheel === 'function') {
+        this.props.onWheel(e);
+      }
+    };
     return (
-      <div className={'quinoa-presentation-player ' + template}>
+      <div onWheel={onWheel} className={'quinoa-presentation-player ' + template}>
         {this.renderComponent()}
       </div>
     );
