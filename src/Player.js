@@ -313,11 +313,10 @@ class QuinoaPresentationPlayer extends Component {
       }
     };
     return (
-      <div 
-        onWheel={onWheel} 
+      <div
+        onWheel={onWheel}
         className={'quinoa-presentation-player ' + template + ' ' + (this.props.className ? this.props.className : '')}
-        style={this.props.style}
-      >
+        style={this.props.style}>
         {this.renderComponent()}
       </div>
     );
