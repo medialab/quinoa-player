@@ -5,6 +5,7 @@ import Player from '../src/Player';
 
 import mapPresentation from './map/map-test-from-bulgur.json';
 import timelinePresentation from './timeline/timeline-test-from-bulgur.json';
+import networkPresentation from './network/network-test-from-bulgur.json';
 
 const timelineZeroSlides = {
   ...timelinePresentation,
@@ -14,9 +15,15 @@ const timelineZeroSlides = {
 // import networkPresentation from './network/network-test-from-bulgur.json';
 
 storiesOf('Quinoa timeline presentation', module)
-  .add('Cartel mode, navigable', () => (
+  .add('Cartel mode, navigable (stepper)', () => (
     <Player 
       presentation={timelinePresentation} 
+    />
+  ))
+  .add('Cartel mode, navigable (scroller)', () => (
+    <Player 
+      presentation={timelinePresentation} 
+      template="scroller"
     />
   ))
   .add('Presentation with no slides', () => (
@@ -33,8 +40,29 @@ storiesOf('Quinoa timeline presentation', module)
 //   ));
 
 storiesOf('Quinoa map presentation', module)
-  .add('Cartel mode, navigable', () => (
+  .add('Cartel mode, navigable, stepper', () => (
     <Player 
       presentation={mapPresentation} 
+    />
+  ))
+  .add('Cartel mode, navigable, scroller', () => (
+    <Player 
+      presentation={mapPresentation} 
+      template='scroller'
+      onExit={(direction) => console.info('on exit', direction)}
+    />
+  ));
+
+storiesOf('Quinoa network presentation', module)
+  .add('Cartel mode, navigable, stepper', () => (
+    <Player 
+      presentation={networkPresentation} 
+    />
+  ))
+  .add('Cartel mode, navigable, scroller', () => (
+    <Player 
+      presentation={networkPresentation} 
+      template='scroller'
+      onExit={(direction) => console.info('on exit', direction)}
     />
   ));

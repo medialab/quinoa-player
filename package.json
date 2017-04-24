@@ -29,6 +29,9 @@
   },
   "homepage": "https://github.com/medialab/quinoa-presentation-player#readme",
   "dependencies": {
+    "d3-ease": "^1.0.3",
+    "d3-interpolate": "^1.1.4",
+    "d3-timer": "^1.0.5",
     "quinoa-vis-modules": "git+https://github.com/medialab/quinoa-vis-modules.git",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

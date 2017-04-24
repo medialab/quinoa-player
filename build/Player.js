@@ -16,6 +16,10 @@ var _StepperLayout = require('./templates/stepper/StepperLayout');
 
 var _StepperLayout2 = _interopRequireDefault(_StepperLayout);
 
+var _ScrollerLayout = require('./templates/scroller/ScrollerLayout');
+
+var _ScrollerLayout2 = _interopRequireDefault(_ScrollerLayout);
+
 var _quinoaVisModules = require('quinoa-vis-modules');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -47,12 +51,14 @@ var QuinoaPresentationPlayer = function (_Component) {
     _this.toggleAside = _this.toggleAside.bind(_this);
     _this.resetView = _this.resetView.bind(_this);
     _this.onUserViewChange = _this.onUserViewChange.bind(_this);
+    _this.toggleInteractionMode = _this.toggleInteractionMode.bind(_this);
 
     var initialState = {
       status: 'waiting',
       navigation: {},
       gui: {
-        asideVisible: false
+        asideVisible: false,
+        interactionMode: 'read'
       },
       datasets: {},
       activeViewsParameters: {}
@@ -221,6 +227,15 @@ var QuinoaPresentationPlayer = function (_Component) {
       //    }
     }
   }, {
+    key: 'toggleInteractionMode',
+    value: function toggleInteractionMode(to) {
+      this.setState({
+        gui: _extends({}, this.state.gui, {
+          interactionMode: to
+        })
+      });
+    }
+  }, {
     key: 'renderComponent',
     value: function renderComponent() {
       var _props = this.props,
@@ -231,6 +246,23 @@ var QuinoaPresentationPlayer = function (_Component) {
 
       if (this.state.presentation && this.state.status === 'loaded') {
         switch (template) {
+          case 'scroller':
+            return _react2.default.createElement(_ScrollerLayout2.default, {
+              currentSlide: this.state.currentSlide,
+              activeViewsParameters: this.state.activeViewsParameters,
+              viewDifferentFromSlide: this.state.viewDifferentFromSlide,
+              datasets: this.state.datasets,
+              presentation: this.state.presentation,
+              navigation: this.state.navigation,
+              setCurrentSlide: this.setCurrentSlide,
+              stepSlide: this.stepSlide,
+              toggleAside: this.toggleAside,
+              gui: this.state.gui,
+              options: options,
+              resetView: this.resetView,
+              onUserViewChange: this.onUserViewChange,
+              toggleInteractionMode: this.toggleInteractionMode,
+              onExit: this.props.onExit });
           case 'stepper':
           default:
             return _react2.default.createElement(_StepperLayout2.default, {

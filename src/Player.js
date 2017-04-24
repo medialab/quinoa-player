@@ -2,6 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 
 import StepperLayout from './templates/stepper/StepperLayout';
+import ScrollerLayout from './templates/scroller/ScrollerLayout';
 
 import {
   mapMapData,
@@ -22,12 +23,14 @@ class QuinoaPresentationPlayer extends Component {
     this.toggleAside = this.toggleAside.bind(this);
     this.resetView = this.resetView.bind(this);
     this.onUserViewChange = this.onUserViewChange.bind(this);
+    this.toggleInteractionMode = this.toggleInteractionMode.bind(this);
 
     const initialState = {
       status: 'waiting',
       navigation: {},
       gui: {
-        asideVisible: false
+        asideVisible: false,
+        interactionMode: 'read'
       },
       datasets: {},
       activeViewsParameters: {}
@@ -191,6 +194,15 @@ class QuinoaPresentationPlayer extends Component {
    //    }
   }
 
+  toggleInteractionMode (to) {
+    this.setState({
+      gui: {
+        ...this.state.gui,
+        interactionMode: to
+      }
+    });
+  }
+
   renderComponent () {
     const {
       options = {},
@@ -198,6 +210,25 @@ class QuinoaPresentationPlayer extends Component {
     } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
       switch (template) {
+        case 'scroller':
+          return (
+            <ScrollerLayout
+              currentSlide={this.state.currentSlide}
+              activeViewsParameters={this.state.activeViewsParameters}
+              viewDifferentFromSlide={this.state.viewDifferentFromSlide}
+              datasets={this.state.datasets}
+              presentation={this.state.presentation}
+              navigation={this.state.navigation}
+              setCurrentSlide={this.setCurrentSlide}
+              stepSlide={this.stepSlide}
+              toggleAside={this.toggleAside}
+              gui={this.state.gui}
+              options={options}
+              resetView={this.resetView}
+              onUserViewChange={this.onUserViewChange}
+              toggleInteractionMode={this.toggleInteractionMode}
+              onExit={this.props.onExit} />
+        );
         case 'stepper':
         default:
           return (

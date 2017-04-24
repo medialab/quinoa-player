@@ -63,10 +63,10 @@
         {
             display: flex;
 
+            min-width: 30%;
             // border-right: 1px solid $color-strokes;
 
             flex: 1;
-            min-width: 20%;
             flex-flow: column nowrap;
             align-items: stretch;
         }
@@ -132,13 +132,14 @@
                 max-height: 33%;
                 padding: $gutter-medium;
 
+                transition: all .5s ease;
+
+                opacity: .5;
                 // background: $color-secondary-background;
 
                 flex: 1;
-
-                opacity: .5;
-                transition: all .5s ease;
-                &:hover{
+                &:hover
+                {
                     opacity: 1;
                 }
             }
@@ -168,7 +169,6 @@
 
         cursor: pointer;
         transition: all .2s ease;
-
         // border-bottom: 1px solid $color-strokes;
 
         flex-flow: row nowrap;

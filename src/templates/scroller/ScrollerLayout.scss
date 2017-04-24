@@ -1,6 +1,6 @@
 @import '../../Player.scss';
 
-.quinoa-presentation-player.stepper
+.quinoa-presentation-player.scroller
 {
     // default styling
     font-family: 'Source Sans Pro', sans-serif;
@@ -23,6 +23,7 @@
 
     flex-flow: column nowrap;
     align-items: stretch;
+
     // nested layout
     .wrapper
     {
@@ -32,41 +33,56 @@
 
         width: 100%;
         height: 100%;
+        // left: 0;
+        // top: 0;
         margin: 0;
         padding: 0;
 
         flex: 1;
         flex-flow: row nowrap;
         align-items: stretch;
-
         .views-container,
         .caption-container
         {
             position: relative;
         }
-
         .views-container
         {
+            position: absolute;
+            top: 0;
+            left: 0;
+
             display: flex;
             flex-direction: row;
 
+            width: 100%;
+            height: 100%;
             margin: 0;
             padding: 0;
-
-            flex: 4;
             .view-container
             {
                 flex: 1;
+
+                &.timeline{
+                    left: 30%;
+                    width: 70%;
+                    position: relative;
+                }
             }
         }
         .caption-container
         {
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            left: 0;
+
             display: flex;
 
-            min-width: 30%;
+            width: 30%;
+            height: 100%;
             // border-right: 1px solid $color-strokes;
 
-            flex: 1;
             flex-flow: column nowrap;
             align-items: stretch;
         }
@@ -78,7 +94,6 @@
             flex: 1;
             flex-flow: column nowrap;
             align-items: stretch;
-
             .slide-caption-container
             {
                 display: flex;
@@ -86,24 +101,30 @@
                 flex: 3;
                 flex-flow: row nowrap;
                 align-items: stretch;
+                position : relative;
+                overflow: hidden;
+
                 .nav-container
                 {
                     display: flex;
+                    position: absolute;
+                    left:  $gutter-medium;
+                    top: 0;
+                    width: $gutter-medium;
+                    height: 100%;
 
-                    padding-top: $gutter-medium;
-                    padding-bottom: $gutter-medium;
-
-                    flex: 1;
                     flex-flow: column nowrap;
                     align-items: stretch;
+                    z-index: 2;
                     button
                     {
                         text-align: center;
                     }
-
                     .nav-arrow
                     {
                         font-size: $font-size-2;
+
+                        display: none;
 
                         transition: all .2s ease;
                         &:hover
@@ -112,16 +133,31 @@
                         }
                     }
                 }
-
                 .slide-caption
                 {
                     padding: $gutter-medium;
 
                     flex: 5;
-
+                    position : absolute;
+                    left: 0;
+                    padding-left: $gutter-medium * 3;
+                    overflow-y: hidden;
+                    cursor: pointer;
+                    overflow-y: visible;
                     .slide-content
                     {
-                        padding-right: $gutter-medium;
+                        padding: $gutter-small;
+                        padding-right: $gutter-medium *2;
+
+                        color: white;
+                        background: black;
+                        margin-bottom: $gutter-medium*5;
+
+                        opacity: .5;
+                        transition: all .5s ease;
+                        &.active{
+                            opacity: 1;
+                        }
                     }
                 }
             }
@@ -138,9 +174,34 @@
                 // background: $color-secondary-background;
 
                 flex: 1;
+                z-index: 3;
+                h4
+                {
+                    overflow: hidden;
+
+                    max-height: .001px;
+                    padding: 0;
+
+                    transition: all .5s ease;
+
+                    opacity: 0;
+                }
                 &:hover
                 {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+
+                    width: 100%;
+
                     opacity: 1;
+                    background: white;
+                    h4
+                    {
+                        max-height: 2rem;
+
+                        opacity: 1;
+                    }
                 }
             }
         }
@@ -151,7 +212,36 @@
 
             padding: $gutter-medium;
 
+            background: white;
+
             flex: 1;
+        }
+    }
+    .explore
+    {
+        .slide-legend-container
+        {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            overflow-y: auto;
+
+            width: 100%;
+            max-height: 33%;
+            padding: $gutter-medium;
+
+            transition: all .5s ease;
+
+            opacity: .5;
+            // background: $color-secondary-background;
+
+            flex: 1;
+            &:hover
+            {
+                opacity: 1;
+                background: white;
+            }
         }
     }
     /* 
@@ -177,7 +267,6 @@
         {
             @extend .interactive-item-intent;
         }
-
         &.active
         {
             @extend .interactive-item-active;
@@ -187,7 +276,6 @@
             }
         }
     }
-
     // view legend
     .view-legend
     {
@@ -233,7 +321,6 @@
         justify-content: space-between;
         align-items: center;
         flex: 5;
-
         li
         {
             position: relative;
@@ -250,7 +337,6 @@
             border: $color-strokes;
             border-radius: 50%;
             background: $color-strokes;
-
             h3
             {
                 position: absolute;
@@ -277,14 +363,12 @@
                     opacity: 0;
                     color: $color-background;
                     background: $color-primary;
-
                     .tooltip-content
                     {
                         padding: $gutter-small;
                     }
                 }
             }
-
             &:hover
             {
                 &:not(.active)
@@ -296,14 +380,12 @@
                     opacity: 1;
                 }
             }
-
             &.active
             {
                 background: $color-primary;
             }
         }
     }
-
     // slide caption
     .slide-caption
     {
@@ -315,13 +397,6 @@
         {
             margin: 0;
         }
-        .slide-content
-        {
-            overflow-y: auto;
-
-            flex: 1;
-        }
-
         .placeholder-text
         {
             font-style: italic;
@@ -340,7 +415,6 @@
 
             opacity: .8;
             color: $color-primary;
-
             &:hover
             {
                 font-weight: 800;
@@ -349,7 +423,39 @@
             }
         }
     }
+    .read-mode-toggler
+    {
+        display: flex;
 
+        margin: 0;
+        padding: 0;
+        padding-left: $gutter-medium;
+
+        flex-flow: row nowrap;
+        align-items: stretch;
+        li
+        {
+            padding: 0;
+
+            list-style: none;
+
+            text-align: left;
+
+            flex: 1;
+            &:hover
+            {
+                @extend .interactive-item-intent;
+            }
+            &.active
+            {
+                @extend .interactive-item-active;
+                &:hover
+                {
+                    @extend .interactive-item-active-intent;
+                }
+            }
+        }
+    }
     // components
     button
     {
