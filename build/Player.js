@@ -353,7 +353,10 @@ var QuinoaPresentationPlayer = function (_Component) {
       };
       return _react2.default.createElement(
         'div',
-        { onWheel: onWheel, className: 'quinoa-presentation-player ' + template },
+        {
+          onWheel: onWheel,
+          className: 'quinoa-presentation-player ' + template + ' ' + (this.props.className ? this.props.className : ''),
+          style: this.props.style },
         this.renderComponent()
       );
     }
