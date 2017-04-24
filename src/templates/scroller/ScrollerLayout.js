@@ -14,6 +14,27 @@ import {
 
 import './ScrollerLayout.scss';
 
+function getElementsByClassName(c, inputEl) {
+    let el = inputEl;
+    if (typeof inputEl === 'string') {
+      el = document.getElementById(inputEl);
+    }
+    if (!inputEl) {
+      el = document;
+    }
+    if (el.getElementsByClassName) {
+      return el.getElementsByClassName(c);
+    }
+    const arr = [];
+    const allEls = el.getElementsByTagName('*');
+    for (let i = 0; i < allEls.length; i++) {
+        if (allEls[i].className.split(' ').indexOf(c) > -1) {
+    arr.push(allEls[i]);
+    }
+    }
+    return arr;
+}
+
 class ScrollerLayout extends Component {
 
   constructor(props) {
@@ -93,7 +114,7 @@ class ScrollerLayout extends Component {
       }
       const scrollTop = this.state.scrollTop - e.deltaY;
       const relScrollTop = this.captionContainer.offsetHeight * 0.6 - scrollTop;
-      const anchorsEls = document.getElementsByClassName('slide-content');
+      const anchorsEls = getElementsByClassName('slide-content', this.captionContainer); // $(this.captionContainer).find('.slide-content') // document.getElementsByClassName('slide-content');
       const anchors = [];
       let activeId;
       let totalHeight = 0;

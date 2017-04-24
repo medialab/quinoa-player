@@ -36,6 +36,27 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function getElementsByClassName(c, inputEl) {
+  var el = inputEl;
+  if (typeof inputEl === 'string') {
+    el = document.getElementById(inputEl);
+  }
+  if (!inputEl) {
+    el = document;
+  }
+  if (el.getElementsByClassName) {
+    return el.getElementsByClassName(c);
+  }
+  var arr = [];
+  var allEls = el.getElementsByTagName('*');
+  for (var i = 0; i < allEls.length; i++) {
+    if (allEls[i].className.split(' ').indexOf(c) > -1) {
+      arr.push(allEls[i]);
+    }
+  }
+  return arr;
+}
+
 var ScrollerLayout = function (_Component) {
   _inherits(ScrollerLayout, _Component);
 
@@ -131,7 +152,7 @@ var ScrollerLayout = function (_Component) {
         }
         var scrollTop = _this3.state.scrollTop - e.deltaY;
         var relScrollTop = _this3.captionContainer.offsetHeight * 0.6 - scrollTop;
-        var anchorsEls = document.getElementsByClassName('slide-content');
+        var anchorsEls = getElementsByClassName('slide-content', _this3.captionContainer); // $(this.captionContainer).find('.slide-content') // document.getElementsByClassName('slide-content');
         var anchors = [];
         var activeId = void 0;
         var totalHeight = 0;
