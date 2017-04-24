@@ -63,10 +63,12 @@
             {
                 flex: 1;
 
-                &.timeline{
-                    left: 30%;
-                    width: 70%;
+                &.timeline
+                {
                     position: relative;
+                    left: 30%;
+
+                    width: 70%;
                 }
             }
         }
@@ -96,26 +98,29 @@
             align-items: stretch;
             .slide-caption-container
             {
+                position: relative;
+
                 display: flex;
+                overflow: hidden;
 
                 flex: 3;
                 flex-flow: row nowrap;
                 align-items: stretch;
-                position : relative;
-                overflow: hidden;
 
                 .nav-container
                 {
-                    display: flex;
                     position: absolute;
-                    left:  $gutter-medium;
+                    z-index: 2;
                     top: 0;
+                    left: $gutter-medium;
+
+                    display: flex;
+
                     width: $gutter-medium;
                     height: 100%;
 
                     flex-flow: column nowrap;
                     align-items: stretch;
-                    z-index: 2;
                     button
                     {
                         text-align: center;
@@ -135,27 +140,31 @@
                 }
                 .slide-caption
                 {
+                    position: absolute;
+                    left: 0;
+
+                    overflow-y: hidden;
+                    overflow-y: visible;
+
                     padding: $gutter-medium;
+                    padding-left: $gutter-medium * 3;
+
+                    cursor: pointer;
 
                     flex: 5;
-                    position : absolute;
-                    left: 0;
-                    padding-left: $gutter-medium * 3;
-                    overflow-y: hidden;
-                    cursor: pointer;
-                    overflow-y: visible;
                     .slide-content
                     {
+                        margin-bottom: $gutter-medium*5;
                         padding: $gutter-small;
                         padding-right: $gutter-medium *2;
 
-                        color: white;
-                        background: black;
-                        margin-bottom: $gutter-medium*5;
+                        transition: all .5s ease;
 
                         opacity: .5;
-                        transition: all .5s ease;
-                        &.active{
+                        color: white;
+                        background: black;
+                        &.active
+                        {
                             opacity: 1;
                         }
                     }
@@ -163,6 +172,8 @@
             }
             .slide-legend-container
             {
+                z-index: 3;
+
                 overflow-y: auto;
 
                 max-height: 33%;
@@ -174,7 +185,6 @@
                 // background: $color-secondary-background;
 
                 flex: 1;
-                z-index: 3;
                 h4
                 {
                     overflow: hidden;
