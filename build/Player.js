@@ -341,12 +341,19 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       var _props$template2 = this.props.template,
           template = _props$template2 === undefined ? 'stepper' : _props$template2;
 
+      var onWheel = function onWheel(e) {
+        if (typeof _this4.props.onWheel === 'function') {
+          _this4.props.onWheel(e);
+        }
+      };
       return _react2.default.createElement(
         'div',
-        { className: 'quinoa-presentation-player ' + template },
+        { onWheel: onWheel, className: 'quinoa-presentation-player ' + template },
         this.renderComponent()
       );
     }
