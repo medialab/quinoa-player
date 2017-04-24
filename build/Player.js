@@ -12,11 +12,11 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _StepperLayout = require('./templates/stepper/StepperLayout');
+
+var _StepperLayout2 = _interopRequireDefault(_StepperLayout);
+
 var _quinoaVisModules = require('quinoa-vis-modules');
-
-var _PresentationLayout = require('./PresentationLayout');
-
-var _PresentationLayout2 = _interopRequireDefault(_PresentationLayout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -223,24 +223,31 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'renderComponent',
     value: function renderComponent() {
-      var _props$options = this.props.options,
-          options = _props$options === undefined ? {} : _props$options;
+      var _props = this.props,
+          _props$options = _props.options,
+          options = _props$options === undefined ? {} : _props$options,
+          _props$template = _props.template,
+          template = _props$template === undefined ? 'stepper' : _props$template;
 
       if (this.state.presentation && this.state.status === 'loaded') {
-        return _react2.default.createElement(_PresentationLayout2.default, {
-          currentSlide: this.state.currentSlide,
-          activeViewsParameters: this.state.activeViewsParameters,
-          viewDifferentFromSlide: this.state.viewDifferentFromSlide,
-          datasets: this.state.datasets,
-          presentation: this.state.presentation,
-          navigation: this.state.navigation,
-          setCurrentSlide: this.setCurrentSlide,
-          stepSlide: this.stepSlide,
-          toggleAside: this.toggleAside,
-          gui: this.state.gui,
-          options: options,
-          resetView: this.resetView,
-          onUserViewChange: this.onUserViewChange });
+        switch (template) {
+          case 'stepper':
+          default:
+            return _react2.default.createElement(_StepperLayout2.default, {
+              currentSlide: this.state.currentSlide,
+              activeViewsParameters: this.state.activeViewsParameters,
+              viewDifferentFromSlide: this.state.viewDifferentFromSlide,
+              datasets: this.state.datasets,
+              presentation: this.state.presentation,
+              navigation: this.state.navigation,
+              setCurrentSlide: this.setCurrentSlide,
+              stepSlide: this.stepSlide,
+              toggleAside: this.toggleAside,
+              gui: this.state.gui,
+              options: options,
+              resetView: this.resetView,
+              onUserViewChange: this.onUserViewChange });
+        }
       } else if (this.status === 'error') {
         return _react2.default.createElement(
           'div',
@@ -302,9 +309,12 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props$template2 = this.props.template,
+          template = _props$template2 === undefined ? 'stepper' : _props$template2;
+
       return _react2.default.createElement(
         'div',
-        { className: 'quinoa-presentation-player' },
+        { className: 'quinoa-presentation-player ' + template },
         this.renderComponent()
       );
     }

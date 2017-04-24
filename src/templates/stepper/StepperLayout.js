@@ -8,6 +8,8 @@ import {
   Network
 } from 'quinoa-vis-modules';
 
+import './StepperLayout.scss';
+
 const PresentationLayout = ({
   // currentSlide,
   activeViewsParameters,

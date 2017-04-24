@@ -18,6 +18,8 @@ var _reactKeyHandler2 = _interopRequireDefault(_reactKeyHandler);
 
 var _quinoaVisModules = require('quinoa-vis-modules');
 
+require('./StepperLayout.scss');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PresentationLayout = function PresentationLayout(_ref) {

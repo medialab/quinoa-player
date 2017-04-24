@@ -1,6 +1,8 @@
 /* eslint react/no-did-mount-set-state : 0 */
 import React, {Component, PropTypes} from 'react';
 
+import StepperLayout from './templates/stepper/StepperLayout';
+
 import {
   mapMapData,
   mapTimelineData,
@@ -8,8 +10,6 @@ import {
 } from 'quinoa-vis-modules';
 
 require('./Player.scss');
-
-import PresentationLayout from './PresentationLayout';
 
 class QuinoaPresentationPlayer extends Component {
   constructor(props) {
@@ -193,25 +193,30 @@ class QuinoaPresentationPlayer extends Component {
 
   renderComponent () {
     const {
-      options = {}
+      options = {},
+      template = 'stepper'
     } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
-      return (
-        <PresentationLayout
-          currentSlide={this.state.currentSlide}
-          activeViewsParameters={this.state.activeViewsParameters}
-          viewDifferentFromSlide={this.state.viewDifferentFromSlide}
-          datasets={this.state.datasets}
-          presentation={this.state.presentation}
-          navigation={this.state.navigation}
-          setCurrentSlide={this.setCurrentSlide}
-          stepSlide={this.stepSlide}
-          toggleAside={this.toggleAside}
-          gui={this.state.gui}
-          options={options}
-          resetView={this.resetView}
-          onUserViewChange={this.onUserViewChange} />
-      );
+      switch (template) {
+        case 'stepper':
+        default:
+          return (
+            <StepperLayout
+              currentSlide={this.state.currentSlide}
+              activeViewsParameters={this.state.activeViewsParameters}
+              viewDifferentFromSlide={this.state.viewDifferentFromSlide}
+              datasets={this.state.datasets}
+              presentation={this.state.presentation}
+              navigation={this.state.navigation}
+              setCurrentSlide={this.setCurrentSlide}
+              stepSlide={this.stepSlide}
+              toggleAside={this.toggleAside}
+              gui={this.state.gui}
+              options={options}
+              resetView={this.resetView}
+              onUserViewChange={this.onUserViewChange} />
+        );
+      }
     }
     else if (this.status === 'error') {
       return (<div>Oups, that looks like an error</div>);
@@ -268,8 +273,11 @@ class QuinoaPresentationPlayer extends Component {
     });
   }
   render() {
+    const {
+      template = 'stepper'
+    } = this.props;
     return (
-      <div className="quinoa-presentation-player">
+      <div className={'quinoa-presentation-player ' + template}>
         {this.renderComponent()}
       </div>
     );
