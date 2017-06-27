@@ -2,7 +2,7 @@
   "name": "quinoa-presentation-player",
   "version": "0.1.0",
   "description": "js module and standalone app for displaying quinoa data presentations",
-  "main": "build/Player.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "rm -rf build && gulp build",
     "lint": "eslint --fix src",
