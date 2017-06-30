@@ -324,7 +324,7 @@ class QuinoaPresentationPlayer extends Component {
 }
 
 QuinoaPresentationPlayer.propTypes = {
-  // presentation: PropTypes.Object,
+  // presentation: PropTypes.object,
   options: PropTypes.shape({
     allowViewExploration: PropTypes.bool // whether users can pan/zoom/navigate inside view
   }),

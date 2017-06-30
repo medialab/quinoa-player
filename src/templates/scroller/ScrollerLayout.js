@@ -160,6 +160,9 @@ class ScrollerLayout extends Component {
     const bindCaptionContainer = captionContainer => {
       this.captionContainer = captionContainer;
     };
+
+    const css = presentation.settings && presentation.settings.css || '';
+
     return (
       <figure className="wrapper" onWheel={onWheel} ref={bindRef}>
         <figcaption className={'caption-container' + ' ' + interactionMode}>
@@ -379,6 +382,9 @@ class ScrollerLayout extends Component {
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowDown" onKeyHandle={next} />
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowRight" onKeyHandle={toggleAside} />
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowLeft" onKeyHandle={toggleAside} />
+        <style>
+          {css}
+        </style>
       </figure>
     );
   }

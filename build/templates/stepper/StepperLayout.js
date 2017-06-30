@@ -41,6 +41,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
   var prev = function prev() {
     return !presentation.firstSlide && stepSlide(false);
   };
+  var css = presentation.settings && presentation.settings.css || '';
   return _react2.default.createElement(
     'figure',
     { className: 'wrapper' },
@@ -288,7 +289,12 @@ var PresentationLayout = function PresentationLayout(_ref) {
     _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowUp', onKeyHandle: prev }),
     _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowDown', onKeyHandle: next }),
     _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowRight', onKeyHandle: toggleAside }),
-    _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowLeft', onKeyHandle: toggleAside })
+    _react2.default.createElement(_reactKeyHandler2.default, { keyEventName: _reactKeyHandler.KEYDOWN, keyValue: 'ArrowLeft', onKeyHandle: toggleAside }),
+    _react2.default.createElement(
+      'style',
+      null,
+      css
+    )
   );
 };
 

@@ -31,6 +31,7 @@ const PresentationLayout = ({
 }) => {
   const next = () => !presentation.lastSlide && stepSlide(true);
   const prev = () => !presentation.firstSlide && stepSlide(false);
+  const css = presentation.settings && presentation.settings.css || '';
   return (
     <figure className="wrapper">
       <figcaption className="caption-container">
@@ -214,6 +215,9 @@ const PresentationLayout = ({
       <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowDown" onKeyHandle={next} />
       <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowRight" onKeyHandle={toggleAside} />
       <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowLeft" onKeyHandle={toggleAside} />
+      <style>
+        {css}
+      </style>
     </figure>
   );
 };

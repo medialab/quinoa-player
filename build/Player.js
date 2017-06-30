@@ -366,7 +366,7 @@ var QuinoaPresentationPlayer = function (_Component) {
 }(_react.Component);
 
 QuinoaPresentationPlayer.propTypes = {
-  // presentation: PropTypes.Object,
+  // presentation: PropTypes.object,
   options: _react.PropTypes.shape({
     allowViewExploration: _react.PropTypes.bool // whether users can pan/zoom/navigate inside view
   }),
