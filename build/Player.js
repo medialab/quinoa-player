@@ -114,6 +114,13 @@ var QuinoaPresentationPlayer = function (_Component) {
       }
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.presentation !== nextProps.presentation) {
+        this.setState({ presentation: nextProps.presentation });
+      }
+    }
+  }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate() {
       return true;
@@ -248,6 +255,7 @@ var QuinoaPresentationPlayer = function (_Component) {
           template = _props$template === undefined ? 'stepper' : _props$template;
 
       if (this.state.presentation && this.state.status === 'loaded') {
+
         switch (template) {
           case 'scroller':
             return _react2.default.createElement(_ScrollerLayout2.default, {

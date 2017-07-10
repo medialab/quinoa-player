@@ -82,6 +82,12 @@ class QuinoaPresentationPlayer extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.presentation !== nextProps.presentation) {
+      this.setState({presentation: nextProps.presentation});
+    }
+  }
+
   shouldComponentUpdate() {
     return true;
   }
@@ -212,6 +218,7 @@ class QuinoaPresentationPlayer extends Component {
       template = 'stepper'
     } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
+
       switch (template) {
         case 'scroller':
           return (
