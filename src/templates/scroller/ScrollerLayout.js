@@ -9,7 +9,8 @@ import {timer} from 'd3-timer';
 import {
   Timeline,
   Map,
-  Network
+  Network,
+  SVGViewer,
 } from 'quinoa-vis-modules';
 
 import './ScrollerLayout.scss';
@@ -351,6 +352,9 @@ class ScrollerLayout extends Component {
                     break;
                   case 'network':
                     VisComponent = Network;
+                    break;
+                  case 'svg':
+                    VisComponent = SVGViewer;
                     break;
                   default:
                     break;

@@ -450,6 +450,9 @@ var ScrollerLayout = function (_Component) {
               case 'network':
                 VisComponent = _quinoaVisModules.Network;
                 break;
+              case 'svg':
+                VisComponent = _quinoaVisModules.SVGViewer;
+                break;
               default:
                 break;
             }

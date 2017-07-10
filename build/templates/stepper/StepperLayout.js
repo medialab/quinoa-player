@@ -253,6 +253,9 @@ var PresentationLayout = function PresentationLayout(_ref) {
           case 'network':
             Component = _quinoaVisModules.Network;
             break;
+          case 'svg':
+            Component = _quinoaVisModules.SVGViewer;
+            break;
           default:
             break;
         }
@@ -276,7 +279,7 @@ var PresentationLayout = function PresentationLayout(_ref) {
               'div',
               { className: 'view-body' },
               _react2.default.createElement(Component, {
-                data: dataset,
+                data: dataset || visualization.data,
                 viewParameters: activeViewsParameters[viewKey].viewParameters,
                 allowUserViewChange: allowViewExploration,
                 onUserViewChange: onViewChange })

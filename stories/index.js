@@ -6,6 +6,7 @@ import Player from '../src/Player';
 import mapPresentation from './map/map-test-from-bulgur.json';
 import timelinePresentation from './timeline/timeline-test-from-bulgur.json';
 import networkPresentation from './network/network-test-from-bulgur.json';
+import svgPresentation from './svg/svg-presentation-example.json';
 
 const timelineZeroSlides = {
   ...timelinePresentation,
@@ -62,6 +63,20 @@ storiesOf('Quinoa network presentation', module)
   .add('Cartel mode, navigable, scroller', () => (
     <Player 
       presentation={networkPresentation} 
+      template='scroller'
+      onExit={(direction) => console.info('on exit', direction)}
+    />
+  ));
+
+storiesOf('Quinoa svg presentation', module)
+  .add('Cartel mode, navigable, stepper', () => (
+    <Player 
+      presentation={svgPresentation} 
+    />
+  ))
+  .add('Cartel mode, navigable, scroller', () => (
+    <Player 
+      presentation={svgPresentation} 
       template='scroller'
       onExit={(direction) => console.info('on exit', direction)}
     />

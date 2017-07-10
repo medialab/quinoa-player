@@ -123,6 +123,9 @@ class QuinoaPresentationPlayer extends Component {
           case 'network':
             mappedData = mapNetworkData(dataset, viewDataMap);
             break;
+          case 'svg':
+            mappedData = dataset;
+            break;
           default:
             break;
         }
@@ -233,19 +236,21 @@ class QuinoaPresentationPlayer extends Component {
         default:
           return (
             <StepperLayout
-              currentSlide={this.state.currentSlide}
               activeViewsParameters={this.state.activeViewsParameters}
-              viewDifferentFromSlide={this.state.viewDifferentFromSlide}
+              currentSlide={this.state.currentSlide}
               datasets={this.state.datasets}
-              presentation={this.state.presentation}
+              gui={this.state.gui}
               navigation={this.state.navigation}
+              onExit={this.props.onExit}
+              onUserViewChange={this.onUserViewChange}
+              options={options}
+              presentation={this.state.presentation}
+              resetView={this.resetView}
               setCurrentSlide={this.setCurrentSlide}
               stepSlide={this.stepSlide}
               toggleAside={this.toggleAside}
-              gui={this.state.gui}
-              options={options}
-              resetView={this.resetView}
-              onUserViewChange={this.onUserViewChange} />
+              toggleInteractionMode={this.toggleInteractionMode}
+              viewDifferentFromSlide={this.state.viewDifferentFromSlide} />
         );
       }
     }

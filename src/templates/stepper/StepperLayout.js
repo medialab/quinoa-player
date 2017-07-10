@@ -5,7 +5,8 @@ import KeyHandler, {KEYDOWN} from 'react-key-handler';
 import {
   Timeline,
   Map,
-  Network
+  Network,
+  SVGViewer,
 } from 'quinoa-vis-modules';
 
 import './StepperLayout.scss';
@@ -185,6 +186,9 @@ const PresentationLayout = ({
                 case 'network':
                   Component = Network;
                   break;
+                case 'svg':
+                  Component = SVGViewer;
+                  break;
                 default:
                   break;
               }
@@ -199,7 +203,7 @@ const PresentationLayout = ({
                     </div>
                     <div className="view-body">
                       <Component
-                        data={dataset}
+                        data={dataset || visualization.data}
                         viewParameters={activeViewsParameters[viewKey].viewParameters}
                         allowUserViewChange={allowViewExploration}
                         onUserViewChange={onViewChange} />
