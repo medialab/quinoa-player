@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import KeyHandler, {KEYDOWN} from 'react-key-handler';
 
@@ -11,7 +12,7 @@ import {
 
 import './StepperLayout.scss';
 
-const PresentationLayout = ({
+const StepperLayout = ({
   // currentSlide,
   activeViewsParameters,
   // viewDifferentFromSlide,
@@ -226,5 +227,102 @@ const PresentationLayout = ({
   );
 };
 
-export default PresentationLayout;
+
+StepperLayout.propTypes = {
+  /**
+   * The presentation to display
+   */
+  presentation: PropTypes.object.isRequired,
+  /**
+   * The current slide being displayed by the component
+   */
+  currentSlide: PropTypes.object,
+  /**
+   * Parameters describing current view's state
+   */
+  activeViewsParameters: PropTypes.object,
+  /**
+   * Whether the current view parameters match with current slide's view parameters
+   */
+  viewDifferentFromSlide: PropTypes.bool,
+  /**
+   * The transformed datasets to use for displaying visualizations
+   */
+  datasets: PropTypes.object,
+  /**
+   * Navigation state description
+   */
+  navigation: PropTypes.shape({
+    /**
+     * What is the active slide's id
+     */
+    currentSlideId: PropTypes.string,
+    /**
+     * What is the active slide's rank in slides list
+     */
+    position: PropTypes.number,
+    /**
+     * Whether active slide is the first
+     */
+    firstSlide: PropTypes.bool,
+    /**
+     * Whether active slide is the last
+     */
+    lastSlide: PropTypes.bool
+
+  }),
+  /**
+   * Callbacks when user asks to jump to a specific slide
+   */
+  setCurrentSlide: PropTypes.func,
+  /**
+   * Callbacks when user asks to step forward or backward in slides order
+   */
+  stepSlide: PropTypes.func,
+  /**
+   * Callbacks to change the display of presentation's metadata/details in aside
+   */
+  toggleAside: PropTypes.func,
+  /**
+   * Interface state description
+   */
+  gui: PropTypes.shape({
+    /**
+     * Whether aside displays list of slides or presentation's metadata/details
+     */
+    asideVisible: PropTypes.bool,
+    /**
+     * Whether user is allowed to explore the view or can just navigate into slides' views
+     */
+    interactionMode: PropTypes.oneOf(['read', 'explore'])
+  }),
+  /**
+   * Component global options
+   */
+  options: PropTypes.shape({
+    /**
+     * declares whether users can pan/zoom/navigate inside the view
+     * or if the view is strictly controlled by current slide's parameters
+     */
+    allowViewExploration: PropTypes.bool
+  }),
+  /**
+   * Callbacks when user tries to reset view to current slide's view parameters
+   */
+  resetView: PropTypes.func,
+  /**
+   * Callbacks when user changes view manually
+   */
+  onUserViewChange: PropTypes.func,
+  /**
+   * Hook to switch between "read" and "explore" interaction modes
+   */
+  toggleInteractionMode: PropTypes.func,
+  /**
+   * Trigger to call when user interacts to exit the presentation
+   */
+  onExit: PropTypes.func
+};
+
+export default StepperLayout;
 

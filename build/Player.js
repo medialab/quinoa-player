@@ -379,10 +379,34 @@ var QuinoaPresentationPlayer = function (_Component) {
 }(_react.Component);
 
 QuinoaPresentationPlayer.propTypes = {
-  // presentation: PropTypes.object,
+  /**
+   * component must be given a presentation prop as argument
+   * (see ./src/presentationModel.json and ./quinoa-presentation-document-model-description.md)
+   */
+  presentation: _react.PropTypes.object.isRequired,
+  /**
+   * Component global options
+   */
   options: _react.PropTypes.shape({
-    allowViewExploration: _react.PropTypes.bool // whether users can pan/zoom/navigate inside view
+    /**
+     * declares whether users can pan/zoom/navigate inside the view
+     * or if the view is strictly controlled by current slide's parameters
+     */
+    allowViewExploration: _react.PropTypes.bool
   }),
-  onSlideChange: _react.PropTypes.func };
+  /**
+   * callback when navigation is changed
+   */
+  onSlideChange: _react.PropTypes.func,
+  /**
+   * callback when user triggers an exit event on the component
+   * (e.g. for scroller template : scroll down on last slide, scroll up on first slide)
+   */
+  onExit: _react.PropTypes.func,
+  /**
+   * callback transmitting wheel events upstream
+   */
+  onWheel: _react.PropTypes.func
+};
 
 exports.default = QuinoaPresentationPlayer;

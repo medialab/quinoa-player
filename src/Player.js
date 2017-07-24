@@ -336,11 +336,34 @@ class QuinoaPresentationPlayer extends Component {
 }
 
 QuinoaPresentationPlayer.propTypes = {
-  // presentation: PropTypes.object,
+  /**
+   * component must be given a presentation prop as argument
+   * (see ./src/presentationModel.json and ./quinoa-presentation-document-model-description.md)
+   */
+  presentation: PropTypes.object.isRequired,
+  /**
+   * Component global options
+   */
   options: PropTypes.shape({
-    allowViewExploration: PropTypes.bool // whether users can pan/zoom/navigate inside view
+    /**
+     * declares whether users can pan/zoom/navigate inside the view
+     * or if the view is strictly controlled by current slide's parameters
+     */
+    allowViewExploration: PropTypes.bool
   }),
-  onSlideChange: PropTypes.func, // callback when navigation is changed
+  /**
+   * callback when navigation is changed
+   */
+  onSlideChange: PropTypes.func,
+  /**
+   * callback when user triggers an exit event on the component
+   * (e.g. for scroller template : scroll down on last slide, scroll up on first slide)
+   */
+  onExit: PropTypes.func,
+  /**
+   * callback transmitting wheel events upstream
+   */
+  onWheel: PropTypes.func,
 };
 
 

@@ -83,7 +83,8 @@
       "@yomguithereal/eslint-config/react"
     ],
     "rules": {
-      "react/no-set-state": 0
+      "react/no-set-state": 0,
+      "react/forbid-prop-types": 0
     }
   }
 }
