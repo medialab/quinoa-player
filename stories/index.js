@@ -1,6 +1,11 @@
+/**
+ * quinoa-presentation-player stories definition
+ * ============
+ * each story allows to visually assess the lib's component in the browser
+ * run `npm storybook` to see them in action
+ */
 import React from 'react';
-import { storiesOf, action, linkTo } from '@kadira/storybook';
-import Welcome from './Welcome';
+import { storiesOf } from '@kadira/storybook';
 import Player from '../src/Player';
 
 import mapPresentation from './map/map-test-from-bulgur.json';

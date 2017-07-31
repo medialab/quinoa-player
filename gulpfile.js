@@ -1,7 +1,17 @@
+/**
+ * Gulp tasks for quinoa-presentation-player
+ */
+
 var gulp = require('gulp');
 var strip = require('gulp-strip-comments');
 var babel = require('gulp-babel');
 
+/**
+ * This build tasks does the following operations:
+ * code transpilation to plain js, 
+ * code transpilation of scss code to css code,
+ * comments stripping.
+ */
 gulp.task('build', function(){
   gulp.src([
       'src/*.js',
@@ -18,6 +28,7 @@ gulp.task('build', function(){
       "react"
     ]
   }))
+    .pipe(strip())
     .pipe(gulp.dest('build'));
 
   gulp.src([

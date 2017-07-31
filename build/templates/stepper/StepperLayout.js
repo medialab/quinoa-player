@@ -194,7 +194,6 @@ var StepperLayout = function StepperLayout(_ref) {
           'div',
           { className: 'slide-legend-container' },
 
-          // legend
           navigation.currentSlideId && Object.keys(presentation.slides[navigation.currentSlideId].views).map(function (viewId) {
             return _react2.default.createElement(
               'div',
@@ -306,98 +305,31 @@ var StepperLayout = function StepperLayout(_ref) {
 };
 
 StepperLayout.propTypes = {
-  /**
-   * The presentation to display
-   */
   presentation: _propTypes2.default.object.isRequired,
-  /**
-   * The current slide being displayed by the component
-   */
   currentSlide: _propTypes2.default.object,
-  /**
-   * Parameters describing current view's state
-   */
   activeViewsParameters: _propTypes2.default.object,
-  /**
-   * Whether the current view parameters match with current slide's view parameters
-   */
   viewDifferentFromSlide: _propTypes2.default.bool,
-  /**
-   * The transformed datasets to use for displaying visualizations
-   */
   datasets: _propTypes2.default.object,
-  /**
-   * Navigation state description
-   */
   navigation: _propTypes2.default.shape({
-    /**
-     * What is the active slide's id
-     */
     currentSlideId: _propTypes2.default.string,
-    /**
-     * What is the active slide's rank in slides list
-     */
     position: _propTypes2.default.number,
-    /**
-     * Whether active slide is the first
-     */
     firstSlide: _propTypes2.default.bool,
-    /**
-     * Whether active slide is the last
-     */
     lastSlide: _propTypes2.default.bool
 
   }),
-  /**
-   * Callbacks when user asks to jump to a specific slide
-   */
   setCurrentSlide: _propTypes2.default.func,
-  /**
-   * Callbacks when user asks to step forward or backward in slides order
-   */
   stepSlide: _propTypes2.default.func,
-  /**
-   * Callbacks to change the display of presentation's metadata/details in aside
-   */
   toggleAside: _propTypes2.default.func,
-  /**
-   * Interface state description
-   */
   gui: _propTypes2.default.shape({
-    /**
-     * Whether aside displays list of slides or presentation's metadata/details
-     */
     asideVisible: _propTypes2.default.bool,
-    /**
-     * Whether user is allowed to explore the view or can just navigate into slides' views
-     */
     interactionMode: _propTypes2.default.oneOf(['read', 'explore'])
   }),
-  /**
-   * Component global options
-   */
   options: _propTypes2.default.shape({
-    /**
-     * declares whether users can pan/zoom/navigate inside the view
-     * or if the view is strictly controlled by current slide's parameters
-     */
     allowViewExploration: _propTypes2.default.bool
   }),
-  /**
-   * Callbacks when user tries to reset view to current slide's view parameters
-   */
   resetView: _propTypes2.default.func,
-  /**
-   * Callbacks when user changes view manually
-   */
   onUserViewChange: _propTypes2.default.func,
-  /**
-   * Hook to switch between "read" and "explore" interaction modes
-   */
   toggleInteractionMode: _propTypes2.default.func,
-  /**
-   * Trigger to call when user interacts to exit the presentation
-   */
   onExit: _propTypes2.default.func
 };
 

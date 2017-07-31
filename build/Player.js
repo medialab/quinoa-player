@@ -30,10 +30,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint react/no-did-mount-set-state : 0 */
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } 
 
 
 require('./Player.scss');
+
 
 var QuinoaPresentationPlayer = function (_Component) {
   _inherits(QuinoaPresentationPlayer, _Component);
@@ -52,6 +53,7 @@ var QuinoaPresentationPlayer = function (_Component) {
     _this.resetView = _this.resetView.bind(_this);
     _this.onUserViewChange = _this.onUserViewChange.bind(_this);
     _this.toggleInteractionMode = _this.toggleInteractionMode.bind(_this);
+    _this.onExit = _this.onExit.bind(_this);
 
     var initialState = {
       status: 'waiting',
@@ -63,7 +65,6 @@ var QuinoaPresentationPlayer = function (_Component) {
       datasets: {},
       activeViewsParameters: {}
     };
-
     if (props.presentation) {
       initialState.status = 'loaded';
       initialState.presentation = props.presentation;
@@ -72,6 +73,7 @@ var QuinoaPresentationPlayer = function (_Component) {
     _this.state = initialState;
     return _this;
   }
+
 
   _createClass(QuinoaPresentationPlayer, [{
     key: 'componentDidMount',
@@ -82,37 +84,37 @@ var QuinoaPresentationPlayer = function (_Component) {
         if (this.state.presentation.order && this.state.presentation.order.length) {
           var beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
           this.setCurrentSlide(this.state.presentation.order[beginAt]);
-        } else {
-          var datasets = {};
-          var views = this.state.presentation.visualizations;
-          Object.keys(views).map(function (viewKey) {
-            var view = views[viewKey];
-            var visualization = _this2.state.presentation.visualizations[viewKey];
-            var visType = visualization.metadata.visualizationType;
-            var dataset = visualization.data;
-            var mappedData = void 0;
-            switch (visType) {
-              case 'map':
-                mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
-                break;
-              case 'timeline':
-                mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
-                break;
-              case 'network':
-                mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
-                break;
-              default:
-                break;
-            }
-            datasets[viewKey] = mappedData;
-          });
-          this.setState({
-            activeViewsParameters: _extends({}, this.state.presentation.visualizations),
-            datasets: datasets
-          });
         }
+        var datasets = {};
+        var views = this.state.presentation.visualizations;
+        Object.keys(views).map(function (viewKey) {
+          var view = views[viewKey];
+          var visualization = _this2.state.presentation.visualizations[viewKey];
+          var visType = visualization.metadata.visualizationType;
+          var dataset = visualization.data;
+          var mappedData = void 0;
+          switch (visType) {
+            case 'map':
+              mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
+              break;
+            case 'timeline':
+              mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
+              break;
+            case 'network':
+              mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
+              break;
+            default:
+              break;
+          }
+          datasets[viewKey] = mappedData;
+        });
+        this.setState({
+          activeViewsParameters: _extends({}, this.state.presentation.visualizations),
+          datasets: datasets
+        });
       }
     }
+
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
@@ -120,11 +122,14 @@ var QuinoaPresentationPlayer = function (_Component) {
         this.setState({ presentation: nextProps.presentation });
       }
     }
+
+
   }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate() {
       return true;
     }
+
   }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate(nextProps, nextState) {
@@ -173,7 +178,7 @@ var QuinoaPresentationPlayer = function (_Component) {
               break;
           }
           datasets[viewKey] = mappedData;
-        });
+        }); 
         this.setState({
           datasets: datasets
         });
@@ -190,6 +195,7 @@ var QuinoaPresentationPlayer = function (_Component) {
         });
       }
     }
+
   }, {
     key: 'onUserViewChange',
     value: function onUserViewChange(viewKey, viewParameters) {
@@ -197,6 +203,7 @@ var QuinoaPresentationPlayer = function (_Component) {
         activeViewsParameters: _extends({}, this.state.activeViews, _defineProperty({}, viewKey, { viewParameters: viewParameters }))
       });
     }
+
   }, {
     key: 'resetView',
     value: function resetView() {
@@ -220,22 +227,16 @@ var QuinoaPresentationPlayer = function (_Component) {
         });
       }
     }
+
   }, {
     key: 'initPresentation',
     value: function initPresentation(presentation) {
-      // const valid = validate(presentation);
-      // if (valid) {
       this.setState({
         status: 'loaded',
         presentation: presentation
       });
-      //    }
-      // else {
-      //      this.setState({
-      //        status: 'error'
-      //      });
-      //    }
     }
+
   }, {
     key: 'toggleInteractionMode',
     value: function toggleInteractionMode(to) {
@@ -245,6 +246,15 @@ var QuinoaPresentationPlayer = function (_Component) {
         })
       });
     }
+
+  }, {
+    key: 'onExit',
+    value: function onExit(side) {
+      if (typeof this.props.onExit === 'function') {
+        this.props.onExit(side);
+      }
+    }
+
   }, {
     key: 'renderComponent',
     value: function renderComponent() {
@@ -255,7 +265,6 @@ var QuinoaPresentationPlayer = function (_Component) {
           template = _props$template === undefined ? 'stepper' : _props$template;
 
       if (this.state.presentation && this.state.status === 'loaded') {
-
         switch (template) {
           case 'scroller':
             return _react2.default.createElement(_ScrollerLayout2.default, {
@@ -273,7 +282,7 @@ var QuinoaPresentationPlayer = function (_Component) {
               resetView: this.resetView,
               onUserViewChange: this.onUserViewChange,
               toggleInteractionMode: this.toggleInteractionMode,
-              onExit: this.props.onExit });
+              onExit: this.onExit });
           case 'stepper':
           default:
             return _react2.default.createElement(_StepperLayout2.default, {
@@ -282,7 +291,7 @@ var QuinoaPresentationPlayer = function (_Component) {
               datasets: this.state.datasets,
               gui: this.state.gui,
               navigation: this.state.navigation,
-              onExit: this.props.onExit,
+              onExit: this.onExit,
               onUserViewChange: this.onUserViewChange,
               options: options,
               presentation: this.state.presentation,
@@ -307,6 +316,7 @@ var QuinoaPresentationPlayer = function (_Component) {
         );
       }
     }
+
   }, {
     key: 'setCurrentSlide',
     value: function setCurrentSlide(id) {
@@ -331,17 +341,19 @@ var QuinoaPresentationPlayer = function (_Component) {
         }
       }
     }
+
   }, {
     key: 'stepSlide',
     value: function stepSlide(forward) {
       var newSlidePosition = void 0;
       if (forward) {
-        newSlidePosition = this.state.navigation.position < this.state.presentation.order.length - 1 ? this.state.navigation.position + 1 : this.state.navigation.position; // 0;
+        newSlidePosition = this.state.navigation.position < this.state.presentation.order.length - 1 ? this.state.navigation.position + 1 : this.state.navigation.position; 
       } else {
-        newSlidePosition = this.state.navigation.position > 0 ? this.state.navigation.position - 1 : this.state.navigation.position; // this.state.presentation.order.length - 1;
+        newSlidePosition = this.state.navigation.position > 0 ? this.state.navigation.position - 1 : this.state.navigation.position; 
       }
       this.setCurrentSlide(this.state.presentation.order[newSlidePosition]);
     }
+
   }, {
     key: 'toggleAside',
     value: function toggleAside() {
@@ -351,6 +363,7 @@ var QuinoaPresentationPlayer = function (_Component) {
         })
       });
     }
+
   }, {
     key: 'render',
     value: function render() {
@@ -378,34 +391,16 @@ var QuinoaPresentationPlayer = function (_Component) {
   return QuinoaPresentationPlayer;
 }(_react.Component);
 
+
+
 QuinoaPresentationPlayer.propTypes = {
-  /**
-   * component must be given a presentation prop as argument
-   * (see ./src/presentationModel.json and ./quinoa-presentation-document-model-description.md)
-   */
   presentation: _react.PropTypes.object.isRequired,
-  /**
-   * Component global options
-   */
+  beginAt: _react.PropTypes.number,
   options: _react.PropTypes.shape({
-    /**
-     * declares whether users can pan/zoom/navigate inside the view
-     * or if the view is strictly controlled by current slide's parameters
-     */
     allowViewExploration: _react.PropTypes.bool
   }),
-  /**
-   * callback when navigation is changed
-   */
   onSlideChange: _react.PropTypes.func,
-  /**
-   * callback when user triggers an exit event on the component
-   * (e.g. for scroller template : scroll down on last slide, scroll up on first slide)
-   */
   onExit: _react.PropTypes.func,
-  /**
-   * callback transmitting wheel events upstream
-   */
   onWheel: _react.PropTypes.func
 };
 

@@ -1,3 +1,8 @@
+/**
+ * This module exports a stateless stepper layout component
+ * ============
+ * @module quinoa-presentation-player/templates/Stepper
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
@@ -12,10 +17,25 @@ import {
 
 import './StepperLayout.scss';
 
+/**
+ * Renders the component in a pure/stateless form
+ * @param {object} props - the props received by the component
+ * @param {object} props.activeViewsParameters - the parameters to use to render the presentation's views
+ * @param {object} props.datasets - map of datasets to use
+ * @param {object} props.presentation - active presentation data
+ * @param {object} props.navigation - set of utils to describe the navigation state
+ * @param {function} props.setCurrentSlide - set current slide by id
+ * @param {function} props.stepSlide - go one slide forward or backward
+ * @param {function} props.toggleAside - callback to change the state of left pannel
+ * @param {object} props.gui - general gui state representation
+ * @param {boolean} props.gui.asideVisible - whether the left pannel displays the slides or metadata
+ * @param {object} props.options - options of the rendering
+ * @param {boolean} props.options.allowViewExploration - whether user can change view parameters
+ * @param {function} props.onUserViewChange - callback for the view
+ * @return {ReactElement} component - the component
+ */
 const StepperLayout = ({
-  // currentSlide,
   activeViewsParameters,
-  // viewDifferentFromSlide,
   datasets,
   presentation,
   navigation,
@@ -29,8 +49,8 @@ const StepperLayout = ({
     allowViewExploration = true
   },
   onUserViewChange,
-  // resetView
 }) => {
+  // todo : this is a bit too concise
   const next = () => !presentation.lastSlide && stepSlide(true);
   const prev = () => !presentation.firstSlide && stepSlide(false);
   const css = presentation.settings && presentation.settings.css || '';
@@ -46,12 +66,12 @@ const StepperLayout = ({
               <div className="metadata aside-group">
                 <h1>{presentation.metadata.title || 'Quinoa'}</h1>
                 {
-                presentation.metadata.authors && presentation.metadata.authors.length ?
-                  <p className="authors-container">
-                    By {presentation.metadata.authors.join(', ')}
-                  </p>
-                : null
-              }
+                  presentation.metadata.authors && presentation.metadata.authors.length ?
+                    <p className="authors-container">
+                      By {presentation.metadata.authors.join(', ')}
+                    </p>
+                  : null
+                }
                 {
                 presentation.metadata.description ?
                   <p className="description-container">
@@ -86,9 +106,11 @@ const StepperLayout = ({
                       const onSlideClick = () => setCurrentSlide(id);
                       return (
                         <li onClick={onSlideClick} key={index} className={navigation.currentSlideId === id ? 'active' : 'inactive'}>
-                          <h3><span className="tooltip-container">
-                            <span className="tooltip-content">{slide.title}</span>
-                          </span></h3>
+                          <h3>
+                            <span className="tooltip-container">
+                              <span className="tooltip-content">{slide.title}</span>
+                            </span>
+                          </h3>
                         </li>
                       );
                     })}
@@ -227,7 +249,9 @@ const StepperLayout = ({
   );
 };
 
-
+/**
+ * Component's properties types
+ */
 StepperLayout.propTypes = {
   /**
    * The presentation to display

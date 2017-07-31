@@ -1,19 +1,64 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i');
+/**
+ * Scss elements to be used all along the app
+ * Note: if you need to specify new values/mixins/abstract classes
+ * it must happen here !
+ */
 
+// 1. variables
+// 1.1. dimension variables
 $gutter-small: .5em;
 $gutter-medium: $gutter-small * 1.666;
 
+// 1.2 color variables
 $color-primary: #333;
 $color-background: white;
 $color-secondary-background: #e5e7e6;
 $color-primary-background: #f4f4f4;
 $color-strokes: #dddbd9;
 
+// 1.3. font size variables
 $font-size-1: $gutter-small * 1.666;
 $font-size-2: $font-size-1 * 1.66;
 
+// 2. mixins
+@mixin transition($args...)
+{
+    -webkit-transition: $args;
+       -moz-transition: $args;
+        -ms-transition: $args;
+         -o-transition: $args;
+            transition: $args;
+}
 
-// abstract classes
+// 3. abstract classes
+.absolute-fill
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.flex-stretched-column
+{
+    display: flex;
+
+    flex-flow: column nowrap;
+    align-items: stretch;
+}
+
+.flex-stretched-row
+{
+    display: flex;
+
+    flex-flow: row nowrap;
+    align-items: stretch;
+}
+
 .interactive-item-intent
 {
     color: $color-primary;
@@ -22,12 +67,12 @@ $font-size-2: $font-size-1 * 1.66;
 
 .interactive-item-active
 {
-    color: #333;
+    color: $color-primary;
     background: #d6cfc4;
 }
 
 .interactive-item-active-intent
 {
-    color: #333;
+    color: $color-primary;
     background: #c3baac;
 }

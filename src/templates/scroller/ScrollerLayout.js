@@ -1,3 +1,8 @@
+/**
+ * This module exports a stateful scroller layout component
+ * ============
+ * @module quinoa-presentation-player/templates/ScrollerLayout
+ */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
@@ -16,7 +21,15 @@ import {
 
 import './ScrollerLayout.scss';
 
-function getElementsByClassName(c, inputEl) {
+/**
+ * Retrieves a collection of dom elements by their class name
+ * (this avoid to require jquery for this sole purpose)
+ * (todo: this could be optimized) (todo: that could be stored separately in an utils script)
+ * @param {string} className - the class name to search
+ * @param {DOMElement} inputEl - the root DOM element to search into
+ * @return {array<DOMElement>} elements - the elements returned by the query
+ */
+function getElementsByClassName(className, inputEl) {
     let el = inputEl;
     if (typeof inputEl === 'string') {
       el = document.getElementById(inputEl);
@@ -25,33 +38,52 @@ function getElementsByClassName(c, inputEl) {
       el = document;
     }
     if (el.getElementsByClassName) {
-      return el.getElementsByClassName(c);
+      return el.getElementsByClassName(className);
     }
-    const arr = [];
+    const elements = [];
     const allEls = el.getElementsByTagName('*');
     for (let i = 0; i < allEls.length; i++) {
-        if (allEls[i].className.split(' ').indexOf(c) > -1) {
-    arr.push(allEls[i]);
+        if (allEls[i].className.split(' ').indexOf(className) > -1) {
+          elements.push(allEls[i]);
+        }
     }
-    }
-    return arr;
+    return elements;
 }
-
+/**
+ * ScrollerLayout class for building a presentation-player react component instances
+ */
 class ScrollerLayout extends Component {
-
+  /**
+   * constructor
+   * @param {object} props - properties given to instance at instanciation
+   */
   constructor(props) {
     super(props);
-
+    // the transition property shall be a timer function provided by d3-timer
     this.transition = null;
-
+    /**
+     * Initial state
+     */
     this.state = {
+      /**
+       * Scroll position within the presentation
+       */
       scrollTop: 0,
+      /**
+       * Whether component's caption container position has been initiated
+       */
       initiated: false
     };
     this.scrollToSlide = this.scrollToSlide.bind(this);
   }
-
+  /**
+   * Executes code before component updates
+   */
   componentWillUpdate() {
+    // if the component is not initiated
+    // we set the position of the scroll so
+    // that the first slide comment is on center
+    // of the screen
     if (this.captionContainer && !this.state.initiated) {
       this.setState({
         scrollTop: this.captionContainer.offsetHeight / 2,
@@ -59,34 +91,45 @@ class ScrollerLayout extends Component {
       });
     }
   }
-
+  /**
+   * Programmatically scrolls the component to a specific slide position
+   * @param {string} id - id of the slide to scroll to
+   */
   scrollToSlide(id) {
     this.props.setCurrentSlide(id);
     const targetEl = document.getElementById(id);
+    // target is set so that the target slide will be on center of the screen
     const target = this.captionContainer.offsetHeight / 2 - targetEl.offsetTop;
-    const transitionsDuration = 500;
+    // prepare a transition to the new position
+    const transitionsDuration = 500;// todo: parametrize that
     const interpTop = interpolateNumber(this.state.scrollTop, target);
+    // timer fires onTick callbacks until it is told to stop
     const onTick = elapsed => {
       const t = elapsed < transitionsDuration ? easeCubic(elapsed / transitionsDuration) : 1;
       const scrollTop = interpTop(t);
       this.setState({
         scrollTop
       });
+      // when elapsed time is greater to transition duration
+      // stop the timer and unload it
       if (t >= 1 && this.transition) {
         this.transition.stop();
         this.transition = null;
       }
     };
+    // this is a security to avoid creating several timers
+    // (leak risk)
     if (this.transition === null) {
       this.transition = timer(onTick);
     }
   }
-
+  /**
+   * Renders the component
+   * @return {ReactElement} component - the component react representation
+   */
   render () {
     const {
-      // currentSlide,
       activeViewsParameters,
-      // viewDifferentFromSlide,
       datasets,
       presentation,
       navigation,
@@ -105,6 +148,10 @@ class ScrollerLayout extends Component {
       onExit,
       // resetView
     } = this.props;
+
+    /**
+     * Callbacks
+     */
     const next = () => !presentation.lastSlide && stepSlide(true);
     const prev = () => !presentation.firstSlide && stepSlide(false);
     const onClickExplore = () => toggleInteractionMode('explore');
@@ -156,6 +203,10 @@ class ScrollerLayout extends Component {
     const onLegendWheel = e => {
       e.stopPropagation();
     };
+
+    /**
+     * References binding
+     */
     const bindRef = component => {
       this.component = component;
     };
@@ -164,16 +215,19 @@ class ScrollerLayout extends Component {
     };
 
     const css = presentation.settings && presentation.settings.css || '';
-
     return (
       <figure className="wrapper" onWheel={onWheel} ref={bindRef}>
         <figcaption className={'caption-container' + ' ' + interactionMode}>
           <h1 onClick={toggleAside} className={'caption-header ' + (asideVisible ? 'active' : '')}>
             <span className="presentation-title">{presentation.metadata.title || 'Quinoa'}</span>
           </h1>
-          {
+          { // content of the aside can be the slides+ caption
+            // or metadata about the presentation
             asideVisible ?
               <div className="caption-body-info">
+                {/* todo: the metadata pannel should be refactored
+                    as a separate component for better legibility
+                 */}
                 <div className="metadata aside-group">
                   <h1>{presentation.metadata.title || 'Quinoa'}</h1>
                   {
@@ -220,12 +274,15 @@ class ScrollerLayout extends Component {
                     <button>Explore</button>
                   </li>
                 </ul>}
-                {navigation.currentSlideId && interactionMode === 'read' ?
-                  <div className="slide-caption-container" ref={bindCaptionContainer}>
-                    {presentation.order.length > 1 ? <nav className="nav-container">
-                      <button className="nav-arrow" onClick={prev}>▲</button>
-                      <ul className="quick-nav">
-                        {presentation.order.map((id, index) => {
+                {
+                  // slide captions container
+                  // todo: refactor it as a separated component
+                  navigation.currentSlideId && interactionMode === 'read' ?
+                    <div className="slide-caption-container" ref={bindCaptionContainer}>
+                      {presentation.order.length > 1 ? <nav className="nav-container">
+                        <button className="nav-arrow" onClick={prev}>▲</button>
+                        <ul className="quick-nav">
+                          {presentation.order.map((id, index) => {
                         const slide = presentation.slides[id];
                         const onSlideClick = () => this.scrollToSlide(id);
                         return (
@@ -236,20 +293,21 @@ class ScrollerLayout extends Component {
                           </li>
                         );
                       })}
-                      </ul>
-                      <button className="nav-arrow" onClick={next}>▼</button>
-                    </nav> : null}
-                    <article
-                      className="slide-caption"
-                      style={{
+                        </ul>
+                        <button className="nav-arrow" onClick={next}>▼</button>
+                      </nav> : null}
+                      {/* todo: refactor slidecaption as a component */}
+                      <article
+                        className="slide-caption"
+                        style={{
                         top: this.state.scrollTop + 'px'
                       }}>
-                      {
+                        {
                         presentation.order.map(id => {
                           const slide = presentation.slides[id];
                           const onSlideClick = () => this.scrollToSlide(id);
                           return (
-                            <section
+                            <div
                               key={id}
                               className={'slide-content ' + (id === navigation.currentSlideId ? 'active' : '')}
                               id={id}
@@ -260,28 +318,21 @@ class ScrollerLayout extends Component {
                                 <ReactMarkdown source={slide.markdown} />
                               : <p className="placeholder-text">No comments</p>
                             }
-                            </section>
+                            </div>
                           );
                         })
                       }
-                      {/*<section className="slide-content">
-                        <h2 className="slide-title">{presentation.slides[navigation.currentSlideId].title}</h2>
-                        {
-                          presentation.slides[navigation.currentSlideId].markdown.length ?
-                            <ReactMarkdown source={presentation.slides[navigation.currentSlideId].markdown} />
-                          : <p className="placeholder-text">No comments</p>
-                        }
-                      </section>*/}
-                    </article>
-                  </div> :
-                  <p>
-                    {!navigation.currentSlideId && 'No slide to display'}
-                  </p>
+                      </article>
+                    </div> :
+                    <p>
+                      {!navigation.currentSlideId && 'No slide to display'}
+                    </p>
                 }
                 <div className="slide-legend-container" onWheel={onLegendWheel}>
                   <h4>Legend</h4>
                   {
                     // legend
+                    // todo: refactor that as a component
                     navigation.currentSlideId &&
                     Object.keys(presentation.slides[navigation.currentSlideId].views)
                     .map(viewId => (
@@ -340,6 +391,7 @@ class ScrollerLayout extends Component {
         { activeViewsParameters ?
           <div className="views-container">
             {Object.keys(presentation.visualizations).map(viewKey => {
+                // todo: this could be wrapped in a separate component
                 const visualization = presentation.visualizations[viewKey];
                 const visType = visualization.metadata.visualizationType;
                 const dataset = datasets[viewKey];
@@ -395,6 +447,9 @@ class ScrollerLayout extends Component {
   }
 }
 
+/**
+ * Component's properties types
+ */
 ScrollerLayout.propTypes = {
   /**
    * The presentation to display

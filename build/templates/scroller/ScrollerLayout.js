@@ -38,9 +38,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } 
 
-function getElementsByClassName(c, inputEl) {
+
+function getElementsByClassName(className, inputEl) {
   var el = inputEl;
   if (typeof inputEl === 'string') {
     el = document.getElementById(inputEl);
@@ -49,16 +50,16 @@ function getElementsByClassName(c, inputEl) {
     el = document;
   }
   if (el.getElementsByClassName) {
-    return el.getElementsByClassName(c);
+    return el.getElementsByClassName(className);
   }
-  var arr = [];
+  var elements = [];
   var allEls = el.getElementsByTagName('*');
   for (var i = 0; i < allEls.length; i++) {
-    if (allEls[i].className.split(' ').indexOf(c) > -1) {
-      arr.push(allEls[i]);
+    if (allEls[i].className.split(' ').indexOf(className) > -1) {
+      elements.push(allEls[i]);
     }
   }
-  return arr;
+  return elements;
 }
 
 var ScrollerLayout = function (_Component) {
@@ -70,7 +71,6 @@ var ScrollerLayout = function (_Component) {
     var _this = _possibleConstructorReturn(this, (ScrollerLayout.__proto__ || Object.getPrototypeOf(ScrollerLayout)).call(this, props));
 
     _this.transition = null;
-
     _this.state = {
       scrollTop: 0,
       initiated: false
@@ -78,6 +78,7 @@ var ScrollerLayout = function (_Component) {
     _this.scrollToSlide = _this.scrollToSlide.bind(_this);
     return _this;
   }
+
 
   _createClass(ScrollerLayout, [{
     key: 'componentWillUpdate',
@@ -89,6 +90,7 @@ var ScrollerLayout = function (_Component) {
         });
       }
     }
+
   }, {
     key: 'scrollToSlide',
     value: function scrollToSlide(id) {
@@ -97,7 +99,7 @@ var ScrollerLayout = function (_Component) {
       this.props.setCurrentSlide(id);
       var targetEl = document.getElementById(id);
       var target = this.captionContainer.offsetHeight / 2 - targetEl.offsetTop;
-      var transitionsDuration = 500;
+      var transitionsDuration = 500; 
       var interpTop = (0, _d3Interpolate.interpolateNumber)(this.state.scrollTop, target);
       var onTick = function onTick(elapsed) {
         var t = elapsed < transitionsDuration ? (0, _d3Ease.easeCubic)(elapsed / transitionsDuration) : 1;
@@ -114,6 +116,7 @@ var ScrollerLayout = function (_Component) {
         this.transition = (0, _d3Timer.timer)(onTick);
       }
     }
+
   }, {
     key: 'render',
     value: function render() {
@@ -137,6 +140,7 @@ var ScrollerLayout = function (_Component) {
           onUserViewChange = _props.onUserViewChange,
           onExit = _props.onExit;
 
+
       var next = function next() {
         return !presentation.lastSlide && stepSlide(true);
       };
@@ -156,7 +160,7 @@ var ScrollerLayout = function (_Component) {
         }
         var scrollTop = _this3.state.scrollTop - e.deltaY;
         var relScrollTop = _this3.captionContainer.offsetHeight * 0.6 - scrollTop;
-        var anchorsEls = getElementsByClassName('slide-content', _this3.captionContainer); // $(this.captionContainer).find('.slide-content') // document.getElementsByClassName('slide-content');
+        var anchorsEls = getElementsByClassName('slide-content', _this3.captionContainer); 
         var anchors = [];
         var activeId = void 0;
         var totalHeight = 0;
@@ -194,6 +198,7 @@ var ScrollerLayout = function (_Component) {
       var onLegendWheel = function onLegendWheel(e) {
         e.stopPropagation();
       };
+
       var bindRef = function bindRef(component) {
         _this3.component = component;
       };
@@ -202,7 +207,6 @@ var ScrollerLayout = function (_Component) {
       };
 
       var css = presentation.settings && presentation.settings.css || '';
-
       return _react2.default.createElement(
         'figure',
         { className: 'wrapper', onWheel: onWheel, ref: bindRef },
@@ -301,6 +305,7 @@ var ScrollerLayout = function (_Component) {
                 )
               )
             ),
+
             navigation.currentSlideId && interactionMode === 'read' ? _react2.default.createElement(
               'div',
               { className: 'slide-caption-container', ref: bindCaptionContainer },
@@ -358,7 +363,7 @@ var ScrollerLayout = function (_Component) {
                     return _this3.scrollToSlide(id);
                   };
                   return _react2.default.createElement(
-                    'section',
+                    'div',
                     {
                       key: id,
                       className: 'slide-content ' + (id === navigation.currentSlideId ? 'active' : ''),
@@ -391,7 +396,6 @@ var ScrollerLayout = function (_Component) {
                 'Legend'
               ),
 
-              // legend
               navigation.currentSlideId && Object.keys(presentation.slides[navigation.currentSlideId].views).map(function (viewId) {
                 return _react2.default.createElement(
                   'div',
@@ -506,99 +510,34 @@ var ScrollerLayout = function (_Component) {
   return ScrollerLayout;
 }(_react.Component);
 
+
+
 ScrollerLayout.propTypes = {
-  /**
-   * The presentation to display
-   */
   presentation: _propTypes2.default.object.isRequired,
-  /**
-   * The current slide being displayed by the component
-   */
   currentSlide: _propTypes2.default.object,
-  /**
-   * Parameters describing current view's state
-   */
   activeViewsParameters: _propTypes2.default.object,
-  /**
-   * Whether the current view parameters match with current slide's view parameters
-   */
   viewDifferentFromSlide: _propTypes2.default.bool,
-  /**
-   * The transformed datasets to use for displaying visualizations
-   */
   datasets: _propTypes2.default.object,
-  /**
-   * Navigation state description
-   */
   navigation: _propTypes2.default.shape({
-    /**
-     * What is the active slide's id
-     */
     currentSlideId: _propTypes2.default.string,
-    /**
-     * What is the active slide's rank in slides list
-     */
     position: _propTypes2.default.number,
-    /**
-     * Whether active slide is the first
-     */
     firstSlide: _propTypes2.default.bool,
-    /**
-     * Whether active slide is the last
-     */
     lastSlide: _propTypes2.default.bool
 
   }),
-  /**
-   * Callbacks when user asks to jump to a specific slide
-   */
   setCurrentSlide: _propTypes2.default.func,
-  /**
-   * Callbacks when user asks to step forward or backward in slides order
-   */
   stepSlide: _propTypes2.default.func,
-  /**
-   * Callbacks to change the display of presentation's metadata/details in aside
-   */
   toggleAside: _propTypes2.default.func,
-  /**
-   * Interface state description
-   */
   gui: _propTypes2.default.shape({
-    /**
-     * Whether aside displays list of slides or presentation's metadata/details
-     */
     asideVisible: _propTypes2.default.bool,
-    /**
-     * Whether user is allowed to explore the view or can just navigate into slides' views
-     */
     interactionMode: _propTypes2.default.oneOf(['read', 'explore'])
   }),
-  /**
-   * Component global options
-   */
   options: _propTypes2.default.shape({
-    /**
-     * declares whether users can pan/zoom/navigate inside the view
-     * or if the view is strictly controlled by current slide's parameters
-     */
     allowViewExploration: _propTypes2.default.bool
   }),
-  /**
-   * Callbacks when user tries to reset view to current slide's view parameters
-   */
   resetView: _propTypes2.default.func,
-  /**
-   * Callbacks when user changes view manually
-   */
   onUserViewChange: _propTypes2.default.func,
-  /**
-   * Hook to switch between "read" and "explore" interaction modes
-   */
   toggleInteractionMode: _propTypes2.default.func,
-  /**
-   * Trigger to call when user interacts to exit the presentation
-   */
   onExit: _propTypes2.default.func
 };
 
