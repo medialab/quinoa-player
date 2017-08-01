@@ -261,11 +261,11 @@ var QuinoaPresentationPlayer = function (_Component) {
       var _props = this.props,
           _props$options = _props.options,
           options = _props$options === undefined ? {} : _props$options,
-          _props$template = _props.template,
-          template = _props$template === undefined ? 'stepper' : _props$template;
+          template = _props.template;
 
       if (this.state.presentation && this.state.status === 'loaded') {
-        switch (template) {
+        var activeTemplate = this.state.presentation && this.state.presentation.settings && this.state.presentation.template || template || 'stepper';
+        switch (activeTemplate) {
           case 'scroller':
             return _react2.default.createElement(_ScrollerLayout2.default, {
               currentSlide: this.state.currentSlide,
@@ -369,8 +369,8 @@ var QuinoaPresentationPlayer = function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      var _props$template2 = this.props.template,
-          template = _props$template2 === undefined ? 'stepper' : _props$template2;
+      var _props$template = this.props.template,
+          template = _props$template === undefined ? 'stepper' : _props$template;
 
       var onWheel = function onWheel(e) {
         if (typeof _this4.props.onWheel === 'function') {

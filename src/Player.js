@@ -310,10 +310,15 @@ class QuinoaPresentationPlayer extends Component {
   renderComponent () {
     const {
       options = {},
-      template = 'stepper'
+      template
     } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
-      switch (template) {
+      const activeTemplate = (
+        this.state.presentation && 
+        this.state.presentation.settings && 
+        this.state.presentation.template
+      ) || template || 'stepper';
+      switch (activeTemplate) {
         case 'scroller':
           return (
             <ScrollerLayout

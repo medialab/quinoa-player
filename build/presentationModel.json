@@ -5,6 +5,10 @@
             "type": "string",
             "required": true
         },
+        "type": {
+            "type":"string",
+            "required": true
+        },
         "metadata": {
             "type": "object",
             "required": true,
@@ -42,6 +46,10 @@
                                     "type": "string",
                                     "required": false
                                 },
+                                "filename": {
+                                    "type": "string",
+                                    "required": false
+                                },
                                 "authors": {
                                     "type": "array",
                                     "required": false
@@ -64,7 +72,7 @@
                                 }
                             }
                         },
-                        "data": {
+                        "rawData": {
                             "type": ["string", "array"],
                             "required": true
                         }
@@ -82,18 +90,15 @@
                     "keys": {
                       "metadata": {
                           "type": "object",
-                          "required": true,
-                          "keys": {
-                              "title": {
-                                  "type": "string",
-                                  "required": false
-                              },
-                              "visualizationType": {
-                                  "type": "string",
-                                  "possibleValues": ["map", "timeline", "graph"],
-                                  "required": true
-                              }
-                          }
+                          "required": true
+                      },
+                      "data": {
+                        "required": false,
+                        "type": "object"
+                      },
+                      "dataProfile": {
+                        "required": false,
+                        "type": "object"
                       },
                       "datasets": {
                           "type": "array",
@@ -101,6 +106,10 @@
                           "children": {
                               "type": "uuid"
                           }
+                      },
+                      "viewParameters": {
+                        "required": false,
+                        "type": "object"
                       }
                     }
                 }
@@ -137,13 +146,7 @@
                                     "keys": {
                                         "viewParameters": {
                                             "type": "object",
-                                            "required": true,
-                                            "keys": {
-                                                "viewDataMap": {
-                                                    "type": "object",
-                                                    "required": true
-                                                }
-                                            }
+                                            "required": true
                                         }
                                     }
                                 }
@@ -158,6 +161,30 @@
             "required": true,
             "children": {
                 "type": "uuid"
+            }
+        },
+        "settings": {
+            "type": "object",
+            "required": false,
+            "keys": {
+                "template": {
+                    "type": "string",
+                    "default": "scroller"
+                },
+                "options": {
+                    "type": "object",
+                    "keys": {
+                        "notesPosition": {
+                            "type": "string"
+                        },
+                        "allowDisqusComments": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "css": {
+                    "type": "string"
+                }
             }
         }
     }
