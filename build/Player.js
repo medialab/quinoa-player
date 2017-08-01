@@ -264,7 +264,7 @@ var QuinoaPresentationPlayer = function (_Component) {
           template = _props.template;
 
       if (this.state.presentation && this.state.status === 'loaded') {
-        var activeTemplate = this.state.presentation && this.state.presentation.settings && this.state.presentation.template || template || 'stepper';
+        var activeTemplate = this.state.presentation && this.state.presentation.settings && this.state.presentation.settings.template || template || 'stepper';
         switch (activeTemplate) {
           case 'scroller':
             return _react2.default.createElement(_ScrollerLayout2.default, {

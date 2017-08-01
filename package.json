@@ -1,6 +1,6 @@
 {
   "name": "quinoa-presentation-player",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "js module and standalone app for displaying quinoa data presentations",
   "main": "build/index.js",
   "scripts": {

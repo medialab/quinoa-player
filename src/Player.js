@@ -314,9 +314,9 @@ class QuinoaPresentationPlayer extends Component {
     } = this.props;
     if (this.state.presentation && this.state.status === 'loaded') {
       const activeTemplate = (
-        this.state.presentation && 
-        this.state.presentation.settings && 
-        this.state.presentation.template
+        this.state.presentation &&
+        this.state.presentation.settings &&
+        this.state.presentation.settings.template
       ) || template || 'stepper';
       switch (activeTemplate) {
         case 'scroller':
