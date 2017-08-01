@@ -222,7 +222,8 @@
         /// ...except the zones allowing to open the meta
         // or to toggle the interaction mode
         .caption-header,
-        .read-mode-toggler{
+        .read-mode-toggler
+        {
             pointer-events: all;
         }
         .slide-legend-container

@@ -298,7 +298,7 @@ class QuinoaPresentationPlayer extends Component {
    * Triggers when user tries to exit the presentation
    * @param {string} side - either "top" or "bottom"
    */
-  onExit(side){
+  onExit(side) {
     if (typeof this.props.onExit === 'function') {
       this.props.onExit(side);
     }
