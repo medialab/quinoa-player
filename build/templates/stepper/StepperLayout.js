@@ -218,7 +218,8 @@ var StepperLayout = function StepperLayout(_ref) {
                       return _react2.default.createElement(
                         'li',
                         { className: 'legend-item', key: category },
-                        _react2.default.createElement('span', { className: 'color',
+                        _react2.default.createElement('span', {
+                          className: 'color',
                           style: {
                             background: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.colorsMap[collectionId][category],
                             opacity: presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.shownCategories && presentation.slides[navigation.currentSlideId].views[viewId].viewParameters.shownCategories[collectionId].indexOf(category) === -1 ? 0.3 : 1
