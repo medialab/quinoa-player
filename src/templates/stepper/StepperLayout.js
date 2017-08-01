@@ -156,7 +156,8 @@ const StepperLayout = ({
                                   .filter(category => category !== 'default')
                                   .map(category => (
                                     <li className="legend-item" key={category}>
-                                      <span className="color"
+                                      <span
+                                        className="color"
                                         style={{
                                           background: presentation
                                                         .slides[navigation.currentSlideId]
