@@ -428,8 +428,13 @@ class QuinoaPresentationPlayer extends Component {
    */
   render() {
     const {
-      template = 'stepper'
+      template
     } = this.props;
+    const activeTemplate = (
+        this.state.presentation &&
+        this.state.presentation.settings &&
+        this.state.presentation.settings.template
+      ) || template || 'stepper';
     // we need that when embedding the player
     // in a scroll-aware webpage (see the quinoa-story-player project)
     const onWheel = (e) => {
@@ -440,7 +445,7 @@ class QuinoaPresentationPlayer extends Component {
     return (
       <div
         onWheel={onWheel}
-        className={'quinoa-presentation-player ' + template + ' ' + (this.props.className ? this.props.className : '')}
+        className={'quinoa-presentation-player ' + activeTemplate + ' ' + (this.props.className ? this.props.className : '')}
         style={this.props.style}>
         {this.renderComponent()}
       </div>

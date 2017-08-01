@@ -26,17 +26,29 @@ storiesOf('Quinoa timeline presentation', module)
       presentation={timelinePresentation} 
     />
   ))
-  .add('Cartel mode, navigable (scroller)', () => (
+  .add('Cartel mode, navigable (scroller given as prop)', () => (
     <Player 
       presentation={timelinePresentation} 
       template="scroller"
+    />
+  ))
+  .add('Imposing the scroller mode throught the presentation', () => (
+    <Player 
+      presentation={{
+        ...timelinePresentation,
+        settings: {
+          ...timelinePresentation.settings,
+          template: 'scroller'
+        }
+      }} 
     />
   ))
   .add('Presentation with no slides', () => (
     <Player 
       presentation={timelineZeroSlides} 
     />
-  ));
+  ))
+  ;
 
 // storiesOf('Quinoa network presentation', module)
 //   .add('Cartel mode, navigable', () => (

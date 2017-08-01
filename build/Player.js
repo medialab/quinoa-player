@@ -369,9 +369,9 @@ var QuinoaPresentationPlayer = function (_Component) {
     value: function render() {
       var _this4 = this;
 
-      var _props$template = this.props.template,
-          template = _props$template === undefined ? 'stepper' : _props$template;
+      var template = this.props.template;
 
+      var activeTemplate = this.state.presentation && this.state.presentation.settings && this.state.presentation.settings.template || template || 'stepper';
       var onWheel = function onWheel(e) {
         if (typeof _this4.props.onWheel === 'function') {
           _this4.props.onWheel(e);
@@ -381,7 +381,7 @@ var QuinoaPresentationPlayer = function (_Component) {
         'div',
         {
           onWheel: onWheel,
-          className: 'quinoa-presentation-player ' + template + ' ' + (this.props.className ? this.props.className : ''),
+          className: 'quinoa-presentation-player ' + activeTemplate + ' ' + (this.props.className ? this.props.className : ''),
           style: this.props.style },
         this.renderComponent()
       );
