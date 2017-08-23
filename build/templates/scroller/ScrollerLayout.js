@@ -337,7 +337,8 @@ var ScrollerLayout = function (_Component) {
                           _react2.default.createElement(
                             'span',
                             { className: 'tooltip-content' },
-                            slide.title
+                            slide.title.length ? 
+                            slide.title : slide.markdown ? _react2.default.createElement(_reactMarkdown2.default, { source: slide.markdown.split(' ').slice(0, 3).join(' ') + '...' }) : '...'
                           )
                         )
                       )
@@ -384,7 +385,7 @@ var ScrollerLayout = function (_Component) {
               )
             ) : _react2.default.createElement(
               'p',
-              null,
+              { className: 'no-slide' },
               !navigation.currentSlideId && 'No slide to display'
             ),
             _react2.default.createElement(

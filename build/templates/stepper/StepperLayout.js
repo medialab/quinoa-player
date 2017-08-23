@@ -149,7 +149,8 @@ var StepperLayout = function StepperLayout(_ref) {
                       _react2.default.createElement(
                         'span',
                         { className: 'tooltip-content' },
-                        slide.title
+                        slide.title.length ? 
+                        slide.title : slide.markdown ? _react2.default.createElement(_reactMarkdown2.default, { source: slide.markdown.split(' ').slice(0, 3).join(' ') + '...' }) : '...'
                       )
                     )
                   )
@@ -187,7 +188,7 @@ var StepperLayout = function StepperLayout(_ref) {
           )
         ) : _react2.default.createElement(
           'p',
-          null,
+          { className: 'no-slide' },
           'No slide to display'
         ),
         _react2.default.createElement(

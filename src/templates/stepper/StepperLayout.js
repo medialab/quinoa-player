@@ -108,7 +108,17 @@ const StepperLayout = ({
                         <li onClick={onSlideClick} key={index} className={navigation.currentSlideId === id ? 'active' : 'inactive'}>
                           <h3>
                             <span className="tooltip-container">
-                              <span className="tooltip-content">{slide.title}</span>
+                              <span className="tooltip-content">
+                                {
+                                  slide.title.length ?/* eslint no-nested-ternary:0 */
+                                    slide.title
+                                    :
+                                      slide.markdown ?
+                                        <ReactMarkdown source={slide.markdown.split(' ').slice(0, 3).join(' ') + '...'} />
+                                        :
+                                        '...'
+                                }
+                              </span>
                             </span>
                           </h3>
                         </li>
@@ -130,7 +140,7 @@ const StepperLayout = ({
                     {presentation.order.indexOf(navigation.currentSlideId) < presentation.order.length - 1 ? <button className="next-slide-btn" onClick={next}>Next slide (↓)</button> : null}
                   </article>
                 </div> :
-                <p>
+                <p className="no-slide">
                   No slide to display
                 </p>
               }

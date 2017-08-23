@@ -60,6 +60,10 @@
                     left: 30%;// todo: parametrize that
 
                     width: 70%;// todo: parametrize that
+
+                    .view-body{
+                        width: 70%;
+                    }
                 }
 
                 .view-body
@@ -468,5 +472,9 @@
         {
             background: inherit;
         }
+    }
+
+    .no-slide{
+        padding-left: $gutter-medium;
     }
 }

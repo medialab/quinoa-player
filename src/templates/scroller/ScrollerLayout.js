@@ -288,7 +288,17 @@ class ScrollerLayout extends Component {
                         return (
                           <li onClick={onSlideClick} key={index} className={navigation.currentSlideId === id ? 'active' : 'inactive'}>
                             <h3><span className="tooltip-container">
-                              <span className="tooltip-content">{slide.title}</span>
+                              <span className="tooltip-content">
+                                {
+                                  slide.title.length ?/* eslint no-nested-ternary:0 */
+                                    slide.title
+                                    :
+                                      slide.markdown ?
+                                        <ReactMarkdown source={slide.markdown.split(' ').slice(0, 3).join(' ') + '...'} />
+                                        :
+                                        '...'
+                                }
+                              </span>
                             </span></h3>
                           </li>
                         );
@@ -324,7 +334,7 @@ class ScrollerLayout extends Component {
                       }
                       </article>
                     </div> :
-                    <p>
+                    <p className="no-slide">
                       {!navigation.currentSlideId && 'No slide to display'}
                     </p>
                 }
