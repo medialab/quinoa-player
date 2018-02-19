@@ -8,7 +8,8 @@
  * a specific layout / set of interactions.
  * @module quinoa-presentation-player/Player
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import StepperLayout from './templates/stepper/StepperLayout';
 import ScrollerLayout from './templates/scroller/ScrollerLayout';

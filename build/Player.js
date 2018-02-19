@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _StepperLayout = require('./templates/stepper/StepperLayout');
 
 var _StepperLayout2 = _interopRequireDefault(_StepperLayout);
@@ -394,14 +398,14 @@ var QuinoaPresentationPlayer = function (_Component) {
 
 
 QuinoaPresentationPlayer.propTypes = {
-  presentation: _react.PropTypes.object.isRequired,
-  beginAt: _react.PropTypes.number,
-  options: _react.PropTypes.shape({
-    allowViewExploration: _react.PropTypes.bool
+  presentation: _propTypes2.default.object.isRequired,
+  beginAt: _propTypes2.default.number,
+  options: _propTypes2.default.shape({
+    allowViewExploration: _propTypes2.default.bool
   }),
-  onSlideChange: _react.PropTypes.func,
-  onExit: _react.PropTypes.func,
-  onWheel: _react.PropTypes.func
+  onSlideChange: _propTypes2.default.func,
+  onExit: _propTypes2.default.func,
+  onWheel: _propTypes2.default.func
 };
 
 exports.default = QuinoaPresentationPlayer;

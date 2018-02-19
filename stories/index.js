@@ -5,7 +5,7 @@
  * run `npm storybook` to see them in action
  */
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 import Player from '../src/Player';
 
 import mapPresentation from './map/map-test-from-bulgur.json';
