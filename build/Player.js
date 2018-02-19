@@ -50,7 +50,7 @@ var QuinoaPresentationPlayer = function (_Component) {
 
     _this.initPresentation = _this.initPresentation.bind(_this);
     _this.renderComponent = _this.renderComponent.bind(_this);
-
+    _this.initNavigation = _this.initNavigation.bind(_this);
     _this.setCurrentSlide = _this.setCurrentSlide.bind(_this);
     _this.stepSlide = _this.stepSlide.bind(_this);
     _this.toggleAside = _this.toggleAside.bind(_this);
@@ -82,48 +82,14 @@ var QuinoaPresentationPlayer = function (_Component) {
   _createClass(QuinoaPresentationPlayer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
-      if (this.state.presentation) {
-        if (this.state.presentation.order && this.state.presentation.order.length) {
-          var beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
-          this.setCurrentSlide(this.state.presentation.order[beginAt]);
-        }
-        var datasets = {};
-        var views = this.state.presentation.visualizations;
-        Object.keys(views).map(function (viewKey) {
-          var view = views[viewKey];
-          var visualization = _this2.state.presentation.visualizations[viewKey];
-          var visType = visualization.metadata.visualizationType;
-          var dataset = visualization.data;
-          var mappedData = void 0;
-          switch (visType) {
-            case 'map':
-              mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
-              break;
-            case 'timeline':
-              mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
-              break;
-            case 'network':
-              mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
-              break;
-            default:
-              break;
-          }
-          datasets[viewKey] = mappedData;
-        });
-        this.setState({
-          activeViewsParameters: _extends({}, this.state.presentation.visualizations),
-          datasets: datasets
-        });
-      }
+      if (this.state.presentation) this.initNavigation();
     }
 
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.presentation !== nextProps.presentation) {
-        this.setState({ presentation: nextProps.presentation });
+        this.setState({ presentation: nextProps.presentation, status: 'loaded' }, this.initNavigation);
       }
     }
 
@@ -137,7 +103,7 @@ var QuinoaPresentationPlayer = function (_Component) {
   }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate(nextProps, nextState) {
-      var _this3 = this;
+      var _this2 = this;
 
       var slide = nextState.currentSlide;
       var previousSlide = this.state.currentSlide;
@@ -161,7 +127,7 @@ var QuinoaPresentationPlayer = function (_Component) {
               return propsMap;
             }, {})));
           }, {});
-          var visualization = _this3.state.presentation.visualizations[viewKey];
+          var visualization = _this2.state.presentation.visualizations[viewKey];
           var visType = visualization.metadata.visualizationType;
           var dataset = visualization.data;
           var mappedData = void 0;
@@ -191,13 +157,52 @@ var QuinoaPresentationPlayer = function (_Component) {
         return previousSlide.views[viewKey];
       });
       var activeViewParamsMark = slide && Object.keys(slide.views).map(function (viewKey) {
-        return _this3.state.activeViewsParameters[viewKey];
+        return _this2.state.activeViewsParameters[viewKey];
       });
       if (previousSlide && JSON.stringify(slideViewParamsMark) !== JSON.stringify(activeViewParamsMark) && !this.state.viewDifferentFromSlide) {
         this.setState({
           viewDifferentFromSlide: true
         });
       }
+    }
+
+
+  }, {
+    key: 'initNavigation',
+    value: function initNavigation() {
+      var _this3 = this;
+
+      if (this.state.presentation.order && this.state.presentation.order.length) {
+        var beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
+        this.setCurrentSlide(this.state.presentation.order[beginAt]);
+      }
+      var datasets = {};
+      var views = this.state.presentation.visualizations;
+      Object.keys(views).map(function (viewKey) {
+        var view = views[viewKey];
+        var visualization = _this3.state.presentation.visualizations[viewKey];
+        var visType = visualization.metadata.visualizationType;
+        var dataset = visualization.data;
+        var mappedData = void 0;
+        switch (visType) {
+          case 'map':
+            mappedData = (0, _quinoaVisModules.mapMapData)(dataset, view.flattenedDataMap);
+            break;
+          case 'timeline':
+            mappedData = (0, _quinoaVisModules.mapTimelineData)(dataset, view.flattenedDataMap);
+            break;
+          case 'network':
+            mappedData = (0, _quinoaVisModules.mapNetworkData)(dataset, view.flattenedDataMap);
+            break;
+          default:
+            break;
+        }
+        datasets[viewKey] = mappedData;
+      });
+      this.setState({
+        activeViewsParameters: _extends({}, this.state.presentation.visualizations),
+        datasets: datasets
+      });
     }
 
   }, {

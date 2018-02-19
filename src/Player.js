@@ -34,7 +34,7 @@ class QuinoaPresentationPlayer extends Component {
     super(props);
     this.initPresentation = this.initPresentation.bind(this);
     this.renderComponent = this.renderComponent.bind(this);
-
+    this.initNavigation = this.initNavigation.bind(this);
     this.setCurrentSlide = this.setCurrentSlide.bind(this);
     this.stepSlide = this.stepSlide.bind(this);
     this.toggleAside = this.toggleAside.bind(this);
@@ -84,48 +84,7 @@ class QuinoaPresentationPlayer extends Component {
    * Executes code on instance after the component is mounted
    */
   componentDidMount() {
-    if (this.state.presentation) {
-      // initializing the navigation state
-      if (this.state.presentation.order && this.state.presentation.order.length) {
-        const beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
-        this.setCurrentSlide(this.state.presentation.order[beginAt]);
-      }
-      const datasets = {};
-      const views = this.state.presentation.visualizations;
-      // for each visualization of the presentation
-      // (reminder: presentation data model allows several visualizations)
-      // we format the data according viewParamaters's data map.
-      // this will have to be done each time data map changes
-      Object.keys(views).map(viewKey => {
-        const view = views[viewKey];
-        const visualization = this.state.presentation.visualizations[viewKey];
-        const visType = visualization.metadata.visualizationType;
-        const dataset = visualization.data;
-        let mappedData;
-        // we rely on the quinoa-vis-modules util modules
-        // todo: (question) should we change quinoa-vis-modules utils api
-        // to be lighter and not having to use that switch
-        // (example of alternative api : mapVisData(visualizationType, dataset, dataMap)) ?
-        switch (visType) {
-          case 'map':
-            mappedData = mapMapData(dataset, view.flattenedDataMap);
-            break;
-          case 'timeline':
-            mappedData = mapTimelineData(dataset, view.flattenedDataMap);
-            break;
-          case 'network':
-            mappedData = mapNetworkData(dataset, view.flattenedDataMap);
-            break;
-          default:
-            break;
-        }
-        datasets[viewKey] = mappedData;
-      });
-      this.setState({
-        activeViewsParameters: {...this.state.presentation.visualizations},
-        datasets
-      });
-    }
+    if (this.state.presentation) this.initNavigation();
   }
   /**
    * Executes code when component receives new properties
@@ -133,7 +92,7 @@ class QuinoaPresentationPlayer extends Component {
    */
   componentWillReceiveProps(nextProps) {
     if (this.props.presentation !== nextProps.presentation) {
-      this.setState({presentation: nextProps.presentation});
+      this.setState({presentation: nextProps.presentation, status: 'loaded'}, this.initNavigation);
     }
   }
 
@@ -221,6 +180,52 @@ class QuinoaPresentationPlayer extends Component {
         viewDifferentFromSlide: true
       });
     }
+  }
+
+  /**
+   * Wraps the init Navigation process of the presentation data
+   */
+  initNavigation() {
+        // initializing the navigation state
+    if (this.state.presentation.order && this.state.presentation.order.length) {
+      const beginAt = this.props.beginAt && this.props.beginAt < this.state.presentation.order.length ? this.props.beginAt : 0;
+      this.setCurrentSlide(this.state.presentation.order[beginAt]);
+    }
+    const datasets = {};
+    const views = this.state.presentation.visualizations;
+    // for each visualization of the presentation
+    // (reminder: presentation data model allows several visualizations)
+    // we format the data according viewParamaters's data map.
+    // this will have to be done each time data map changes
+    Object.keys(views).map(viewKey => {
+      const view = views[viewKey];
+      const visualization = this.state.presentation.visualizations[viewKey];
+      const visType = visualization.metadata.visualizationType;
+      const dataset = visualization.data;
+      let mappedData;
+      // we rely on the quinoa-vis-modules util modules
+      // todo: (question) should we change quinoa-vis-modules utils api
+      // to be lighter and not having to use that switch
+      // (example of alternative api : mapVisData(visualizationType, dataset, dataMap)) ?
+      switch (visType) {
+        case 'map':
+          mappedData = mapMapData(dataset, view.flattenedDataMap);
+          break;
+        case 'timeline':
+          mappedData = mapTimelineData(dataset, view.flattenedDataMap);
+          break;
+        case 'network':
+          mappedData = mapNetworkData(dataset, view.flattenedDataMap);
+          break;
+        default:
+          break;
+      }
+      datasets[viewKey] = mappedData;
+    });
+    this.setState({
+      activeViewsParameters: {...this.state.presentation.visualizations},
+      datasets
+    });
   }
   /**
    * Handles user events on a specific presentation's view
