@@ -50,6 +50,8 @@
 
             @extend .absolute-fill;
 
+            z-index: 0;
+
             .view-container
             {
                 flex: 1;
@@ -88,6 +90,7 @@
             height: 100%;
 
             @extend .flex-stretched-column;
+
         }
         // body of the caption in slide mode
         .caption-body-slide
